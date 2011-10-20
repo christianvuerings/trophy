@@ -1,7 +1,15 @@
+# Mac files
 .DS_Store
+
+# Swf files
+*.swf
+
+# Project property files
 .actionScriptProperties
 .flexProperties
 .project
-.swf
-.settings/*
-bin-debug/*
+.settings/
+
+# Build and Release Folders
+bin-debug/
+bin-release/
