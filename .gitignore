@@ -5,9 +5,6 @@
 *.swf
 
 # Project property files
-.actionScriptProperties
-.flexProperties
-.settings/
 
 # Build and Release Folders
 bin-debug/
