@@ -7,7 +7,6 @@
 # Project property files
 .actionScriptProperties
 .flexProperties
-.project
 .settings/
 
 # Build and Release Folders
