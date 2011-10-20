@@ -1,0 +1,12 @@
+@namespace s "library://ns.adobe.com/flex/spark";
+@namespace mx "library://ns.adobe.com/flex/mx";
+@font-face {
+	src: url("../fonts/jasmineupc.ttf");
+	fontFamily: jasmineUPC;
+	advancedAntiAliasing: true;
+}
+
+s|TextInput {
+	skinClass: ClassReference("assets.skins.textinput");
+	font-size: 17px
+}
