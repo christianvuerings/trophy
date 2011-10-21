@@ -19,7 +19,7 @@
 
 			private function initApp():void
 			{
-				resourceManager.localeChain = [locales[0]];
+				resourceManager.localeChain = [locales[1]];
 			}
 
 		]]>
@@ -43,6 +43,11 @@
 				<mx:LinkButton label="{resourceManager.getString('main', 'advanced_search')}" horizontalCenter="100" />
 			</s:HGroup>
 		</s:VGroup>
-
+		<s:HGroup width="100%" height="100%" horizontalAlign="right" verticalAlign="bottom">
+			<mx:LinkButton label="{resourceManager.getString('main', 'belgium_nl')}" />
+			<mx:LinkButton label="{resourceManager.getString('main', 'belgium_fr')}" />
+			<mx:LinkButton label="{resourceManager.getString('main', 'france_fr')}" />
+			<mx:LinkButton label="{resourceManager.getString('main', 'netherlands_nl')}" />
+		</s:HGroup>
 	</s:Group>
 </s:Application>
