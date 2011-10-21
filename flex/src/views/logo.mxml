@@ -4,8 +4,8 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx">
 	<fx:Declarations>
 	</fx:Declarations>
-	<s:Label x="60" y="0" color="#447CB7" fontFamily="jasmineUPC" fontSize="74" text="{resourceManager.getString('main','psychologist')}"/>
-	<s:Label x="60" y="54" color="#1C4774" fontFamily="jasmineUPC" fontSize="58" text="{resourceManager.getString('main','in_your_neighbourhood')}"/>
+	<s:Label id="logo_profession" x="60" y="0" text="{resourceManager.getString('main','psychologist')}"/>
+	<s:Label id="logo_subtitle" x="60" y="54" text="{resourceManager.getString('main','in_your_neighbourhood')}"/>
 	<s:Image x="0" y="2" smooth="true" smoothingQuality="high"
 			 source="assets/images/logo_magnifier.png"/>
 </s:Group>

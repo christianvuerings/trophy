@@ -6,7 +6,45 @@
 	advancedAntiAliasing: true;
 }
 
+/* Buttons, text inputs */
 s|TextInput {
 	skinClass: ClassReference("assets.skins.textinput");
-	font-size: 17px
 }
+mx|LinkButton {
+	color: #447CB7;
+	rollOverColor: #ffffff;
+}
+mx|LinkButton:over {
+	color: #1C4774;
+}
+
+/* Search */
+.search {
+	font-size: 17px;
+}
+
+/* Logo */
+#logo_profession, #logo_subtitle {
+	fontFamily: jasmineUPC;
+}
+#logo_profession {
+	color: #447CB7;
+	font-size: 74;
+}
+#logo_subtitle {
+	color: #1C4774;
+	font-size: 58;
+}
+
+
+/* Help:
+Buttons:
+
+baseColor
+color
+focusColor
+symbolColor
+rollOverColor
+selectionColor
+contentBackgroundColor
+*/
