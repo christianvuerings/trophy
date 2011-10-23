@@ -22,11 +22,11 @@ class Users implements UsersInterface {
     private $addressStreet;
     private $addressNumber;
     private $addressBus;
-    private $citiesId;
+    private $city;
     private $telephone;
     private $fax;
     private $gsm;
-    private $languageId;
+    private $language;
     private $occupations = array();
     private $specialties = array();
     
@@ -39,7 +39,7 @@ class Users implements UsersInterface {
     /**
      * Creates a new Users object
      */
-    public static function createNew($usersId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $citiesId, $languagesId, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL) {
+    public static function createNew($usersId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $city, $language, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL) {
 	    $instance = new self();
 	
 		$instance->usersId = $usersId;
@@ -55,11 +55,11 @@ class Users implements UsersInterface {
 		$instance->addressStreet = $addressStreet;
 		$instance->addressNumber = $addressNumber;
 		$instance->addressBus = $addressBus;
-		$instance->citiesId = $citiesId;
+		$instance->city = $city;
 		$instance->telephone = $telephone;
 		$instance->fax = $fax;
 		$instance->gsm = $gsm;
-		$instance->languagesId = $languagesId;
+		$instance->language = $languageId;
 		
 	    return $instance;
     }
@@ -216,12 +216,12 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Returns citiesId
+     * Returns city
      * 
      * @return int
      */
-    public function getCitiesId() {
-	    return $this->citiesId;
+    public function getcity() {
+	    return $this->city;
     }
     
     /**
@@ -252,12 +252,12 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Returns languagesId
+     * Returns languageId
      * 
      * @return int
      */
-    public function getLanguagesId() {
-	    return $this->languagesId;
+    public function getlanguage() {
+	    return $this->language;
     }
     
     public function getOccupations(){
@@ -386,12 +386,12 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Sets citiesId
+     * Sets city
      * 
      * @param int
      */
-    public function setCitiesId($citiesId) {
-	    $this->citiesId = $citiesId;
+    public function setcity($city) {
+	    $this->city = $city;
     }
     
     /**
@@ -422,12 +422,12 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Sets languagesId
+     * Sets languageId
      * 
      * @param int
      */
-    public function setLanguagesId($languagesId) {
-	    $this->languagesId = $languagesId;
+    public function setlanguage($language) {
+	    $this->languageId = $language;
     }
     
     public function setOccupations($occupations){

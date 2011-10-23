@@ -46,7 +46,7 @@ class UsersDAO implements UsersDAOInterface {
 
         foreach ($usersIds as $userId) {
             // get record from database
-            $record = $db->getRecord('SELECT u.users_id, u.first_name, u.last_name, u.email, u.password, u.last_login, u.member_since, u.twitter_id, u.facebook_id, u.blog_rss, u.address_street, u.address_number, u.address_bus, u.cities_id, u.telephone, u.fax, u.gsm, l.label FROM users u INNER JOIN languages u ON(u.languages_id = l.languages_id) WHERE users_id =' . $usersId);
+            $record = $db->getRecord('SELECT u.users_id, u.first_name, u.last_name, u.email, u.password, u.last_login, u.member_since, u.twitter_id, u.facebook_id, u.blog_rss, u.address_street, u.address_number, u.address_bus, c.name, u.telephone, u.fax, u.gsm, l.label FROM users u INNER JOIN languages u ON(u.languages_id = l.languages_id) INNER JOIN cities c ON (u.cities_id = c.cities_id) WHERE users_id =' . $usersId);
 
             // translate record to Users object
             $users = new Users();
@@ -63,7 +63,7 @@ class UsersDAO implements UsersDAOInterface {
             $users->setAddressStreet($record['u.address_street']);
             $users->setAddressNumber($record['u.address_number']);
             $users->setAddressBus($record['u.address_bus']);
-            $users->setCitiesId($record['u.cities_id']);
+            $users->setCity($record['c.name']);
             $users->setTelephone($record['u.telephone']);
             $users->setFax($record['u.fax']);
             $users->setGsm($record['u.gsm']);
@@ -133,6 +133,12 @@ class UsersDAO implements UsersDAOInterface {
             $newRecord['fax'] = $users->getFax();
             $newRecord['gsm'] = $users->getGsm();
             $newRecord['languages_id'] = $users->getLanguagesId();
+                
+            $occupationDAO = new OccupationsDAO();
+            foreach ($users->getOccupations() as $occupation) {
+
+                $resultArray = $specialtiesDAO->load($userId);
+            }
 
             // add this record
             $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
