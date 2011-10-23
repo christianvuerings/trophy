@@ -41,7 +41,7 @@ class UsersDAO implements UsersDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'users_id', 'first_name', 'last_name', 'email', 'password', 'last_login', 'member_since', 'twitter_id', 'facebook_id', 'blog_rss', 'address_street', 'address_number', 'address_bus', 'cities_id', 'telephone', 'fax', 'gsm', 'languages_id' FROM ' . self::TABLE_NAME . 'WHERE users_id = ?', array($usersId));
+	$record = $db->getRecord('SELECT users_id, first_name, last_name, email, password, last_login, member_since, twitter_id, facebook_id, blog_rss, address_street, address_number, address_bus, cities_id, telephone, fax, gsm, languages_id FROM ' . self::TABLE_NAME . 'WHERE users_id = ?', array($usersId));
 	
 	// translate record to Users object
 	$users = new Users();

@@ -41,7 +41,7 @@ class PaymentsDAO implements PaymentsDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'payments_id', 'date', 'amount', 'users_id', 'payment_methods_id' FROM ' . self::TABLE_NAME . 'WHERE payments_id = ?', array($paymentsId));
+	$record = $db->getRecord('SELECT payments_id, date, amount, users_id, payment_methods_id FROM ' . self::TABLE_NAME . 'WHERE payments_id = ?', array($paymentsId));
 	
 	// translate record to Payments object
 	$payments = new Payments();

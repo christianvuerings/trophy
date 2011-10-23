@@ -41,7 +41,7 @@ class LanguagesDAO implements LanguagesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'languages_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE languages_id = ?', array($languagesId));
+	$record = $db->getRecord('SELECT languages_id, label FROM ' . self::TABLE_NAME . 'WHERE languages_id = ?', array($languagesId));
 	
 	// translate record to Languages object
 	$languages = new Languages();

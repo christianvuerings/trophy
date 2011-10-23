@@ -41,7 +41,7 @@ class SpecialtiesDAO implements SpecialtiesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'specialties_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE specialties_id = ?', array($specialtiesId));
+	$record = $db->getRecord('SELECT specialties_id, label FROM ' . self::TABLE_NAME . 'WHERE specialties_id = ?', array($specialtiesId));
 	
 	// translate record to Specialties object
 	$specialties = new Specialties();

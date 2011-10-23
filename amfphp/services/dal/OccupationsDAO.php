@@ -41,7 +41,7 @@ class OccupationsDAO implements OccupationsDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'occupations_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE occupations_id = ?', array($occupationsId));
+	$record = $db->getRecord('SELECT occupations_id, label FROM ' . self::TABLE_NAME . 'WHERE occupations_id = ?', array($occupationsId));
 	
 	// translate record to Occupations object
 	$occupations = new Occupations();

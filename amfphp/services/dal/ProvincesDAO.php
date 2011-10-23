@@ -41,7 +41,7 @@ class ProvincesDAO implements ProvincesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'provinces_id', 'label', 'countries_id' FROM ' . self::TABLE_NAME . 'WHERE provinces_id = ?', array($provincesId));
+	$record = $db->getRecord('SELECT provinces_id, label, countries_id FROM ' . self::TABLE_NAME . 'WHERE provinces_id = ?', array($provincesId));
 	
 	// translate record to Provinces object
 	$provinces = new Provinces();

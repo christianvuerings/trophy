@@ -41,7 +41,7 @@ class {$className}DAO implements {$className}DAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT {foreach $fields as $field}'{$field.originalFieldName}'{if $field@last}{else}, {/if}{/foreach} FROM ' . self::TABLE_NAME . 'WHERE {$fields.primaryKey.originalFieldName} = ?', array(${$fields.primaryKey.fieldName}));
+	$record = $db->getRecord('SELECT {foreach $fields as $field}{$field.originalFieldName}{if $field@last}{else}, {/if}{/foreach} FROM ' . self::TABLE_NAME . 'WHERE {$fields.primaryKey.originalFieldName} = ?', array(${$fields.primaryKey.fieldName}));
 	
 	// translate record to {$className} object
 	${$className|lower} = new {$className}();

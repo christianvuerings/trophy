@@ -41,7 +41,7 @@ class CitiesDAO implements CitiesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'cities_id', 'provinces_id', 'zipcode', 'name' FROM ' . self::TABLE_NAME . 'WHERE cities_id = ?', array($citiesId));
+	$record = $db->getRecord('SELECT cities_id, provinces_id, zipcode, name FROM ' . self::TABLE_NAME . 'WHERE cities_id = ?', array($citiesId));
 	
 	// translate record to Cities object
 	$cities = new Cities();

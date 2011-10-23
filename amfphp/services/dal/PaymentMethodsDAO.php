@@ -41,7 +41,7 @@ class PaymentMethodsDAO implements PaymentMethodsDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'payment_methods_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE payment_methods_id = ?', array($paymentMethodsId));
+	$record = $db->getRecord('SELECT payment_methods_id, label FROM ' . self::TABLE_NAME . 'WHERE payment_methods_id = ?', array($paymentMethodsId));
 	
 	// translate record to PaymentMethods object
 	$paymentmethods = new PaymentMethods();
