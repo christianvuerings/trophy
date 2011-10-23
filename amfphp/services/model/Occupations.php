@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/OccupationsDAO.php'
-require_once 'interfaces/OccupationsInterface.php'
+require_once '../dal/OccupationsDAO.php';
+require_once 'interfaces/OccupationsInterface.php';
 
 /**
  * Model Occupations

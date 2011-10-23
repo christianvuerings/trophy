@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/PaymentMethodsDAO.php'
-require_once 'interfaces/PaymentMethodsInterface.php'
+require_once '../dal/PaymentMethodsDAO.php';
+require_once 'interfaces/PaymentMethodsInterface.php';
 
 /**
  * Model PaymentMethods

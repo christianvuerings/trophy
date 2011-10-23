@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/SpecialtiesDAO.php'
-require_once 'interfaces/SpecialtiesInterface.php'
+require_once '../dal/SpecialtiesDAO.php';
+require_once 'interfaces/SpecialtiesInterface.php';
 
 /**
  * Model Specialties

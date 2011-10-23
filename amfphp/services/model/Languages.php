@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/LanguagesDAO.php'
-require_once 'interfaces/LanguagesInterface.php'
+require_once '../dal/LanguagesDAO.php';
+require_once 'interfaces/LanguagesInterface.php';
 
 /**
  * Model Languages

@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/CountriesDAO.php'
-require_once 'interfaces/CountriesInterface.php'
+require_once '../dal/CountriesDAO.php';
+require_once 'interfaces/CountriesInterface.php';
 
 /**
  * Model Countries

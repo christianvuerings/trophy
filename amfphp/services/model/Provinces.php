@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/ProvincesDAO.php'
-require_once 'interfaces/ProvincesInterface.php'
+require_once '../dal/ProvincesDAO.php';
+require_once 'interfaces/ProvincesInterface.php';
 
 /**
  * Model Provinces

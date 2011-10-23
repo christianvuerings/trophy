@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/CitiesDAO.php'
-require_once 'interfaces/CitiesInterface.php'
+require_once '../dal/CitiesDAO.php';
+require_once 'interfaces/CitiesInterface.php';
 
 /**
  * Model Cities

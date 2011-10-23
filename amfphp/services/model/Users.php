@@ -1,7 +1,7 @@
 <?php
 
-require_once '../dal/UsersDAO.php'
-require_once 'interfaces/UsersInterface.php'
+require_once '../dal/UsersDAO.php';
+require_once 'interfaces/UsersInterface.php';
 
 /**
  * Model Users
