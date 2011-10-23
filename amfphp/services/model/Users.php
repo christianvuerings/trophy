@@ -22,13 +22,12 @@ class Users implements UsersInterface {
     private $addressStreet;
     private $addressNumber;
     private $addressBus;
-    private $city;
+    private $cities_id;
     private $telephone;
     private $fax;
     private $gsm;
-    private $language;
-    private $occupations = array();
-    private $specialties = array();
+    private $languages_id;
+
     
     //mapping with flex
     public $_explicitType = "classestrophy.Users";
@@ -39,7 +38,7 @@ class Users implements UsersInterface {
     /**
      * Creates a new Users object
      */
-    public static function createNew($usersId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $city, $language, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL) {
+    public static function createNew($usersId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $cities_id, $languages_id, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL) {
 	    $instance = new self();
 	
 		$instance->usersId = $usersId;
@@ -55,11 +54,11 @@ class Users implements UsersInterface {
 		$instance->addressStreet = $addressStreet;
 		$instance->addressNumber = $addressNumber;
 		$instance->addressBus = $addressBus;
-		$instance->city = $city;
+		$instance->cities_id = $cities_id;
 		$instance->telephone = $telephone;
 		$instance->fax = $fax;
 		$instance->gsm = $gsm;
-		$instance->language = $languageId;
+		$instance->languages_id = $languages_id;
 		
 	    return $instance;
     }
@@ -216,12 +215,12 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Returns city
+     * Returns cities_id
      * 
      * @return int
      */
-    public function getcity() {
-	    return $this->city;
+    public function getcitiesId() {
+	    return $this->cities_id;
     }
     
     /**
@@ -252,21 +251,14 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Returns languageId
+     * Returns languages_idId
      * 
      * @return int
      */
-    public function getlanguage() {
-	    return $this->language;
+    public function getlanguagesId() {
+	    return $this->languages_id;
     }
     
-    public function getOccupations(){
-        return $this->occupations;
-    }
-    
-    public function getSpecialties(){
-        return $this->specialties;
-    }   
     
     /**
      * Sets usersId
@@ -386,12 +378,12 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Sets city
+     * Sets cities_id
      * 
      * @param int
      */
-    public function setcity($city) {
-	    $this->city = $city;
+    public function setcitiesId($cities_id) {
+	    $this->cities_id = $cities_id;
     }
     
     /**
@@ -422,21 +414,15 @@ class Users implements UsersInterface {
     }
     
     /**
-     * Sets languageId
+     * Sets languages_idId
      * 
      * @param int
      */
-    public function setlanguage($language) {
-	    $this->languageId = $language;
+    public function setlanguagesId($languages_id) {
+	    $this->languages_idId = $languages_id;
     }
     
-    public function setOccupations($occupations){
-        $this->occupations = $occupations;
-    }
-    
-    public function setSpecialties($specialties){
-        $this->specialties = $specialties;
-    }
+
     
 }
 ?>

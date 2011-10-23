@@ -11,7 +11,7 @@ require_once '../model/Occupations.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class OccupationsDAO implements OccupationsDAOInterface {
-    const TABLE_NAME = 'occupations';
+    const TABLE_NAME = 'users_occupations';
 
     private $instance;
 
@@ -38,50 +38,30 @@ class OccupationsDAO implements OccupationsDAOInterface {
         $db = MySQLDatabase::getInstance();
 
         // get record from database
-        $records = $db->getRecord('SELECT label FROM ' . self::TABLE_NAME . 'WHERE user_id = ' . $userId);
+        $records = $db->getRecord('SELECT us.user_id,s.label FROM users_occupations uo INNER JOIN occupations o ON (uo.occupation_id = o.occupation_id)  WHERE user_id = ' . $userId);
 
         foreach ($records as $record) {
-            array_push($returnArray, $record['label']);
+            array_push($returnArray, $record['o.label']);
         }
 
         return $returnArray;
     }
 
-    /**
-     * Saves the given object to the database
-     * 
-     * @param OccupationsInterface $occupations
-     * @return int $primaryKey
-     */
-    public function save(OccupationsInterface $occupations) {
+    public function save($userid, $occupationId) {
         // get database
         $db = MySQLDatabase::getInstance();
 
-        // get the key
-        $primaryKey = $occupations->getOccupationsId();
 
-        if (is_null($primaryKey)) {
-            // if the key is NULL, there is no record of it in the database
-            // create array to insert    
-            $newRecord = array();
-            $newRecord['label'] = $occupations->getLabel();
+        // if the key is NULL, there is no record of it in the database
+        // create array to insert    
+        $newRecord = array();
+        $newRecord['user_id'] = $userid;
+        $newRecord['occupation_id'] = $occupationId;
 
-            // add this record
-            $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
-        } else {
-            // the key is not null, the record already exists in the database
-            // we need to perform an update on that record
-            // create array for update
-            $record = array();
-            $record['occupations_id'] = $occupations->getOccupationsId();
-            $record['label'] = $occupations->getLabel();
+        // add this record
+        $db->insert(self::TABLE_NAME, $newRecord);
 
-            // update the record
-            $db->update(self::TABLE_NAME, $record, 'occupations_id = ?', array($primaryKey));
-        }
 
-        // return key
-        return $primaryKey;
     }
 
 }

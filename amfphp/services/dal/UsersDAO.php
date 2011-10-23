@@ -35,10 +35,9 @@ class UsersDAO implements UsersDAOInterface {
     }
 
     /**
-     * loads a Users object from the database
-     * 
-     * @param $int $usersId
-     * @return Users
+     *Returns an array of userObjects when given an array of userids
+     * @param array<int>
+     * @return array<Users> 
      */
     public function load($usersIds=array()) {
         // get database
@@ -46,30 +45,28 @@ class UsersDAO implements UsersDAOInterface {
 
         foreach ($usersIds as $userId) {
             // get record from database
-            $record = $db->getRecord('SELECT u.users_id, u.first_name, u.last_name, u.email, u.password, u.last_login, u.member_since, u.twitter_id, u.facebook_id, u.blog_rss, u.address_street, u.address_number, u.address_bus, c.name, u.telephone, u.fax, u.gsm, l.label FROM users u INNER JOIN languages u ON(u.languages_id = l.languages_id) INNER JOIN cities c ON (u.cities_id = c.cities_id) WHERE users_id =' . $usersId);
+            $record = $db->getRecord('SELECT users_id, first_name, last_name, email, password, last_login, member_since, twitter_id, facebook_id, blog_rss, address_street, address_number, address_bus, cities_id, telephone, fax, gsm,languages_id  FROM users u  WHERE users_id =' . $usersId);
 
             // translate record to Users object
             $users = new Users();
-            $users->setUsersId($record['u.users_id']);
-            $users->setFirstName($record['u.first_name']);
-            $users->setLastName($record['u.last_name']);
-            $users->setEmail($record['u.email']);
-            $users->setPassword($record['u.password']);
-            $users->setLastLogin($record['u.last_login']);
-            $users->setMemberSince($record['u.member_since']);
-            $users->setTwitterId($record['u.twitter_id']);
-            $users->setFacebookId($record['u.facebook_id']);
-            $users->setBlogRss($record['u.blog_rss']);
-            $users->setAddressStreet($record['u.address_street']);
-            $users->setAddressNumber($record['u.address_number']);
-            $users->setAddressBus($record['u.address_bus']);
-            $users->setCity($record['c.name']);
-            $users->setTelephone($record['u.telephone']);
-            $users->setFax($record['u.fax']);
-            $users->setGsm($record['u.gsm']);
-            $users->setLanguage($record['l.label']);
-            $users->setSpecialties($this->getSpecialtiesFromUser($record['u.users_id']));
-            $users->setOccupations($this->getOccupationsFromUser($record['u.users_id']));
+            $users->setUsersId($record['users_id']);
+            $users->setFirstName($record['first_name']);
+            $users->setLastName($record['last_name']);
+            $users->setEmail($record['email']);
+            $users->setPassword($record['password']);
+            $users->setLastLogin($record['last_login']);
+            $users->setMemberSince($record['member_since']);
+            $users->setTwitterId($record['twitter_id']);
+            $users->setFacebookId($record['facebook_id']);
+            $users->setBlogRss($record['blog_rss']);
+            $users->setAddressStreet($record['address_street']);
+            $users->setAddressNumber($record['address_number']);
+            $users->setAddressBus($record['address_bus']);
+            $users->setcitiesId($record['name']);
+            $users->setTelephone($record['telephone']);
+            $users->setFax($record['fax']);
+            $users->setGsm($record['gsm']);
+            $users->setLanguagesId($record['label']);
             array_push($userArray, $users);
         }
 
@@ -77,15 +74,43 @@ class UsersDAO implements UsersDAOInterface {
         return $userArray;
     }
 
-    public function getSpecialtiesFromUser($userId) {
+    /**
+     *Sets a specialty to a user
+     * @param int
+     */
+    public function setSpecialties($specialtieId) {
         $specialtiesDAO = new SpecialtiesDAO();
-        $resultArray = $specialtiesDAO->load($userId);
+        $specialtiesDAO->save($this->userId, $specialtieId);
+
+    }
+
+    /**
+     *Sets an occupation to a user
+     * @param int
+     */
+    public function setOccupations($occupationId) {
+        $specialtiesDAO = new OccupationsDAO();
+        $specialtiesDAO->save($this->userId, $occupationId);
+
+    }
+
+    /**
+     *returns an array of specialtys
+     * @return array<string>
+     */
+    public function getSpecialtiesFromUser() {
+        $specialtiesDAO = new SpecialtiesDAO();
+        $resultArray = $specialtiesDAO->load($this->userId);
         return $resultArray;
     }
 
-    public function getOccupationsFromUser($userId) {
+    /**
+     *
+     * @return returns an array of occupations
+     */
+    public function getOccupationsFromUser() {
         $occupationsDAO = new OccupationsDAO();
-        $resultArray = $occupationsDAO->load($userId);
+        $resultArray = $occupationsDAO->load($this->userId);
         return $resultArray;
     }
 
@@ -133,7 +158,7 @@ class UsersDAO implements UsersDAOInterface {
             $newRecord['fax'] = $users->getFax();
             $newRecord['gsm'] = $users->getGsm();
             $newRecord['languages_id'] = $users->getLanguagesId();
-                
+
             $occupationDAO = new OccupationsDAO();
             foreach ($users->getOccupations() as $occupation) {
 

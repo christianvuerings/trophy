@@ -11,7 +11,7 @@ require_once '../model/Specialties.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class SpecialtiesDAO implements SpecialtiesDAOInterface {
-    const TABLE_NAME = 'specialties';
+    const TABLE_NAME = 'user_specialties';
 
     private $instance;
 
@@ -32,61 +32,36 @@ class SpecialtiesDAO implements SpecialtiesDAOInterface {
         return $this->instance;
     }
 
-    /**
-     * loads a Specialties object from the database
-     * 
-     * @param $int $specialtiesId
-     * @return Specialties
-     */
+
     public function load($userId) {
         // get database
         $db = MySQLDatabase::getInstance();
 
         // get record from database
-        $records = $db->getRecord('SELECT label FROM ' . self::TABLE_NAME . 'WHERE user_id = ' . $userId);
+        $records = $db->getRecord('SELECT us.user_id,s.label FROM users_specialties us INNER JOIN specialties s ON (us.specialties_id = s.specialties_id)  WHERE user_id = ' . $userId);
 
-        foreach($records as $record){
-            array_push($returnArray, $record['label']);
+        foreach ($records as $record) {
+            array_push($returnArray, $record['s.label']);
         }
 
         return $returnArray;
     }
 
-    /**
-     * Saves the given object to the database
-     * 
-     * @param SpecialtiesInterface $specialties
-     * @return int $primaryKey
-     */
-    public function save(SpecialtiesInterface $specialties) {
+    public function save($userid, $specialtiesId) {
         // get database
         $db = MySQLDatabase::getInstance();
 
-        // get the key
-        $primaryKey = $specialties->getSpecialtiesId();
 
-        if (is_null($primaryKey)) {
-            // if the key is NULL, there is no record of it in the database
-            // create array to insert    
-            $newRecord = array();
-            $newRecord['label'] = $specialties->getLabel();
+        // if the key is NULL, there is no record of it in the database
+        // create array to insert    
+        $newRecord = array();
+        $newRecord['user_id'] = $userid;
+        $newRecord['specialties_id'] = $specialtiesId;
 
-            // add this record
-            $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
-        } else {
-            // the key is not null, the record already exists in the database
-            // we need to perform an update on that record
-            // create array for update
-            $record = array();
-            $record['specialties_id'] = $specialties->getSpecialtiesId();
-            $record['label'] = $specialties->getLabel();
+        // add this record
+        $db->insert(self::TABLE_NAME, $newRecord);
 
-            // update the record
-            $db->update(self::TABLE_NAME, $record, 'specialties_id = ?', array($primaryKey));
-        }
 
-        // return key
-        return $primaryKey;
     }
 
 }
