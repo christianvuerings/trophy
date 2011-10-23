@@ -26,8 +26,10 @@ class Users implements UsersInterface {
     private $telephone;
     private $fax;
     private $gsm;
-    private $languagesId;
-        
+    private $languageId;
+    private $occupations = array();
+    private $specialties = array();
+    
     //mapping with flex
     public $_explicitType = "classestrophy.Users";
     
@@ -258,6 +260,14 @@ class Users implements UsersInterface {
 	    return $this->languagesId;
     }
     
+    public function getOccupations(){
+        return $this->occupations;
+    }
+    
+    public function getSpecialties(){
+        return $this->specialties;
+    }   
+    
     /**
      * Sets usersId
      * 
@@ -418,6 +428,14 @@ class Users implements UsersInterface {
      */
     public function setLanguagesId($languagesId) {
 	    $this->languagesId = $languagesId;
+    }
+    
+    public function setOccupations($occupations){
+        $this->occupations = $occupations;
+    }
+    
+    public function setSpecialties($specialties){
+        $this->specialties = $specialties;
     }
     
 }
