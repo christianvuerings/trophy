@@ -11,7 +11,7 @@ require_once '../model/Specialties.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class SpecialtiesDAO implements SpecialtiesDAOInterface {
-    public const TABLE_NAME = specialties;
+    const TABLE_NAME = 'specialties';
     
     private $instance;
     
@@ -41,7 +41,7 @@ class SpecialtiesDAO implements SpecialtiesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'specialties_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE specialties_id = ?', array($specialtiesId))
+	$record = $db->getRecord('SELECT 'specialties_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE specialties_id = ?', array($specialtiesId));
 	
 	// translate record to Specialties object
 	$specialties = new Specialties();
@@ -88,4 +88,5 @@ class SpecialtiesDAO implements SpecialtiesDAOInterface {
 	// return key
 	return $primaryKey;
     }
+}
 ?>

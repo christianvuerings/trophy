@@ -7,9 +7,7 @@ require_once '../model/interfaces/ProvincesInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class ProvincesDAOInterface {
-    public const TABLE_NAME = provinces;
-    
+class ProvincesDAOInterface {   
     /**
      * Returns an instance of this ProvincesDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class ProvincesDAOInterface {
      * @return int $primaryKey
      */
     public function save(ProvincesInterface $provinces);
+}
 ?>

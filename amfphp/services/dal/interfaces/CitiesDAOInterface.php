@@ -7,9 +7,7 @@ require_once '../model/interfaces/CitiesInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class CitiesDAOInterface {
-    public const TABLE_NAME = cities;
-    
+class CitiesDAOInterface {   
     /**
      * Returns an instance of this CitiesDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class CitiesDAOInterface {
      * @return int $primaryKey
      */
     public function save(CitiesInterface $cities);
+}
 ?>

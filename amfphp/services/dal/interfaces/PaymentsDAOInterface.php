@@ -7,9 +7,7 @@ require_once '../model/interfaces/PaymentsInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class PaymentsDAOInterface {
-    public const TABLE_NAME = payments;
-    
+class PaymentsDAOInterface {   
     /**
      * Returns an instance of this PaymentsDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class PaymentsDAOInterface {
      * @return int $primaryKey
      */
     public function save(PaymentsInterface $payments);
+}
 ?>

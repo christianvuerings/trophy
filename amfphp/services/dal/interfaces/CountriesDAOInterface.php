@@ -7,9 +7,7 @@ require_once '../model/interfaces/CountriesInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class CountriesDAOInterface {
-    public const TABLE_NAME = countries;
-    
+class CountriesDAOInterface {   
     /**
      * Returns an instance of this CountriesDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class CountriesDAOInterface {
      * @return int $primaryKey
      */
     public function save(CountriesInterface $countries);
+}
 ?>

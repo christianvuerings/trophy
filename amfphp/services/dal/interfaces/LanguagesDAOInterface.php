@@ -7,9 +7,7 @@ require_once '../model/interfaces/LanguagesInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class LanguagesDAOInterface {
-    public const TABLE_NAME = languages;
-    
+class LanguagesDAOInterface {   
     /**
      * Returns an instance of this LanguagesDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class LanguagesDAOInterface {
      * @return int $primaryKey
      */
     public function save(LanguagesInterface $languages);
+}
 ?>

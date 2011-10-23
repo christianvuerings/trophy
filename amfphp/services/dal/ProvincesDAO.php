@@ -11,7 +11,7 @@ require_once '../model/Provinces.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class ProvincesDAO implements ProvincesDAOInterface {
-    public const TABLE_NAME = provinces;
+    const TABLE_NAME = 'provinces';
     
     private $instance;
     
@@ -41,7 +41,7 @@ class ProvincesDAO implements ProvincesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'provinces_id', 'label', 'countries_id' FROM ' . self::TABLE_NAME . 'WHERE provinces_id = ?', array($provincesId))
+	$record = $db->getRecord('SELECT 'provinces_id', 'label', 'countries_id' FROM ' . self::TABLE_NAME . 'WHERE provinces_id = ?', array($provincesId));
 	
 	// translate record to Provinces object
 	$provinces = new Provinces();
@@ -91,4 +91,5 @@ class ProvincesDAO implements ProvincesDAOInterface {
 	// return key
 	return $primaryKey;
     }
+}
 ?>

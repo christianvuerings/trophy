@@ -11,7 +11,7 @@ require_once '../model/Languages.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class LanguagesDAO implements LanguagesDAOInterface {
-    public const TABLE_NAME = languages;
+    const TABLE_NAME = 'languages';
     
     private $instance;
     
@@ -41,7 +41,7 @@ class LanguagesDAO implements LanguagesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'languages_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE languages_id = ?', array($languagesId))
+	$record = $db->getRecord('SELECT 'languages_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE languages_id = ?', array($languagesId));
 	
 	// translate record to Languages object
 	$languages = new Languages();
@@ -88,4 +88,5 @@ class LanguagesDAO implements LanguagesDAOInterface {
 	// return key
 	return $primaryKey;
     }
+}
 ?>

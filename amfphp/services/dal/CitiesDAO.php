@@ -11,7 +11,7 @@ require_once '../model/Cities.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class CitiesDAO implements CitiesDAOInterface {
-    public const TABLE_NAME = cities;
+    const TABLE_NAME = 'cities';
     
     private $instance;
     
@@ -41,7 +41,7 @@ class CitiesDAO implements CitiesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'cities_id', 'provinces_id', 'zipcode', 'name' FROM ' . self::TABLE_NAME . 'WHERE cities_id = ?', array($citiesId))
+	$record = $db->getRecord('SELECT 'cities_id', 'provinces_id', 'zipcode', 'name' FROM ' . self::TABLE_NAME . 'WHERE cities_id = ?', array($citiesId));
 	
 	// translate record to Cities object
 	$cities = new Cities();
@@ -94,4 +94,5 @@ class CitiesDAO implements CitiesDAOInterface {
 	// return key
 	return $primaryKey;
     }
+}
 ?>

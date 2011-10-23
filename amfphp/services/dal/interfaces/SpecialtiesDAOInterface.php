@@ -7,9 +7,7 @@ require_once '../model/interfaces/SpecialtiesInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class SpecialtiesDAOInterface {
-    public const TABLE_NAME = specialties;
-    
+class SpecialtiesDAOInterface {   
     /**
      * Returns an instance of this SpecialtiesDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class SpecialtiesDAOInterface {
      * @return int $primaryKey
      */
     public function save(SpecialtiesInterface $specialties);
+}
 ?>

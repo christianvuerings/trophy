@@ -11,7 +11,7 @@ require_once '../model/Countries.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class CountriesDAO implements CountriesDAOInterface {
-    public const TABLE_NAME = countries;
+    const TABLE_NAME = 'countries';
     
     private $instance;
     
@@ -41,7 +41,7 @@ class CountriesDAO implements CountriesDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'countries_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE countries_id = ?', array($countriesId))
+	$record = $db->getRecord('SELECT 'countries_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE countries_id = ?', array($countriesId));
 	
 	// translate record to Countries object
 	$countries = new Countries();
@@ -88,4 +88,5 @@ class CountriesDAO implements CountriesDAOInterface {
 	// return key
 	return $primaryKey;
     }
+}
 ?>

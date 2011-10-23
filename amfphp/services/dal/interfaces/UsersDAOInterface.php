@@ -7,9 +7,7 @@ require_once '../model/interfaces/UsersInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class UsersDAOInterface {
-    public const TABLE_NAME = users;
-    
+class UsersDAOInterface {   
     /**
      * Returns an instance of this UsersDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class UsersDAOInterface {
      * @return int $primaryKey
      */
     public function save(UsersInterface $users);
+}
 ?>

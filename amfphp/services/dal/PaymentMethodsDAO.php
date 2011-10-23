@@ -11,7 +11,7 @@ require_once '../model/PaymentMethods.php';
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class PaymentMethodsDAO implements PaymentMethodsDAOInterface {
-    public const TABLE_NAME = payment_methods;
+    const TABLE_NAME = 'payment_methods';
     
     private $instance;
     
@@ -41,7 +41,7 @@ class PaymentMethodsDAO implements PaymentMethodsDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT 'payment_methods_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE payment_methods_id = ?', array($paymentMethodsId))
+	$record = $db->getRecord('SELECT 'payment_methods_id', 'label' FROM ' . self::TABLE_NAME . 'WHERE payment_methods_id = ?', array($paymentMethodsId));
 	
 	// translate record to PaymentMethods object
 	$paymentmethods = new PaymentMethods();
@@ -88,4 +88,5 @@ class PaymentMethodsDAO implements PaymentMethodsDAOInterface {
 	// return key
 	return $primaryKey;
     }
+}
 ?>

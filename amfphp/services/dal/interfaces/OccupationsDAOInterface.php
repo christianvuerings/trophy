@@ -7,9 +7,7 @@ require_once '../model/interfaces/OccupationsInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class OccupationsDAOInterface {
-    public const TABLE_NAME = occupations;
-    
+class OccupationsDAOInterface {   
     /**
      * Returns an instance of this OccupationsDAO
      * Singleton pattern
@@ -33,4 +31,5 @@ class OccupationsDAOInterface {
      * @return int $primaryKey
      */
     public function save(OccupationsInterface $occupations);
+}
 ?>
