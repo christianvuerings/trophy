@@ -1,4 +1,5 @@
 <?php
+include_once('configuration.php');
 
  Class Database
 {
