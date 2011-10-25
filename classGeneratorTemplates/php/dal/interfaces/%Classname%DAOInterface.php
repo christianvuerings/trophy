@@ -17,6 +17,14 @@ class {$className}DAOInterface {
     public function getInstance();
     
     /**
+     * deletes a {$className} object from the database
+     * 
+     * @param ${$fields.primaryKey.type.php} ${$fields.primaryKey.fieldName}
+     * @return int  number of deleted rows
+     */
+    public function delete(${$fields.primaryKey.fieldName})
+    
+    /**
      * loads a {$className} object from the database
      * 
      * @param ${$fields.primaryKey.type.php} ${$fields.primaryKey.fieldName}
