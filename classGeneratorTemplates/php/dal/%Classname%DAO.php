@@ -29,6 +29,19 @@ class {$className}DAO implements {$className}DAOInterface {
 	return $this->instance;
     }
 
+    /**
+     * deletes a {$className} object from the database
+     * 
+     * @param ${$fields.primaryKey.type.php} ${$fields.primaryKey.fieldName}
+     * @return int  number of deleted rows
+     */
+    public function delete(${$fields.primaryKey.fieldName}) {
+	// get database
+	$db = MySQLDatabase::getInstance();
+	
+	// delete and return affected rows
+	return $db->delete(TABLE_NAME, '{$fields.primaryKey.originalFieldName} = ?', array($primaryKey));
+    }
     
     /**
      * loads a {$className} object from the database
