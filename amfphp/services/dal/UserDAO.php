@@ -12,6 +12,8 @@ require_once '../model/User.php';
  */
 class UserDAO implements UserDAOInterface {
     const TABLE_NAME = 'user';
+    const OCCUPATION_LINK_TABLE_NAME = 'user_occupation';
+    const SPECIALITY_LINK_TABLE_NAME = 'user_speciality';
     
     private $instance;
     
@@ -41,6 +43,9 @@ class UserDAO implements UserDAOInterface {
 	
 	// delete and return affected rows
 	return $db->delete(TABLE_NAME, 'user_id = ?', array($primaryKey));
+	
+	// TODO: delete the users occupations
+	// TODO: delete the users specialities
     }
     
     /**
@@ -76,6 +81,9 @@ class UserDAO implements UserDAOInterface {
 	$user->setFax($record['fax']);   
 	$user->setGsm($record['gsm']);   
 	$user->setLanguageId($record['language_id']);   
+	
+	// TODO: load the users occupations
+	// TODO: load the users specialities
 
 	// return User object
 	return $user;
@@ -116,6 +124,9 @@ class UserDAO implements UserDAOInterface {
 	    $user->setFax($record['fax']);   
 	    $user->setGsm($record['gsm']);   
 	    $user->setLanguageId($record['language_id']);   
+	    
+	    // TODO: load the users occupations
+	    // TODO: load the users specialities
 	    
 	    $users[] = $user;
 	}
@@ -158,6 +169,9 @@ class UserDAO implements UserDAOInterface {
 	    $newRecord['fax'] = $user->getFax();
 	    $newRecord['gsm'] = $user->getGsm();
 	    $newRecord['language_id'] = $user->getLanguageId();
+	    
+	    // TODO: save the users occupations
+	    // TODO: save the users specialities
 			    
 	    // add this record
 	    $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
@@ -184,6 +198,9 @@ class UserDAO implements UserDAOInterface {
 	    $record['fax'] = $user->getFax();
 	    $record['gsm'] = $user->getGsm();
 	    $record['language_id'] = $user->getLanguageId();
+	    
+	    // TODO: save the users occupations
+	    // TODO: save the users specialities
 		
 	    // update the record
 	    $db->update(self::TABLE_NAME, $record, 'user_id = ?', array($primaryKey));
@@ -192,5 +209,46 @@ class UserDAO implements UserDAOInterface {
 	// return key
 	return $primaryKey;
     }
+    
+    /**
+     * Saves the link between a User and an occupation
+     *
+     * @param UserInterface $user
+     * @param OccupationInterface $occupation 
+     */
+    public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
+	$db->insert(self::OCCUPATION_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'occupation_id' => $occupation->getOccupationId()));
+    }
+    
+    /**
+     * Saves the link between a user and a speciality
+     *
+     * @param UserInterface $user
+     * @param SpecialityInterface $speciality 
+     */
+    public function saveLinkBetweenUserAndSpeciality(UserInterface $user, SpecialityInterface $speciality) {
+	$db->insert(self::SPECIALITY_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'speciality_id' => $speciality->getSpecialityId()));
+    }
+    
+    /**
+     * Removes the link between a User and an occupation
+     *
+     * @param UserInterface $user
+     * @param OccupationInterface $occupation 
+     */
+    public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
+	$db->delete(self::OCCUPATION_LINK_TABLE_NAME, 'user_id = ? AND occupation_id = ?', array($user->getUserId(), $occupation->getOccupationId()));
+    }
+    
+    /**
+     * Saves the link between a user and a speciality
+     *
+     * @param UserInterface $user
+     * @param SpecialityInterface $speciality 
+     */
+    public function saveLinkBetweenUserAndSpeciality(UserInterface $user, SpecialityInterface $speciality) {
+	$db->delete(self::SPECIALITY_LINK_TABLE_NAME, 'user_id = ? AND speciality_id = ?', array($user->getUserId(), $speciality->getSpecialityId()));
+    }
 }
+
 ?>

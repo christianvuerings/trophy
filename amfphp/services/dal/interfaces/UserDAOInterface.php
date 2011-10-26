@@ -47,5 +47,37 @@ class UserDAOInterface {
      * @return int $primaryKey
      */
     public function save(UserInterface $user);
+    
+        /**
+     * Saves the link between a User and an occupation
+     *
+     * @param UserInterface $user
+     * @param OccupationInterface $occupation 
+     */
+    public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation);
+    
+    /**
+     * Saves the link between a user and a speciality
+     *
+     * @param UserInterface $user
+     * @param SpecialityInterface $speciality 
+     */
+    public function saveLinkBetweenUserAndSpeciality(UserInterface $user, SpecialityInterface $speciality);
+    
+    /**
+     * Removes the link between a User and an occupation
+     *
+     * @param UserInterface $user
+     * @param OccupationInterface $occupation 
+     */
+    public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation);
+    
+    /**
+     * Saves the link between a user and a speciality
+     *
+     * @param UserInterface $user
+     * @param SpecialityInterface $speciality 
+     */
+    public function saveLinkBetweenUserAndSpeciality(UserInterface $user, SpecialityInterface $speciality);
 }
 ?>
