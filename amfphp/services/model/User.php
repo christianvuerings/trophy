@@ -2,6 +2,8 @@
 
 require_once '../dal/UserDAO.php';
 require_once 'interfaces/UserInterface.php';
+require_once 'interfaces/OccupationInterface.php';
+require_once 'interfaces/SpecialityInterface.php';
 
 /**
  * Model User
@@ -27,6 +29,9 @@ class User implements UserInterface {
     private $fax;
     private $gsm;
     private $languageId;
+    
+    private $occupations = array();	
+    private $specialties = array();
         
     //mapping with flex
     public $_explicitType = "classestrophy.User";
@@ -54,31 +59,35 @@ class User implements UserInterface {
      * @param string   $telephone
      * @param string   $fax
      * @param string   $gsm
+     * @param array<Occupation>	$occupations
+     * @param array<Speciality> $specialities
      * @param int   $languageId
      * @return User $instance
      */
-    public static function createNew($userId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $cityId, $languageId, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL) {
+    public static function createNew($userId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $cityId, $languageId, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL, $occupations = array(), $specialties = array()) {
 	    $instance = new self();
 	
-		$instance->userId = $userId;
-		$instance->firstName = $firstName;
-		$instance->lastName = $lastName;
-		$instance->email = $email;
-		$instance->password = $password;
-		$instance->lastLogin = $lastLogin;
-		$instance->memberSince = $memberSince;
-		$instance->twitterId = $twitterId;
-		$instance->facebookId = $facebookId;
-		$instance->blogRss = $blogRss;
-		$instance->addressStreet = $addressStreet;
-		$instance->addressNumber = $addressNumber;
-		$instance->addressBus = $addressBus;
-		$instance->cityId = $cityId;
-		$instance->telephone = $telephone;
-		$instance->fax = $fax;
-		$instance->gsm = $gsm;
-		$instance->languageId = $languageId;
-		
+	    $instance->userId = $userId;
+	    $instance->firstName = $firstName;
+	    $instance->lastName = $lastName;
+	    $instance->email = $email;
+	    $instance->password = $password;
+	    $instance->lastLogin = $lastLogin;
+	    $instance->memberSince = $memberSince;
+	    $instance->twitterId = $twitterId;
+	    $instance->facebookId = $facebookId;
+	    $instance->blogRss = $blogRss;
+	    $instance->addressStreet = $addressStreet;
+	    $instance->addressNumber = $addressNumber;
+	    $instance->addressBus = $addressBus;
+	    $instance->cityId = $cityId;
+	    $instance->telephone = $telephone;
+	    $instance->fax = $fax;
+	    $instance->gsm = $gsm;
+	    $instance->languageId = $languageId;
+	    $instance->occupations = $occupations;
+	    $instance->specialities = $specialties;
+	
 	    return $instance;
     }
     
@@ -127,8 +136,25 @@ class User implements UserInterface {
 	    return $dao->load($userId);
     }
     
+    /**
+     * Adds an occupation to this user
+     *
+     * @param OccupationInterface $occupation 
+     */
+    public function addOccupation(OccupationInterface $occupation){
+	$this->occupations[$occupation->getOccupationId()] = $occupation;
+    }
     
-    /* Getters and setters */
+    /**
+     * Adds a speciality to this user
+     *
+     * @param specialityInterface $speciality 
+     */
+    public function addspeciality(specialityInterface $speciality){
+	$this->specialities[$speciality->getSpecialityId()] = $speciality;
+    }
+    
+    
     /**
      * Returns userId
      * 
@@ -291,6 +317,43 @@ class User implements UserInterface {
 	    return $this->languageId;
     }
     
+    /**
+     * Returns an array of linked occupations to this user
+     *
+     * @return Array<Occupation>
+     */
+    public function getOccupations() {
+	return $this->occupations;
+    }
+    
+    /**
+     * Return an array of specialities linked to this user
+     *
+     * @return Array<Speciality>
+     */
+    public function getSpecialties() {
+	return $this->specialties;
+    }
+    
+    /**
+     * Removes an occupation to this user
+     *
+     * @param OccupationInterface $occupation 
+     */
+    public function removeOccupation(OccupationInterface $occupation){
+	unset($this->occupations[$occupation->getOccupationId()]);
+    }
+    
+    /**
+     * Removes a speciality to this user
+     *
+     * @param specialityInterface $speciality 
+     */
+    public function removespeciality(specialityInterface $speciality){
+	unset($this->specialities[$speciality->getSpecialityId()]);
+    }
+
+
     /**
      * Sets userId
      * 

@@ -30,7 +30,7 @@ interface UserInterface {
      *      * @param $int   $languageId
      *      * @return User $instance
      */
-    public static function createNew($userId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $cityId, $languageId, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL);
+    public static function createNew($userId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $cityId, $languageId, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL, $occupations = array(), $specialties = array());
     
     /**
      * deletes an object from permanent storage
@@ -54,9 +54,21 @@ interface UserInterface {
      * @return User
      */
     public static function load($userId);
+    
+    /**
+     * Adds an occupation to this user
+     *
+     * @param OccupationInterface $occupation 
+     */
+    public function addOccupation(OccupationInterface $occupation);
+    
+    /**
+     * Adds a speciality to this user
+     *
+     * @param specialityInterface $speciality 
+     */
+    public function addspeciality(specialityInterface $speciality);
 
-
-    /* Getters and setters */
     public function getUserId();
     
     public function getFirstName();
@@ -92,6 +104,20 @@ interface UserInterface {
     public function getGsm();
     
     public function getLanguageId();
+    
+    /**
+     * Removes an occupation to this user
+     *
+     * @param OccupationInterface $occupation 
+     */
+    public function removeOccupation(OccupationInterface $occupation);
+    
+    /**
+     * Removes a speciality to this user
+     *
+     * @param specialityInterface $speciality 
+     */
+    public function removespeciality(specialityInterface $speciality);
     
     public function setUserId($userId);
     
