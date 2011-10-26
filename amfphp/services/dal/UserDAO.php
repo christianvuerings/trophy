@@ -82,6 +82,49 @@ class UserDAO implements UserDAOInterface {
     }
     
     /**
+     * loads User objects from the database
+     * 
+     * @param array<int> $userIds
+     * @return array<User>
+     */
+    public function loadMultiple($userIds) {
+	// get database
+	$db = MySQLDatabase::getInstance();
+	
+	// get records from database
+	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, twitter_id, facebook_id, blog_rss, address_street, address_number, address_bus, city_id, telephone, fax, gsm, language_id FROM ' . self::TABLE_NAME . 'WHERE user_id IN (?)', array(implode(', ', $userIds)));
+	
+	$users = array();
+	foreach ($records as $record) {
+	    // translate record to User object
+	    $user = new User();
+	    $user->setUserId($record['user_id']);   
+	    $user->setFirstName($record['first_name']);   
+	    $user->setLastName($record['last_name']);   
+	    $user->setEmail($record['email']);   
+	    $user->setPassword($record['password']);   
+	    $user->setLastLogin($record['last_login']);   
+	    $user->setMemberSince($record['member_since']);   
+	    $user->setTwitterId($record['twitter_id']);   
+	    $user->setFacebookId($record['facebook_id']);   
+	    $user->setBlogRss($record['blog_rss']);   
+	    $user->setAddressStreet($record['address_street']);   
+	    $user->setAddressNumber($record['address_number']);   
+	    $user->setAddressBus($record['address_bus']);   
+	    $user->setCityId($record['city_id']);   
+	    $user->setTelephone($record['telephone']);   
+	    $user->setFax($record['fax']);   
+	    $user->setGsm($record['gsm']);   
+	    $user->setLanguageId($record['language_id']);   
+	    
+	    $users[] = $user;
+	}
+
+	// return array of User objects
+	return $users;
+    }
+    
+    /**
      * Saves the given object to the database
      * 
      * @param UserInterface $user
@@ -98,23 +141,23 @@ class UserDAO implements UserDAOInterface {
 	    // if the key is NULL, there is no record of it in the database
 	    // create array to insert    
 	    $newRecord = array();
-        	    		    	    $newRecord['first_name'] = $user->getFirstName();
-			    	    $newRecord['last_name'] = $user->getLastName();
-			    	    $newRecord['email'] = $user->getEmail();
-			    	    $newRecord['password'] = $user->getPassword();
-			    	    $newRecord['last_login'] = $user->getLastLogin();
-			    	    $newRecord['member_since'] = $user->getMemberSince();
-			    	    $newRecord['twitter_id'] = $user->getTwitterId();
-			    	    $newRecord['facebook_id'] = $user->getFacebookId();
-			    	    $newRecord['blog_rss'] = $user->getBlogRss();
-			    	    $newRecord['address_street'] = $user->getAddressStreet();
-			    	    $newRecord['address_number'] = $user->getAddressNumber();
-			    	    $newRecord['address_bus'] = $user->getAddressBus();
-			    	    $newRecord['city_id'] = $user->getCityId();
-			    	    $newRecord['telephone'] = $user->getTelephone();
-			    	    $newRecord['fax'] = $user->getFax();
-			    	    $newRecord['gsm'] = $user->getGsm();
-			    	    $newRecord['language_id'] = $user->getLanguageId();
+	    $newRecord['first_name'] = $user->getFirstName();
+	    $newRecord['last_name'] = $user->getLastName();
+	    $newRecord['email'] = $user->getEmail();
+	    $newRecord['password'] = $user->getPassword();
+	    $newRecord['last_login'] = $user->getLastLogin();
+	    $newRecord['member_since'] = $user->getMemberSince();
+	    $newRecord['twitter_id'] = $user->getTwitterId();
+	    $newRecord['facebook_id'] = $user->getFacebookId();
+	    $newRecord['blog_rss'] = $user->getBlogRss();
+	    $newRecord['address_street'] = $user->getAddressStreet();
+	    $newRecord['address_number'] = $user->getAddressNumber();
+	    $newRecord['address_bus'] = $user->getAddressBus();
+	    $newRecord['city_id'] = $user->getCityId();
+	    $newRecord['telephone'] = $user->getTelephone();
+	    $newRecord['fax'] = $user->getFax();
+	    $newRecord['gsm'] = $user->getGsm();
+	    $newRecord['language_id'] = $user->getLanguageId();
 			    
 	    // add this record
 	    $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
@@ -123,24 +166,24 @@ class UserDAO implements UserDAOInterface {
 	    // we need to perform an update on that record
 	    // create array for update
 	    $record = array();
-	    	    $record['user_id'] = $user->getUserId();
-		    $record['first_name'] = $user->getFirstName();
-		    $record['last_name'] = $user->getLastName();
-		    $record['email'] = $user->getEmail();
-		    $record['password'] = $user->getPassword();
-		    $record['last_login'] = $user->getLastLogin();
-		    $record['member_since'] = $user->getMemberSince();
-		    $record['twitter_id'] = $user->getTwitterId();
-		    $record['facebook_id'] = $user->getFacebookId();
-		    $record['blog_rss'] = $user->getBlogRss();
-		    $record['address_street'] = $user->getAddressStreet();
-		    $record['address_number'] = $user->getAddressNumber();
-		    $record['address_bus'] = $user->getAddressBus();
-		    $record['city_id'] = $user->getCityId();
-		    $record['telephone'] = $user->getTelephone();
-		    $record['fax'] = $user->getFax();
-		    $record['gsm'] = $user->getGsm();
-		    $record['language_id'] = $user->getLanguageId();
+	    $record['user_id'] = $user->getUserId();
+	    $record['first_name'] = $user->getFirstName();
+	    $record['last_name'] = $user->getLastName();
+	    $record['email'] = $user->getEmail();
+	    $record['password'] = $user->getPassword();
+	    $record['last_login'] = $user->getLastLogin();
+	    $record['member_since'] = $user->getMemberSince();
+	    $record['twitter_id'] = $user->getTwitterId();
+	    $record['facebook_id'] = $user->getFacebookId();
+	    $record['blog_rss'] = $user->getBlogRss();
+	    $record['address_street'] = $user->getAddressStreet();
+	    $record['address_number'] = $user->getAddressNumber();
+	    $record['address_bus'] = $user->getAddressBus();
+	    $record['city_id'] = $user->getCityId();
+	    $record['telephone'] = $user->getTelephone();
+	    $record['fax'] = $user->getFax();
+	    $record['gsm'] = $user->getGsm();
+	    $record['language_id'] = $user->getLanguageId();
 		
 	    // update the record
 	    $db->update(self::TABLE_NAME, $record, 'user_id = ?', array($primaryKey));

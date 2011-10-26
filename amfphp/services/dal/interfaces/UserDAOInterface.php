@@ -33,6 +33,14 @@ class UserDAOInterface {
     public function load($userId);
     
     /**
+     * loads User objects from the database
+     * 
+     * @param array<int> $userIds
+     * @return array<User>
+     */
+    public function loadMultiple($userIds);
+    
+    /**
      * Saves the given object to the database
      * 
      * @param UserInterface $user
