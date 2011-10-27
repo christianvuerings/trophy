@@ -6,26 +6,25 @@
 			   minWidth="955"
 			   minHeight="600"
 			   creationComplete="initApp()"
-			   preloader="mx.preloaders.DownloadProgressBar">
+			   preloader="mx.preloaders.DownloadProgressBar"
+			   xmlns:mappings="mate.mappings.*">
 	<fx:Style source="assets/css/global.css" />
 	<fx:Declarations>
+		<mappings:TrophyEventMapping />
 	</fx:Declarations>
 
 	<fx:Script>
 		<![CDATA[
 			private function initApp():void
 			{
-				//setLa
-				//resourceManager.localeChain = [locales[1]];
+
 			}
 
 		]]>
 	</fx:Script>
 
 	<s:Group width="100%" height="100%">
-		<s:HGroup width="100%" horizontalAlign="right">
-			<mx:LinkButton label="{resourceManager.getString('main', 'i_am_a_psychologist')}" />
-		</s:HGroup>
+		<view:topnavigation id="topnavigation" />
 		<s:VGroup horizontalCenter="0" verticalCenter="0">
 			<s:HGroup horizontalAlign="center" width="400" id="logo_group">
 				<view:logo id="logo" />
