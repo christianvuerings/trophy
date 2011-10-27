@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 width="100%" height="100%" horizontalAlign="right" verticalAlign="bottom" activate="initialization(event)">
+	<fx:Declarations>
+	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.resources.ResourceBundle;
+
+			[Bindable]
+			private var locales_mapping:Object = new Object();
+			private var currentlocale:String; // Contains the current locale
+
+			// Getters & Setters
+			public function getCurrentlocale():String{
+				return currentlocale;
+			}
+			public function setCurrentlocale(currentlocale:String):void {
+				this.currentlocale = currentlocale;
+				resourceManager.localeChain = [locales_mapping[currentlocale]];
+			}
+
+			// Click Handlers
+			protected function languageClickHandler(event:MouseEvent):void
+			{
+				// We'll need to change the current locale, language & country
+				setCurrentlocale(event.currentTarget.id);
+			}
+
+			// Other Handlers
+			protected function initialization(event:Event):void {
+
+				// Initialize the locales mappings object
+				// We need this because flex doesn't support nl_BE and fr_BE as default
+				// We could generate the locales folder on each machine, but this is cumbersome
+				locales_mapping["fr_FR"] = "fr_FR";
+				locales_mapping["fr_BE"] = "fr_FR";
+				locales_mapping["nl_BE"] = "nl_NL";
+				locales_mapping["nl_NL"] = "nl_NL";
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Metadata>
+		[ResourceBundle("main")]
+	</fx:Metadata>
+	<mx:LinkButton id="nl_BE" label="{resourceManager.getString('main', 'belgium_nl')}" icon="@Embed('assets/images/countries/belgium.png')" click="languageClickHandler(event)" />
+	<mx:LinkButton id="fr_BE" label="{resourceManager.getString('main', 'belgium_fr')}" icon="@Embed('assets/images/countries/belgium.png')" click="languageClickHandler(event)" />
+	<mx:LinkButton id="fr_FR" label="{resourceManager.getString('main', 'france_fr')}" icon="@Embed('assets/images/countries/france.png')" click="languageClickHandler(event)" />
+	<mx:LinkButton id="nl_NL" label="{resourceManager.getString('main', 'netherlands_nl')}" icon="@Embed('assets/images/countries/netherlands.png')" click="languageClickHandler(event)" />
+</s:HGroup>
