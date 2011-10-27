@@ -6,9 +6,11 @@
 			   minWidth="955"
 			   minHeight="600"
 			   creationComplete="initApp()"
-			   preloader="mx.preloaders.DownloadProgressBar">
+			   preloader="mx.preloaders.DownloadProgressBar"
+			   xmlns:mappings="mate.mappings.*">
 	<fx:Style source="assets/css/global.css" />
 	<fx:Declarations>
+		<mappings:TrophyEventMapping />
 	</fx:Declarations>
 
 	<fx:Script>
