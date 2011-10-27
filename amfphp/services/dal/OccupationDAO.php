@@ -40,6 +40,7 @@ class OccupationDAO implements OccupationDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// delete and return affected rows
+        //TODO:delete lines in the link table
 	return $db->delete(TABLE_NAME, 'occupation_id = ?', array($primaryKey));
     }
     
