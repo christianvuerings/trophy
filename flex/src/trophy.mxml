@@ -3,8 +3,8 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
 			   xmlns:view="views.*"
-			   minWidth="955"
-			   minHeight="600"
+			   minWidth="800"
+			   minHeight="400"
 			   creationComplete="initApp()"
 			   preloader="mx.preloaders.DownloadProgressBar"
 			   xmlns:mappings="mate.mappings.*">
@@ -15,9 +15,25 @@
 
 	<fx:Script>
 		<![CDATA[
+			import mx.controls.Alert;
+
+			private function performSearch():void {
+				Alert.show(txtSearch.text);
+			}
+
+			private function checkKey(event:KeyboardEvent):void {
+				if(event.charCode==13){
+					performSearch();
+				}
+			}
+
+			private function addEventListeners():void{
+				frmSearch.addEventListener(KeyboardEvent.KEY_DOWN, checkKey);
+			}
+
 			private function initApp():void
 			{
-
+				addEventListeners();
 			}
 
 		]]>
@@ -29,9 +45,12 @@
 			<s:HGroup horizontalAlign="center" width="400" id="logo_group">
 				<view:logo id="logo" />
 			</s:HGroup>
-			<s:TextInput width="{logo_group.width}"
-						 prompt="{resourceManager.getString('main', 'give_postal_code_city_or_town')}"
-						 styleName="search" />
+			<s:Form id="frmSearch">
+				<s:TextInput width="{logo_group.width}"
+							 prompt="{resourceManager.getString('main', 'give_postal_code_city_or_town')}"
+							 styleName="search"
+							 id="txtSearch"/>
+			</s:Form>
 			<s:HGroup horizontalAlign="right" width="{logo_group.width}">
 				<mx:LinkButton label="{resourceManager.getString('main', 'advanced_search')}" horizontalCenter="100" />
 			</s:HGroup>
