@@ -1,9 +1,6 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+require_once '../model/interfaces/OccupationInterface.php';
 
 /**
  * Description of SearchController
@@ -11,7 +8,20 @@
  * @author Thomas Crepain <info@thomascrepain.be>
  */
 class SearchController {
-    //put your code here
+    /**
+     * Searches for Users within an occupation
+     *
+     * @param string $searchQuery
+     * @param OccupationInterface $occupation
+     * @return array<User> 
+     */
+    public function searchUsersInOccupation($searchQuery, OccupationInterface $occupation){
+	$users = array();
+	
+	// TODO: add search functionality
+	
+	return $users;
+    }
 }
 
 ?>
