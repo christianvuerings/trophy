@@ -9,7 +9,7 @@
 	</fx:Script>
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
-		<EventHandlers type="{TrophyEvent.GETISLOGGEDIN}" debug="true">
+		<EventHandlers debug="true">
 
 		</EventHandlers>
 
