@@ -3,7 +3,23 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  width="100%" horizontalAlign="right">
+
+	<fx:Script>
+		<![CDATA[
+			import mate.events.*;
+
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+
+			protected function psychologistClickHandler(event:MouseEvent):void
+			{
+				var changeGlobalStateEvent:ChangeGlobalStateEvent = new ChangeGlobalStateEvent(ChangeGlobalStateEvent.CHANGEGLOBALSTATE);
+				dispatchEvent(changeGlobalStateEvent);
+			}
+		]]>
+	</fx:Script>
+
 	<fx:Declarations>
 	</fx:Declarations>
-	<mx:LinkButton label="{resourceManager.getString('main', 'i_am_a_psychologist')}" />
+	<mx:LinkButton label="{resourceManager.getString('main', 'i_am_a_psychologist')}" click="psychologistClickHandler(event)" />
 </s:HGroup>

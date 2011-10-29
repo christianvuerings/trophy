@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:view="views.*"
+		  horizontalCenter="0" verticalCenter="0"
+		  creationComplete="mainsearchCreationComplete(event)">
+	<fx:Script>
+		<![CDATA[
+			import mate.events.SearchEvent;
+
+			import mx.events.FlexEvent;
+			private function performSearch(){
+				// Check whether the user actually entered something in the textbox
+				if(txtSearch.text != "") {
+
+				}
+				var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SUBMITSEARCH);
+				searchEvent.locationname = txtSearch.text;
+				dispatchEvent(searchEvent);
+				//searchEven txtSearch.text;
+				//dispatchEvent(searchEvent:SearchEvent);
+				//dispatchEvent(SearchEvent:SearchEvent);
+			}
+
+			private function checkKey(event:KeyboardEvent):void {
+				if(event.charCode==13){
+					performSearch();
+				}
+			}
+
+			// Initialize the external interface if it is available.
+			// We use this to communicate with JavaScript
+			private function initializeExternalInterface():void {
+
+				// Check whether the external interface is available
+				if(ExternalInterface.available){
+					txtSearch.text = ExternalInterface.call("geoplugin_city");
+				}
+			}
+
+			protected function mainsearchCreationComplete(event:FlexEvent):void
+			{
+				initializeExternalInterface();
+
+				frmSearch.addEventListener(KeyboardEvent.KEY_DOWN, checkKey);
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<mx:StringValidator id="txtSearchValidator"
+							source="{txtSearch}"
+							property="text"
+							required="true" />
+	</fx:Declarations>
+	<s:HGroup horizontalAlign="center" width="400" id="logo_group">
+		<view:logo id="logo" />
+	</s:HGroup>
+	<s:Form id="frmSearch">
+		<s:TextInput width="{logo_group.width}"
+					 prompt="{resourceManager.getString('main', 'give_postal_code_city_or_town')}"
+					 styleName="search"
+					 id="txtSearch"/>
+	</s:Form>
+	<s:HGroup horizontalAlign="right" width="{logo_group.width}">
+		<mx:LinkButton label="{resourceManager.getString('main', 'advanced_search')}" horizontalCenter="100" />
+	</s:HGroup>
+</s:VGroup>
