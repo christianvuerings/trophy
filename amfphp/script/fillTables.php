@@ -1,5 +1,7 @@
 <?php
 
+include_once('./../services/Include/configuration.php');
+
 $firstnamesBoys = array(
     'Jacob',
     'Ethan',
@@ -305,24 +307,38 @@ $lastnames = array(
     'Griffin',
     'Diaz',
     'Hayes');
-
-$con = mysql_connect("localhost", "root", "");
+$con = mysql_connect('localhost', 'root', '');
+//$con = mysql_connect($GLOBALS['configuration']['host'], $GLOBALS['configuration']['user'],$GLOBALS['configuration']['pass'] );
 if (!$con) {
     die('Could not connect: ' . mysql_error());
 }
+mysql_select_db($GLOBALS['configuration']['db'], $con);
 
-mysql_select_db("trophy", $con);
+mysql_query("INSERT INTO language (label) VALUES ('dutch')");
+mysql_query("INSERT INTO language (label) VALUES ('english')");
+mysql_query("INSERT INTO language (label) VALUES ('french')");
+
+
 $password = '098f6bcd4621d373cade4e832627b4f6';
 foreach ($lastnames as $lastname) {
     foreach ($firstnamesBoys as $firstname) {
         $email = $firstname . "." . $lastname . "@email.com";
-        mysql_query("INSERT INTO user (first_name, last_name, email,password) VALUES ($firstname, $lastname, $email,$password)");
+        $language_id = rand(1, 3);
+        mysql_query("INSERT INTO user (first_name, last_name, email,password,language_id) VALUES ('$firstname', '$lastname', '$email','$password','$language_id') ON DUPLICATE KEY UPDATE email = email");
+        mysql_query("INSERT INTO languages (label) VALUES ('french')");
     }
     foreach ($firstnamesGirls as $firstname) {
         $email = $firstname . "." . $lastname . "@email.com";
-        mysql_query("INSERT INTO user (first_name, last_name, email,password) VALUES ('$firstname', '$lastname', '$email','$password')");
+        $language_id = rand(1, 3);
+        mysql_query("INSERT INTO user (first_name, last_name, email,password,language_id) VALUES ('$firstname', '$lastname', '$email','$password','$language_id')  ON DUPLICATE KEY UPDATE email = email");
     }
 }
+
+mysql_query("INSERT INTO languages (label) VALUES ('dutch')");
+mysql_query("INSERT INTO languages (label) VALUES ('english')");
+mysql_query("INSERT INTO languages (label) VALUES ('french')");
+
+
 
 mysql_close($con);
 ?>
