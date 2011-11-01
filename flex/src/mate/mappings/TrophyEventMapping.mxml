@@ -5,16 +5,24 @@
 		<![CDATA[
 			import mate.business.*;
 			import mate.events.*;
+			import views.*;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
-		<EventHandlers debug="true">
-
+		<EventHandlers debug="true" type="{LanguageEvent.GETLOCALE}" >
+			<!--<MethodInvoker generator="{LanguageManager}" method="storeLocale" />-->
+			<PropertyGetter generator="{LanguageManager}" targetKey="locale" />
+		</EventHandlers>
+		<EventHandlers debug="true" type="{LanguageEvent.SETLOCALE}">
+			<PropertySetter generator="{LanguageManager}" targetKey="locale" sourceKey="locale" />
+			<MethodInvoker generator="{mainsearch}" method="languageChanged" />
+			<!--<MethodInvoker generator="{LanguageManager}" method="storeLocale" arguments="{['locale']}" />-->
 		</EventHandlers>
 
-		<Injectors>
-
+		<Injectors target="{mainsearch}">
+			<PropertyInjector targetKey="locale" source="{LanguageManager}"
+							  sourceKey="locale" />
 		</Injectors>
 	</fx:Declarations>
 </EventMap>

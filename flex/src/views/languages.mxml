@@ -7,40 +7,39 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import mate.events.LanguageEvent;
+
 			import mx.collections.ArrayCollection;
 			import mx.controls.Alert;
 			import mx.resources.ResourceBundle;
 
-			[Bindable]
-			private var locales_mapping:Object = new Object();
-			private var currentlocale:String; // Contains the current locale
+			private var _locales_mapping:Object = new Object();
 
-			// Getters & Setters
-			public function getCurrentlocale():String{
-				return currentlocale;
-			}
-			public function setCurrentlocale(currentlocale:String):void {
-				this.currentlocale = currentlocale;
-				resourceManager.localeChain = [locales_mapping[currentlocale]];
+			// Event listener
+			protected function languageChanged(event:LanguageEvent):void {
+				resourceManager.localeChain = [_locales_mapping[event.locale]];
 			}
 
 			// Click Handlers
 			protected function languageClickHandler(event:MouseEvent):void
 			{
-				// We'll need to change the current locale, language & country
-				setCurrentlocale(event.currentTarget.id);
+				// Fire of the set locale event
+				var setLocale:LanguageEvent = new LanguageEvent(LanguageEvent.SETLOCALE);
+				setLocale.locale = event.currentTarget.id;
+				dispatchEvent(setLocale);
 			}
 
 			// Other Handlers
 			protected function initialization(event:Event):void {
+				addEventListener(LanguageEvent.SETLOCALE, languageChanged);
 
 				// Initialize the locales mappings object
 				// We need this because flex doesn't support nl_BE and fr_BE as default
 				// We could generate the locales folder on each machine, but this is cumbersome
-				locales_mapping["fr_FR"] = "fr_FR";
-				locales_mapping["fr_BE"] = "fr_FR";
-				locales_mapping["nl_BE"] = "nl_NL";
-				locales_mapping["nl_NL"] = "nl_NL";
+				_locales_mapping["fr_FR"] = "fr_FR";
+				_locales_mapping["fr_BE"] = "fr_FR";
+				_locales_mapping["nl_BE"] = "nl_NL";
+				_locales_mapping["nl_NL"] = "nl_NL";
 			}
 
 		]]>

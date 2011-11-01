@@ -3,24 +3,24 @@
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
 		  xmlns:view="views.*"
-		  horizontalCenter="0" verticalCenter="0"
 		  creationComplete="mainsearchCreationComplete(event)">
 	<fx:Script>
 		<![CDATA[
+			import mate.events.LanguageEvent;
 			import mate.events.SearchEvent;
 
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
-			private function performSearch(){
+
+			public var locale:String;
+
+			private function performSearch():void{
 				// Check whether the user actually entered something in the textbox
 				if(txtSearch.text != "") {
-
+					var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SUBMITSEARCH);
+					searchEvent.locationname = txtSearch.text;
+					dispatchEvent(searchEvent);
 				}
-				var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SUBMITSEARCH);
-				searchEvent.locationname = txtSearch.text;
-				dispatchEvent(searchEvent);
-				//searchEven txtSearch.text;
-				//dispatchEvent(searchEvent:SearchEvent);
-				//dispatchEvent(SearchEvent:SearchEvent);
 			}
 
 			private function checkKey(event:KeyboardEvent):void {
@@ -29,13 +29,29 @@
 				}
 			}
 
+			private function setlocation(obj:Object):void {
+				txtSearch.text = obj.city;
+			}
+
+			private function updateSearch(): void{
+				if(ExternalInterface.available){
+					var language:String = resourceManager.localeChain[0].split("_")[0];
+					ExternalInterface.call("trophyjs.getlocation", language);
+				}
+			}
+			private function languageChanged(event:LanguageEvent):void {
+				Alert.show("test");
+				//updateSearch();
+			}
+
 			// Initialize the external interface if it is available.
 			// We use this to communicate with JavaScript
 			private function initializeExternalInterface():void {
 
 				// Check whether the external interface is available
 				if(ExternalInterface.available){
-					txtSearch.text = ExternalInterface.call("geoplugin_city");
+					ExternalInterface.addCallback("setlocation", setlocation);
+					updateSearch();
 				}
 			}
 
@@ -44,6 +60,7 @@
 				initializeExternalInterface();
 
 				frmSearch.addEventListener(KeyboardEvent.KEY_DOWN, checkKey);
+				addEventListener(LanguageEvent.SETLOCALE, languageChanged);
 			}
 
 		]]>
