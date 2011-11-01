@@ -18,35 +18,66 @@
 			import mate.events.*;
 
 			import mx.controls.Alert;
+			import mx.core.Container;
 			import mx.core.FlexGlobals;
 
 			private function submitSearch(event:SearchEvent):void {
 				Alert.show(event.locationname);
 			}
 
-			private function changeGlobalState(event:ChangeGlobalStateEvent):void {
-				Alert.show("Hey state");
+			private function changeGlobalState(event:GlobalStateEvent):void {
+				//var navigatorContent:NavigatorContent = new NavigatorContent();
+				//navigatorContent.id = event.globalstate;
+				viewstack.selectedChild = NavigatorContent(viewstack.getChildByName(event.globalstate));
+
+				/*if(event.globalstate == "mainsearchview") {
+					viewstack.horizontalCenter = 0;
+					viewstack.verticalCenter = 0;
+				} else {
+					Alert.show(viewstack.horizontalCenter + "");
+					viewstack.resizeToContent=true;
+					viewstack.horizontalCenter = "";
+					viewstack.verticalCenter = "";
+					Alert.show(viewstack.horizontalCenter + "");
+				}*/
 			}
 
 			private function addEventListeners():void{
-				addEventListener(ChangeGlobalStateEvent.CHANGEGLOBALSTATE, changeGlobalState);
+				addEventListener(GlobalStateEvent.CHANGEGLOBALSTATE, changeGlobalState);
 				addEventListener(SearchEvent.SUBMITSEARCH, submitSearch);
 			}
+			private function addDispatchEvents():void {
+				var languageEvent:LanguageEvent = new LanguageEvent(LanguageEvent.GETLOCALE);
+				dispatchEvent(languageEvent);
 
-			private function initApp():void
-			{
+				var changeGlobalStateEvent:GlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "mainsearchview";
+				dispatchEvent(changeGlobalStateEvent);
+			}
+
+			private function initApp():void {
 				addEventListeners();
+				addDispatchEvents();
 			}
 
 		]]>
 	</fx:Script>
 
 	<s:Group width="100%" height="100%">
-		<mx:ViewStack>
-
-		</mx:ViewStack>
+		<s:layout>
+			<s:VerticalLayout />
+		</s:layout>
 		<view:topnavigation id="topnavigation" />
-		<view:mainsearch id="mainsearch" />
+		<mx:ViewStack id="viewstack" width="100%" height="100%">
+			<s:NavigatorContent id="mainsearchview">
+				<view:mainsearch id="mainsearch" horizontalCenter="0" verticalCenter="0" />
+			</s:NavigatorContent>
+			<s:NavigatorContent id="registerloginview">
+				<mx:Text text="testss">
+
+				</mx:Text>
+			</s:NavigatorContent>
+		</mx:ViewStack>
 		<view:languages id="languages" />
 	</s:Group>
 </s:Application>

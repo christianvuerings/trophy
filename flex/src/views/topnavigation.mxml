@@ -13,7 +13,8 @@
 
 			protected function psychologistClickHandler(event:MouseEvent):void
 			{
-				var changeGlobalStateEvent:ChangeGlobalStateEvent = new ChangeGlobalStateEvent(ChangeGlobalStateEvent.CHANGEGLOBALSTATE);
+				var changeGlobalStateEvent:GlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "registerloginview";
 				dispatchEvent(changeGlobalStateEvent);
 			}
 		]]>
