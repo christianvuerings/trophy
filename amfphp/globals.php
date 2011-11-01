@@ -25,8 +25,8 @@ define('DATABASE_HOSTNAME', 'localhost');
 // Database port
 define('DATABASE_PORT', '3306');
 // Database username
-define('DATABASE_USERNAME', 'root');
+define('DATABASE_USERNAME', 'trophyUser');
 // Datebase password
-define('DATABASE_PASSWORD', '');
+define('DATABASE_PASSWORD', 'trophyUser');
 
 ?>
