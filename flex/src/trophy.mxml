@@ -26,20 +26,9 @@
 			}
 
 			private function changeGlobalState(event:GlobalStateEvent):void {
-				//var navigatorContent:NavigatorContent = new NavigatorContent();
-				//navigatorContent.id = event.globalstate;
-				viewstack.selectedChild = NavigatorContent(viewstack.getChildByName(event.globalstate));
+				// TODO Only change the viewstack selected item if the item isn't currently being displayed
 
-				/*if(event.globalstate == "mainsearchview") {
-					viewstack.horizontalCenter = 0;
-					viewstack.verticalCenter = 0;
-				} else {
-					Alert.show(viewstack.horizontalCenter + "");
-					viewstack.resizeToContent=true;
-					viewstack.horizontalCenter = "";
-					viewstack.verticalCenter = "";
-					Alert.show(viewstack.horizontalCenter + "");
-				}*/
+				viewstack.selectedChild = NavigatorContent(viewstack.getChildByName(event.globalstate));
 			}
 
 			private function addEventListeners():void{
@@ -72,10 +61,8 @@
 			<s:NavigatorContent id="mainsearchview">
 				<view:mainsearch id="mainsearch" horizontalCenter="0" verticalCenter="0" />
 			</s:NavigatorContent>
-			<s:NavigatorContent id="registerloginview">
-				<mx:Text text="testss">
-
-				</mx:Text>
+			<s:NavigatorContent id="registerview" left="200">
+				<view:register id="register"/>
 			</s:NavigatorContent>
 		</mx:ViewStack>
 		<view:languages id="languages" />
