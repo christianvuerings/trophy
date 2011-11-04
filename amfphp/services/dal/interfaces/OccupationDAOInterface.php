@@ -14,7 +14,7 @@ class OccupationDAOInterface {
      * 
      * @return OccupationDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a Occupation object from the database

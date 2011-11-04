@@ -14,7 +14,7 @@ class ProvinceDAOInterface {
      * 
      * @return ProvinceDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a Province object from the database

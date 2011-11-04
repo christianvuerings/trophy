@@ -13,7 +13,7 @@ require_once '../model/Language.php';
 class LanguageDAO implements LanguageDAOInterface {
     const TABLE_NAME = 'language';
     
-    private $instance;
+    private static $instance;
     
     private function __construct(){ }
     
@@ -23,10 +23,10 @@ class LanguageDAO implements LanguageDAOInterface {
      * 
      * @return LanguageDAO $instance
      */
-    public function getInstance() {
-	if(is_null($this->instance)) $this->instance = new self();
+    public static function getInstance() {
+	if(!isset(self::$instance)) self::$instance = new self();
 	
-	return $this->instance;
+	return self::$instance;
     }
 
     /**

@@ -13,7 +13,7 @@ require_once '../model/City.php';
 class CityDAO implements CityDAOInterface {
     const TABLE_NAME = 'city';
     
-    private $instance;
+    private static $instance;
     
     private function __construct(){ }
     
@@ -23,10 +23,10 @@ class CityDAO implements CityDAOInterface {
      * 
      * @return CityDAO $instance
      */
-    public function getInstance() {
-	if(is_null($this->instance)) $this->instance = new self();
+    public static function getInstance() {
+	if(!isset(self::$instance)) self::$instance = new self();
 	
-	return $this->instance;
+	return self::$instance;
     }
 
     /**

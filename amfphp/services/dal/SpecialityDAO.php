@@ -13,7 +13,7 @@ require_once '../model/Speciality.php';
 class SpecialityDAO implements SpecialityDAOInterface {
     const TABLE_NAME = 'speciality';
     
-    private $instance;
+    private static $instance;
     
     private function __construct(){ }
     
@@ -23,10 +23,10 @@ class SpecialityDAO implements SpecialityDAOInterface {
      * 
      * @return SpecialityDAO $instance
      */
-    public function getInstance() {
-	if(is_null($this->instance)) $this->instance = new self();
+    public static function getInstance() {
+	if(!isset(self::$instance)) self::$instance = new self();
 	
-	return $this->instance;
+	return self::$instance;
     }
 
     /**

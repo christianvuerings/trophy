@@ -14,7 +14,7 @@ class CityDAOInterface {
      * 
      * @return CityDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a City object from the database

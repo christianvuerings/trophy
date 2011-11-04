@@ -13,7 +13,7 @@ require_once '../model/PaymentMethod.php';
 class PaymentMethodDAO implements PaymentMethodDAOInterface {
     const TABLE_NAME = 'payment_method';
     
-    private $instance;
+    private static $instance;
     
     private function __construct(){ }
     
@@ -23,10 +23,10 @@ class PaymentMethodDAO implements PaymentMethodDAOInterface {
      * 
      * @return PaymentMethodDAO $instance
      */
-    public function getInstance() {
-	if(is_null($this->instance)) $this->instance = new self();
+    public static function getInstance() {
+	if(!isset(self::$instance)) self::$instance = new self();
 	
-	return $this->instance;
+	return self::$instance;
     }
 
     /**
