@@ -14,7 +14,7 @@ class LanguageDAOInterface {
      * 
      * @return LanguageDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a Language object from the database

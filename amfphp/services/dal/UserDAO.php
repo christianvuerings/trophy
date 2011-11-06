@@ -19,7 +19,7 @@ class UserDAO implements UserDAOInterface {
     const OCCUPATION_LINK_TABLE_NAME = 'user_occupation';
     const SPECIALITY_LINK_TABLE_NAME = 'user_speciality';
 
-    private $instance;
+    private static $instance;
 
     private function __construct() {
         
@@ -31,11 +31,10 @@ class UserDAO implements UserDAOInterface {
      * 
      * @return UserDAO $instance
      */
-    public function getInstance() {
-        if (is_null($this->instance))
-            $this->instance = new self();
-
-        return $this->instance;
+    public static function getInstance() {
+	if(!isset(self::$instance)) self::$instance = new self();
+	
+	return self::$instance;
     }
 
     /**

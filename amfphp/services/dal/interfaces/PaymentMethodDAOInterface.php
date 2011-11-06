@@ -14,7 +14,7 @@ class PaymentMethodDAOInterface {
      * 
      * @return PaymentMethodDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a PaymentMethod object from the database

@@ -14,7 +14,7 @@ class SpecialityDAOInterface {
      * 
      * @return SpecialityDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a Speciality object from the database

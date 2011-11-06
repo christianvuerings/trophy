@@ -13,7 +13,7 @@ require_once '../model/Occupation.php';
 class OccupationDAO implements OccupationDAOInterface {
     const TABLE_NAME = 'occupation';
     
-    private $instance;
+    private static $instance;
     
     private function __construct(){ }
     
@@ -23,10 +23,10 @@ class OccupationDAO implements OccupationDAOInterface {
      * 
      * @return OccupationDAO $instance
      */
-    public function getInstance() {
-	if(is_null($this->instance)) $this->instance = new self();
+    public static function getInstance() {
+	if(!isset(self::$instance)) self::$instance = new self();
 	
-	return $this->instance;
+	return self::$instance;
     }
 
     /**

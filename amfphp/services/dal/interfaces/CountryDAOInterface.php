@@ -14,7 +14,7 @@ class CountryDAOInterface {
      * 
      * @return CountryDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a Country object from the database

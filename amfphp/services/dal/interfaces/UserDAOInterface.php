@@ -14,7 +14,7 @@ class UserDAOInterface {
      * 
      * @return UserDAO $instance
      */
-    public function getInstance();
+    public static function getInstance();
     
     /**
      * deletes a User object from the database
