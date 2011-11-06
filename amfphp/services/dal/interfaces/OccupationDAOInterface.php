@@ -7,7 +7,7 @@ require_once '../model/interfaces/OccupationInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class OccupationDAOInterface {   
+interface OccupationDAOInterface {   
     /**
      * Returns an instance of this OccupationDAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class OccupationDAOInterface {
      * @param $int $occupationId
      * @return int  number of deleted rows
      */
-    public function delete($occupationId)
+    public function delete($occupationId);
     
     /**
      * loads a Occupation object from the database
