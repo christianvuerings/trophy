@@ -70,6 +70,7 @@ class UserDAO implements UserDAOInterface {
         $db = MySQLDatabase::getInstance();
         $password = md5($password);
         
+	// TODO: sql injection, fix this!!
         $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email='".$email."' AND password='".$password."'";
         // get record from database
         $record = $db->getRecord($query);
