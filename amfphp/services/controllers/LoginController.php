@@ -1,28 +1,23 @@
 <?php
 
-require_once '../model/interfaces/UserInterface.php';
 require_once '../dal/UserDAO.php';
 
-/**
- * The controller to login a user
- */
-class SearchController {
-    
+class LoginController {
 
     /**
-     * Searches for Users within an occupation and country
+     * Logging in a user by email 
      *
-     * @param string $searchQuery
-     * @param OccupationInterface $occupation
-     * @param CountryInterface $country
-     * @return array<User> 
+     * @param string $email
+     * @param string $password
+     * @return User user
      */
-    public function LoginUser($email,$password ){
-	$hashedPassword = md5($password);
-	$user = UserDAO::getInstance()->login($email, $hashedPassword);
-	return $user;
+    public static function LoginUser($email, $password) {
+        $password = 'test';
+        $email = 'test';
+        $user = UserDAO::getInstance()->login($email, $password);
+        return $user;
     }
-    
+
 }
 
 ?>

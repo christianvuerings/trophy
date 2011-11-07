@@ -17,7 +17,7 @@ require_once '../model/Specialty.php';
 class UserDAO implements UserDAOInterface {
     const TABLE_NAME = 'user';
     const OCCUPATION_LINK_TABLE_NAME = 'user_occupation';
-    const specialtY_LINK_TABLE_NAME = 'user_specialty';
+    const SPECIALTY_LINK_TABLE_NAME = 'user_specialty';
 
     private static $instance;
 
@@ -68,9 +68,11 @@ class UserDAO implements UserDAOInterface {
     public function login($email, $password) {
         // get database
         $db = MySQLDatabase::getInstance();
-
+        $password = md5($password);
+        
+        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email='".$email."' AND password='".$password."'";
         // get record from database
-        $record = $db->getRecord('SELECT user_id, first_name, last_name, email, password, last_login, member_since,language_id FROM ' . self::TABLE_NAME . 'WHERE email = ' . $email . ' AND password = ' . $password);
+        $record = $db->getRecord($query);
 
         // translate record to User object
         $user = new User();

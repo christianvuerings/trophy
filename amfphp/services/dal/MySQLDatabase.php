@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Database.php';
-
+require_once '../../globals.php';
 /**
  * Spoon Library
  *
@@ -99,7 +99,7 @@ class MySQLDatabase implements Database {
      * 
      * @var MySQLDatabase
      */
-    private $instance;
+    private static $instance;
     
     /**
      * Creates a database connection instance.
@@ -119,11 +119,11 @@ class MySQLDatabase implements Database {
      * 
      * @return MySQLDatabase $instance
      */
-    public function getInstance() {
-	if (is_null($this->instance))
-	    $this->instance = new self();
+    public static function getInstance() {
+        if (!isset(self::$instance))
+            self::$instance = new self();
 
-	return $this->instance;
+        return self::$instance;
     }
 
     /**
