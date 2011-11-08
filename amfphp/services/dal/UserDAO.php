@@ -294,6 +294,36 @@ class UserDAO implements UserDAOInterface {
     public function saveLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
         $db->insert(self::specialtY_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'specialty_id' => $specialty->getspecialtyId()));
     }
+    
+    /**
+     * Searches the database for users with a practice in a specified city
+     * The query can be the name of the city (or something that looks like it)
+     * or the zipcode of this city
+     *
+     * @param string $query
+     * @param OccupationInterface $occupation
+     * @param CountryInterface $country
+     * @return array<User> 
+     */
+    public function searchUsersByPostalCodeOrCityname($query, OccupationInterface $occupation, CountryInterface $country){
+	// get database
+        $db = MySQLDatabase::getInstance();
+	
+	// get user ids
+	$userIds = $db->getColumn("SELECT u.user_id 
+			FROM " . self::TABLE_NAME . " AS u
+			LEFT JOIN ". self::OCCUPATION_LINK_TABLE_NAME . " AS ou ON ou.user_id = u.user_id
+			LEFT JOIN practice AS p ON p.user_id = u.user_id
+			LEFT JOIN city AS c ON c.city_id = p.city_id
+			LEFT JOIN province ON province.province_id = c.province_id
+			WHERE ou.occupation_id = ? 
+			AND province.country_id = ?
+			AND (c.name LIKE ? OR c.zipcode = ?)",
+			array($occupation->getOccupationId(), $country->getCountryId(), $query, $query));
+	
+	// return these users
+        return $this->loadMultiple($userIds);
+    }
 
     /**
      * Removes the link between a User and an occupation
