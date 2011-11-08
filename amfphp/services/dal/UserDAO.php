@@ -53,8 +53,6 @@ class UserDAO implements UserDAOInterface {
         $db->delete(specialtY_LINK_TABLE_NAME, 'user_id = ?', array($primaryKey));
 
         // delete and return affected rows
-
-
         return $db->delete(TABLE_NAME, 'user_id = ?', array($primaryKey));
     }
 
@@ -250,6 +248,10 @@ class UserDAO implements UserDAOInterface {
     }
 
     public function getUserOccupations($userId) {
+	// get database
+        $db = MySQLDatabase::getInstance();
+	
+	// get records
         $records = $db->getRecord('SELECT occupations_id FROM ' . self::OCCUPATION_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $occupationArray = array();
         foreach ($records as $record) {
@@ -263,6 +265,10 @@ class UserDAO implements UserDAOInterface {
     }
 
     public function getSpecialies($userId) {
+	// get database
+        $db = MySQLDatabase::getInstance();
+	
+	// get records
         $records = $db->getRecord('SELECT specialties_id FROM ' . self::specialtY_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $specialtiesArray = array();
         foreach ($records as $record) {
@@ -282,6 +288,10 @@ class UserDAO implements UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
+	// get database
+        $db = MySQLDatabase::getInstance();
+	
+	// insert link
         $db->insert(self::OCCUPATION_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'occupation_id' => $occupation->getOccupationId()));
     }
 
@@ -332,6 +342,10 @@ class UserDAO implements UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
+	// get database
+        $db = MySQLDatabase::getInstance();
+	
+	// delete link
         $db->delete(self::OCCUPATION_LINK_TABLE_NAME, 'user_id = ? AND occupation_id = ?', array($user->getUserId(), $occupation->getOccupationId()));
     }
 
@@ -342,6 +356,10 @@ class UserDAO implements UserDAOInterface {
      * @param specialtyInterface $specialty 
      */
     public function removeLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
+	// get database
+        $db = MySQLDatabase::getInstance();
+	
+	// delete link
         $db->delete(self::specialtY_LINK_TABLE_NAME, 'user_id = ? AND specialty_id = ?', array($user->getUserId(), $specialty->getspecialtyId()));
     }
 
