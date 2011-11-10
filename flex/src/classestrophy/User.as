@@ -22,149 +22,149 @@ package classestrophy
         private var gsm:String;
         private var languageId:Number;
     
-    	public function get userId() {
-		return $this.userId;
+    	public function get userId():Number {
+			return this.userId;
 	    }
 
-    	public function get firstName() {
-		return $this.firstName;
+    	public function get firstName():String {
+			return this.firstName;
 	    }
 
-    	public function get lastName() {
-		return $this.lastName;
+    	public function get lastName():String {
+			return this.lastName;
 	    }
 
-    	public function get email() {
-		return $this.email;
+    	public function get email():String {
+			return this.email;
 	    }
 
-    	public function get password() {
-		return $this.password;
+    	public function get password():String {
+			return this.password;
 	    }
 
-    	public function get lastLogin() {
-		return $this.lastLogin;
+    	public function get lastLogin():Date {
+			return this.lastLogin;
 	    }
 
-    	public function get memberSince() {
-		return $this.memberSince;
+    	public function get memberSince():Date {
+			return this.memberSince;
 	    }
 
-    	public function get twitterId() {
-		return $this.twitterId;
+    	public function get twitterId():String {
+			return this.twitterId;
 	    }
 
-    	public function get facebookId() {
-		return $this.facebookId;
+    	public function get facebookId()String {
+			return this.facebookId;
 	    }
 
-    	public function get blogRss() {
-		return $this.blogRss;
+    	public function get blogRss()String {
+			return this.blogRss;
 	    }
 
-    	public function get addressStreet() {
-		return $this.addressStreet;
+    	public function get addressStreet():String {
+			return this.addressStreet;
 	    }
 
-    	public function get addressNumber() {
-		return $this.addressNumber;
+    	public function get addressNumber():String {
+			return this.addressNumber;
 	    }
 
-    	public function get addressBus() {
-		return $this.addressBus;
+    	public function get addressBus():String {
+			return this.addressBus;
 	    }
 
-    	public function get cityId() {
-		return $this.cityId;
+    	public function get cityId():Number {
+			return this.cityId;
 	    }
 
-    	public function get telephone() {
-		return $this.telephone;
+    	public function get telephone():String {
+			return this.telephone;
 	    }
 
-    	public function get fax() {
-		return $this.fax;
+    	public function get fax():String {
+			return this.fax;
 	    }
 
-    	public function get gsm() {
-		return $this.gsm;
+    	public function get gsm():String {
+			return this.gsm;
 	    }
 
-    	public function get languageId() {
-		return $this.languageId;
+    	public function get languageId():Number {
+			return this.languageId;
 	    }
 
     
-        public function set userId(userId:Number) {
-		$this.userId = $userId;
+        public function set userId(userId:Number):void {
+			this.userId = userId;
 	    }
 
-        public function set firstName(firstName:String) {
-		$this.firstName = $firstName;
+        public function set firstName(firstName:String):void {
+			this.firstName = firstName;
 	    }
 
-        public function set lastName(lastName:String) {
-		$this.lastName = $lastName;
+        public function set lastName(lastName:String):void {
+			this.lastName = lastName;
 	    }
 
-        public function set email(email:String) {
-		$this.email = $email;
+        public function set email(email:String):void {
+	    	this.email = email;
 	    }
 
-        public function set password(password:String) {
-		$this.password = $password;
+        public function set password(password:String):void {
+			this.password = password;
 	    }
 
-        public function set lastLogin(lastLogin:Date) {
-		$this.lastLogin = $lastLogin;
+        public function set lastLogin(lastLogin:Date):void {
+			this.lastLogin = lastLogin;
 	    }
 
-        public function set memberSince(memberSince:Date) {
-		$this.memberSince = $memberSince;
+        public function set memberSince(memberSince:Date):void {
+			this.memberSince = memberSince;
 	    }
 
-        public function set twitterId(twitterId:String) {
-		$this.twitterId = $twitterId;
+        public function set twitterId(twitterId:String):void {
+			this.twitterId = twitterId;
 	    }
 
-        public function set facebookId(facebookId:String) {
-		$this.facebookId = $facebookId;
+        public function set facebookId(facebookId:String):void {
+			this.facebookId = facebookId;
 	    }
 
-        public function set blogRss(blogRss:String) {
-		$this.blogRss = $blogRss;
+        public function set blogRss(blogRss:String):void {
+			this.blogRss = blogRss;
 	    }
 
-        public function set addressStreet(addressStreet:String) {
-		$this.addressStreet = $addressStreet;
+        public function set addressStreet(addressStreet:String):void {
+			this.addressStreet = addressStreet;
 	    }
 
-        public function set addressNumber(addressNumber:String) {
-		$this.addressNumber = $addressNumber;
+        public function set addressNumber(addressNumber:String):void {
+			this.addressNumber = addressNumber;
 	    }
 
-        public function set addressBus(addressBus:String) {
-		$this.addressBus = $addressBus;
+        public function set addressBus(addressBus:String):void {
+			this.addressBus = addressBus;
 	    }
 
-        public function set cityId(cityId:Number) {
-		$this.cityId = $cityId;
+        public function set cityId(cityId:Number):void {
+			this.cityId = cityId;
 	    }
 
-        public function set telephone(telephone:String) {
-		$this.telephone = $telephone;
+        public function set telephone(telephone:String):void {
+			this.telephone = telephone;
 	    }
 
-        public function set fax(fax:String) {
-		$this.fax = $fax;
+        public function set fax(fax:String):void {
+			this.fax = fax;
 	    }
 
-        public function set gsm(gsm:String) {
-		$this.gsm = $gsm;
+        public function set gsm(gsm:String):void{
+			this.gsm = gsm;
 	    }
 
-        public function set languageId(languageId:Number) {
-		$this.languageId = $languageId;
+        public function set languageId(languageId:Number):void {
+			this.languageId = languageId;
 	    }
 
     }
