@@ -17,6 +17,7 @@
   </compiler>
   <applications>
     <application path="trophy.mxml"/>
+    <application path="tests/logintest.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>

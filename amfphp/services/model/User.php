@@ -30,8 +30,8 @@ class User implements UserInterface {
     private $gsm;
     private $languageId;
     
-    private $occupations = array();	
-    private $specialties = array();
+    //private $occupations = array();	
+    //private $specialties = array();
         
     //mapping with flex
     public $_explicitType = "classestrophy.User";
@@ -85,8 +85,8 @@ class User implements UserInterface {
 	    $instance->fax = $fax;
 	    $instance->gsm = $gsm;
 	    $instance->languageId = $languageId;
-	    $instance->occupations = $occupations;
-	    $instance->specialties = $specialtis;
+	    //$instance->occupations = $occupations;
+            //$instance->specialties = $specialtis;
 	
 	    return $instance;
     }
