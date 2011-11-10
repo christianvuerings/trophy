@@ -1,25 +1,23 @@
 <?php
 
-require_once '../model/interfaces/UserInterface.php';
+require_once '../dal/UserDAO.php';
 
-/**
- * The controller to login a user
- */
-class SearchController {
-    
+class LoginController {
 
     /**
-     * Login a user by email and password
+     * Logging in a user by email 
+     *
      * @param string $email
      * @param string $password
-     * @return User $user 
+     * @return User user
      */
-    public function LoginUser($email,$password ){
-	$password = md5($password);
-	
-	// TODO: add user functionality
-	return $user;
+    public static function LoginUser($email, $password) {
+        $password = 'test';
+        $email = 'test';
+        $user = UserDAO::getInstance()->login($email, $password);
+        return $user;
     }
+
 }
 
 ?>

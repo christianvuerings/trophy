@@ -7,7 +7,9 @@ require_once '../model/interfaces/UserInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class UserDAOInterface {   
+interface UserDAOInterface
+{
+
     /**
      * Returns an instance of this UserDAO
      * Singleton pattern
@@ -15,15 +17,15 @@ class UserDAOInterface {
      * @return UserDAO $instance
      */
     public static function getInstance();
-    
+
     /**
      * deletes a User object from the database
      * 
      * @param $int $userId
      * @return int  number of deleted rows
      */
-    public function delete($userId)
-    
+    public function delete($userId);
+
     /**
      * loads a User object from the database
      * 
@@ -31,7 +33,7 @@ class UserDAOInterface {
      * @return User
      */
     public function load($userId);
-    
+
     /**
      * loads User objects from the database
      * 
@@ -39,7 +41,7 @@ class UserDAOInterface {
      * @return array<User>
      */
     public function loadMultiple($userIds);
-    
+
     /**
      * Saves the given object to the database
      * 
@@ -47,23 +49,23 @@ class UserDAOInterface {
      * @return int $primaryKey
      */
     public function save(UserInterface $user);
-    
-        /**
+
+    /**
      * Saves the link between a User and an occupation
      *
      * @param UserInterface $user
      * @param OccupationInterface $occupation 
      */
     public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation);
-    
+
     /**
-     * Saves the link between a user and a speciality
+     * Saves the link between a user and a specialty
      *
      * @param UserInterface $user
-     * @param SpecialityInterface $speciality 
+     * @param specialtyInterface $specialty 
      */
-    public function saveLinkBetweenUserAndSpeciality(UserInterface $user, SpecialityInterface $speciality);
-    
+    public function saveLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty);
+
     /**
      * Removes the link between a User and an occupation
      *
@@ -71,13 +73,16 @@ class UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation);
-    
+
     /**
-     * Saves the link between a user and a speciality
+     * Saves the link between a user and a specialty
      *
      * @param UserInterface $user
-     * @param SpecialityInterface $speciality 
+     * @param specialtyInterface $specialty 
      */
-    public function saveLinkBetweenUserAndSpeciality(UserInterface $user, SpecialityInterface $speciality);
+    public function removeLinkBetweenUserAndSpecialty(UserInterface $user, specialtyInterface $specialty);
+    
+    
 }
+
 ?>

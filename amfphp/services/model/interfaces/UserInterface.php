@@ -63,11 +63,11 @@ interface UserInterface {
     public function addOccupation(OccupationInterface $occupation);
     
     /**
-     * Adds a speciality to this user
+     * Adds a specialty to this user
      *
-     * @param specialityInterface $speciality 
+     * @param specialtyInterface $specialty 
      */
-    public function addspeciality(specialityInterface $speciality);
+    public function addspecialty(specialtyInterface $specialty);
 
     public function getUserId();
     
@@ -113,11 +113,11 @@ interface UserInterface {
     public function removeOccupation(OccupationInterface $occupation);
     
     /**
-     * Removes a speciality to this user
+     * Removes a specialty to this user
      *
-     * @param specialityInterface $speciality 
+     * @param specialtyInterface $specialty 
      */
-    public function removespeciality(specialityInterface $speciality);
+    public function removespecialty(specialtyInterface $specialty);
     
     public function setUserId($userId);
     

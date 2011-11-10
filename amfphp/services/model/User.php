@@ -3,7 +3,7 @@
 require_once '../dal/UserDAO.php';
 require_once 'interfaces/UserInterface.php';
 require_once 'interfaces/OccupationInterface.php';
-require_once 'interfaces/SpecialityInterface.php';
+require_once 'interfaces/SpecialtyInterface.php';
 
 /**
  * Model User
@@ -30,8 +30,8 @@ class User implements UserInterface {
     private $gsm;
     private $languageId;
     
-    private $occupations = array();	
-    private $specialties = array();
+    //private $occupations = array();	
+    //private $specialties = array();
         
     //mapping with flex
     public $_explicitType = "classestrophy.User";
@@ -60,7 +60,7 @@ class User implements UserInterface {
      * @param string   $fax
      * @param string   $gsm
      * @param array<Occupation>	$occupations
-     * @param array<Speciality> $specialities
+     * @param array<Specialty> $specialties
      * @param int   $languageId
      * @return User $instance
      */
@@ -85,8 +85,8 @@ class User implements UserInterface {
 	    $instance->fax = $fax;
 	    $instance->gsm = $gsm;
 	    $instance->languageId = $languageId;
-	    $instance->occupations = $occupations;
-	    $instance->specialities = $specialties;
+	    //$instance->occupations = $occupations;
+            //$instance->specialties = $specialtis;
 	
 	    return $instance;
     }
@@ -146,12 +146,12 @@ class User implements UserInterface {
     }
     
     /**
-     * Adds a speciality to this user
+     * Adds a specialty to this user
      *
-     * @param specialityInterface $speciality 
+     * @param specialtyInterface $specialty 
      */
-    public function addspeciality(specialityInterface $speciality){
-	$this->specialities[$speciality->getSpecialityId()] = $speciality;
+    public function addspecialty(specialtyInterface $specialty){
+	$this->specialties[$specialty->getspecialtyId()] = $specialty;
     }
     
     
@@ -327,9 +327,9 @@ class User implements UserInterface {
     }
     
     /**
-     * Return an array of specialities linked to this user
+     * Return an array of specialties linked to this user
      *
-     * @return Array<Speciality>
+     * @return Array<specialty>
      */
     public function getSpecialties() {
 	return $this->specialties;
@@ -345,12 +345,12 @@ class User implements UserInterface {
     }
     
     /**
-     * Removes a speciality to this user
+     * Removes a specialty to this user
      *
-     * @param specialityInterface $speciality 
+     * @param specialtyInterface $specialty 
      */
-    public function removespeciality(specialityInterface $speciality){
-	unset($this->specialities[$speciality->getSpecialityId()]);
+    public function removespecialty(specialtyInterface $specialty){
+	unset($this->specialties[$specialty->getspecialtyId()]);
     }
 
 
