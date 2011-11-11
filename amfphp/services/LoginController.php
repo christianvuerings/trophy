@@ -1,5 +1,6 @@
 <?php
-require_once('./../dal/UserDAO.php');
+require_once 'dal/UserDAO.php';
+
 
 class LoginController {
 
@@ -11,7 +12,7 @@ class LoginController {
      * @return User user
      */
     public static function LoginUser($email, $password) {
-        $user = UserDAO::getInstance()->login($email, $password);
+        $user = UserDAO::getInstance()->login($email, $password);     
         return array($user);
     }
 

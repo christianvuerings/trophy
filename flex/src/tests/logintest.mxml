@@ -22,14 +22,14 @@
 		private var password:String;
 		[Bindable]
 		private var myUser:User;
-		
-		private function InitApp():void{
-		}
+
 		private function LoginHandler(event:ResultEvent):void{		
 			for each (var user:User in event.result){
 				myUser = user;
 			}
+			
 			lblInfo.text = myUser.userId.toString();
+
 		}
 			
 		private function ClickLoginButton(event:Event):void{
@@ -46,7 +46,7 @@
 	</fx:Script>
 	<fx:Declarations>
 		<s:RemoteObject id="rmoTtrophy" destination="amfphp" fault="faultHandler(event)"
-						showBusyCursor="true" source="controllers/LoginController">
+						showBusyCursor="true" source="LoginController">
 			<s:method fault="faultHandler(event)" name="LoginUser" result="LoginHandler(event)">
 				<s:arguments>        	
 					<email>{email}</email>
