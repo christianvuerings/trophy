@@ -1,6 +1,6 @@
 <?php
 
-require_once '../model/interfaces/OccupationInterface.php';
+require_once 'model/interfaces/OccupationInterface.php';
 
 /**
  * interface  for OccupationDAO

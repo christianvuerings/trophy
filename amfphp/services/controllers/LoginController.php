@@ -1,5 +1,5 @@
 <?php
-require_once('./../dal/UserDAO.php');
+require_once('./dal/UserDAO.php');
 
 class LoginController {
 

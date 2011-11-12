@@ -28,7 +28,7 @@
 				myUser = user;
 			}
 			
-			lblInfo.text = myUser.userId.toString();
+			lblInfo.text = myUser.userId.toString()+'/'+myUser.firstName+'/'+myUser.lastName;
 
 		}
 			
@@ -46,7 +46,7 @@
 	</fx:Script>
 	<fx:Declarations>
 		<s:RemoteObject id="rmoTtrophy" destination="amfphp" fault="faultHandler(event)"
-						showBusyCursor="true" source="LoginController">
+						showBusyCursor="true" source="controllers">
 			<s:method fault="faultHandler(event)" name="LoginUser" result="LoginHandler(event)">
 				<s:arguments>        	
 					<email>{email}</email>

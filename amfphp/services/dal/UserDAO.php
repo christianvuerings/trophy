@@ -2,12 +2,12 @@
 
 require_once 'MySQLDatabase.php';
 require_once 'interfaces/UserDAOInterface.php';
-require_once '../model/interfaces/UserInterface.php';
-require_once '../model/User.php';
-require_once '../model/interfaces/OccupationInterface.php';
-require_once '../model/Occupation.php';
-require_once '../model/interfaces/SpecialtyInterface.php';
-require_once '../model/Specialty.php';
+require_once './model/interfaces/UserInterface.php';
+require_once './model/User.php';
+require_once './model/interfaces/OccupationInterface.php';
+require_once './model/Occupation.php';
+require_once './model/interfaces/SpecialtyInterface.php';
+require_once './model/Specialty.php';
 
 /**
  * DAO for User
@@ -68,10 +68,10 @@ class UserDAO implements UserDAOInterface {
         $db = MySQLDatabase::getInstance();
         $password = md5($password);
         
-	// TODO: sql injection, fix this!!
-        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email='".$email."' AND password='".$password."'";
+        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email= ? AND password= ? ";
+        
         // get record from database
-        $record = $db->getRecord($query);
+        $record = $db->getRecord($query,array($email,$password));
 
         // translate record to User object
         $user = new User();
@@ -86,6 +86,46 @@ class UserDAO implements UserDAOInterface {
 
 
         return $user;
+    }
+    
+    
+    /**
+     * Registers a user
+     * 
+     * @param UserInterface $user
+     * @return message
+     */
+    public function register(User $user) {
+        // get database
+        $db = MySQLDatabase::getInstance();
+
+        
+        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email= ?  ";
+        
+        // get record from database
+        $record = $db->getRecord($query,array($user->getEmail()));
+        
+        if (is_null($record)) {
+            // if there is no record found we insert a new user in the database
+            // validation of the data happens on the flex side
+            $newRecord = array();
+            $newRecord['first_name'] = $user->getFirstName();
+            $newRecord['last_name'] = $user->getLastName();
+            $newRecord['email'] = $user->getEmail();
+            $newRecord['password'] = $user->getPassword();
+            $newRecord['last_login'] = $user->getLastLogin();
+            $newRecord['member_since'] = $user->getMemberSince();
+            $newRecord['language_id'] = $user->getLanguageId();
+
+             $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
+            
+            $message = true;
+        } else {
+            $message = false;
+        }
+
+        // return key
+        return $message;
     }
 
     /**
@@ -269,7 +309,7 @@ class UserDAO implements UserDAOInterface {
         $db = MySQLDatabase::getInstance();
 	
 	// get records
-        $records = $db->getRecord('SELECT specialties_id FROM ' . self::specialtY_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
+        $records = $db->getRecord('SELECT specialties_id FROM ' . self::SPECIALTY_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $specialtiesArray = array();
         foreach ($records as $record) {
             $specialtiesId = $record['specialties_id'];

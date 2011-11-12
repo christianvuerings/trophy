@@ -1,6 +1,6 @@
 <?php
 
-require_once '../model/interfaces/specialtyInterface.php';
+require_once 'model/interfaces/specialtyInterface.php';
 
 /**
  * interface  for specialtyDAO
