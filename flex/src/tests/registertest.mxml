@@ -20,10 +20,12 @@
 		private var email:String;
 		[Bindable]
 		private var password:String;
+		//Let op type
 		[Bindable]
-		private var myUser:User;
+		private var myUser:Object;
 		[Bindable]
 		private var result:Boolean;
+
 			
 		private function RegisterHandler(event:ResultEvent):void{		
 			for each (var tempResult:Boolean in event.result){
@@ -39,7 +41,7 @@
 		}
 			
 		private function ClickRegisterButton(event:Event):void{
-			myUser = new User();
+			myUser = new Object();
 			email = txtEmail.text;
 			password = txtPassword.text;
 			myUser.email=email.toString();

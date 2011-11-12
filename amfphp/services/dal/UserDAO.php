@@ -97,22 +97,21 @@ class UserDAO implements UserDAOInterface {
     public function register($user) {
         // get database
         $db = MySQLDatabase::getInstance();
-        
 
 
         $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE email= ?  ";
 
         // get record from database
-        $record = $db->getRecord($query, array($user['_email']));
+        $record = $db->getRecord($query, array($user['email']));
         if (is_null($record)) {
             $newRecord = array();
-            $newRecord['first_name'] = $user['_firstName'];
-            $newRecord['last_name'] = $user['_lastName'];
-            $newRecord['email'] = $user['_email'];
-            $newRecord['password'] = $user['_password'];
-            $newRecord['last_login'] = $user['_lastLogin'];
-            $newRecord['member_since'] = $user['_memberSince'];
-            $newRecord['language_id'] = $user['_languageId'];
+            $newRecord['first_name'] = $user['firstName'];
+            $newRecord['last_name'] = $user['lastName'];
+            $newRecord['email'] = $user['email'];
+            $newRecord['password'] = $user['password'];
+            $newRecord['last_login'] = $user['lastLogin'];
+            $newRecord['member_since'] = $user['memberSince'];
+            $newRecord['language_id'] = $user['languageId'];
             $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
             $message = true;
         } else {
