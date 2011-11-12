@@ -95,7 +95,7 @@ class UserDAO implements UserDAOInterface {
      * @param UserInterface $user
      * @return message
      */
-    public function register(User $user) {
+    public function register($user) {
         // get database
         $db = MySQLDatabase::getInstance();
 
@@ -103,19 +103,19 @@ class UserDAO implements UserDAOInterface {
         $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email= ?  ";
         
         // get record from database
-        $record = $db->getRecord($query,array($user->getEmail()));
+        $record = $db->getRecord($query,array($user['_email']));
         
         if (is_null($record)) {
             // if there is no record found we insert a new user in the database
             // validation of the data happens on the flex side
             $newRecord = array();
-            $newRecord['first_name'] = $user->getFirstName();
-            $newRecord['last_name'] = $user->getLastName();
-            $newRecord['email'] = $user->getEmail();
-            $newRecord['password'] = $user->getPassword();
-            $newRecord['last_login'] = $user->getLastLogin();
-            $newRecord['member_since'] = $user->getMemberSince();
-            $newRecord['language_id'] = $user->getLanguageId();
+            $newRecord['first_name'] = $user['_firstName'];
+            $newRecord['last_name'] = $user['_lastName'];
+            $newRecord['email'] = $user['_email'];
+            $newRecord['password'] = $user['_password'];
+            $newRecord['last_login'] = $user['_lastLogin'];
+            $newRecord['member_since'] = $user['_memberSince'];
+            $newRecord['language_id'] = $user['_languageId'];
 
              $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
             

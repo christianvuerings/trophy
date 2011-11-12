@@ -9,9 +9,9 @@ class RegisterController {
      * Registering a new user
      *
      * @param User $myUser
-     * @return string $message
+     * @return bool $message
      */
-    public static function RegisterUser(User $myUser) {
+    public static function RegisterUser($myUser) {
         $message = UserDAO::getInstance()->register($myUser);
     }
 

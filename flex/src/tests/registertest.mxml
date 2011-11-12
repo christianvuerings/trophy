@@ -22,23 +22,36 @@
 		private var password:String;
 		[Bindable]
 		private var myUser:User;
-
-		private function LoginHandler(event:ResultEvent):void{		
-			for each (var user:User in event.result){
-				myUser = user;
+		[Bindable]
+		private var result:Boolean;
+			
+		private function RegisterHandler(event:ResultEvent):void{		
+			for each (var tempResult:Boolean in event.result){
+				result = tempResult;
 			}
-			if(myUser.userId != 0){
-				lblInfo.text = myUser.userId.toString()+'/'+myUser.firstName+'/'+myUser.lastName;
+			lblInfo.text = result.toString();
+			if(tempResult){
+				lblInfo.text = 'Registreren gelukt';
 			}else{
-				lblInfo.text = 'Gebruikersnaam of wachtwoord verkeerd';
+				lblInfo.text = 'Registreren mislukt';
 			}
 
 		}
 			
-		private function ClickLoginButton(event:Event):void{
+		private function ClickRegisterButton(event:Event):void{
+			lblInfo.text = 'button clicked';
 			email = txtEmail.text;
 			password = txtPassword.text;
-			rmoTtrophy.getOperation('LoginUser').send();
+			myUser.email=email;
+			myUser.password=password;
+			myUser.firstName='pieter';
+			myUser.lastName='massoels';
+			myUser.languageId=1;
+			myUser.memberSince=new Date('2011-10-10');
+			myUser.lastLogin=new Date('2011-10-10');
+			email = txtEmail.text;
+			password = txtPassword.text;
+			rmoTtrophy.getOperation('RegisterUser').send();
 		}
 		protected function faultHandler(event:FaultEvent):void
 		{
@@ -50,17 +63,16 @@
 	<fx:Declarations>
 		<s:RemoteObject id="rmoTtrophy" destination="amfphp" fault="faultHandler(event)"
 						showBusyCursor="true" source="controllers">
-			<s:method fault="faultHandler(event)" name="LoginUser" result="LoginHandler(event)">
+			<s:method fault="faultHandler(event)" name="RegisterUser" result="RegisterHandler(event)">
 				<s:arguments>        	
-					<email>{email}</email>
-					<password>{password}</password>					
+					<myUser>{myUser}</myUser>				
 				</s:arguments>					      	
 			</s:method>
 		</s:RemoteObject>
 	</fx:Declarations>
 	<s:TextInput id="txtEmail" text="email"/>
 	<s:TextInput id="txtPassword" text="password"/>
-	<s:Button id="btnLogin" label="Vraag gebruiker op" click="ClickLoginButton(event)"/>
+	<s:Button id="btnRegister" label="Registreer gebruiker" click="ClickRegisterButton(event)"/>
 	<s:Label id="lblInfo" width="131" height="306" text="De gebruikersinfo zal hier geladen worden"/>
 
 </s:Application>

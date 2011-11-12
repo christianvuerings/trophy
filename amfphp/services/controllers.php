@@ -20,9 +20,9 @@ class controllers {
      * Registering a user 
      *
      * @param User $user 
-     * @return string $message
+     * @return bool $message
      */
-    public static function RegisterUser(User $user) {
+    public static function RegisterUser($user) {
         return RegisterController::RegisterUser($user);
     }
     
