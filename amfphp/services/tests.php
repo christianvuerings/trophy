@@ -2,14 +2,11 @@
 
 require_once('controllers/LoginController.php');
 require_once('controllers/RegisterController.php');
+require_once('controllers/SearchController.php');
 
-$user=array();
-$user['_firstName'] ='hey';
-$user['_lastName']='thomas';
-$user['_email']='poging2';
-$user['_password']='eenwachtwoordofzo';
-$user['_lastLogin']='2011-10-10';
-$user['_memberSince']='2011-10-10';
-$user['_languageId']=1;
-$value =  RegisterController::RegisterUser($user);
+
+$value = 'ie';
+$array = SearchController::SearchCityAutoComplete($value);
+var_dump($array);
+
 ?>

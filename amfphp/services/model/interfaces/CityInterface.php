@@ -42,22 +42,7 @@ interface CityInterface {
     public static function load($cityId);
 
 
-    /* Getters and setters */
-    public function getCityId();
-    
-    public function getProvinceId();
-    
-    public function getZipcode();
-    
-    public function getName();
-    
-    public function setCityId($cityId);
-    
-    public function setProvinceId($provinceId);
-    
-    public function setZipcode($zipcode);
-    
-    public function setName($name);
+  
     
 }
 ?>

@@ -1,7 +1,8 @@
 <?php
+
 require_once('controllers/LoginController.php');
 require_once('controllers/RegisterController.php');
-
+require_once('controllers/SearchController.php');
 
 class controllers {
 
@@ -16,7 +17,7 @@ class controllers {
         return LoginController::LoginUser($email, $password);
     }
 
-     /**
+    /**
      * Registering a user 
      *
      * @param User $user 
@@ -25,7 +26,16 @@ class controllers {
     public static function RegisterUser($user) {
         return RegisterController::RegisterUser($user);
     }
-    
+
+   /**
+     * Autocomplete a city name
+     * @param string $searchTerm
+     * @return array<user>  
+     */
+    public static function SearchCityAutoComplete($searchTerm) {
+        return SearchController::SearchCityAutoComplete($searchTerm);
+    }
+
 }
 
 ?>
