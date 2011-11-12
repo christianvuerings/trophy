@@ -29,8 +29,8 @@
 			for each (var tempResult:Boolean in event.result){
 				result = tempResult;
 			}
-			lblInfo.text = result.toString();
-			if(tempResult){
+			result = true;			
+			if(result){
 				lblInfo.text = 'Registreren gelukt';
 			}else{
 				lblInfo.text = 'Registreren mislukt';
@@ -39,18 +39,16 @@
 		}
 			
 		private function ClickRegisterButton(event:Event):void{
-			lblInfo.text = 'button clicked';
+			myUser = new User();
 			email = txtEmail.text;
 			password = txtPassword.text;
-			myUser.email=email;
-			myUser.password=password;
+			myUser.email=email.toString();
+			myUser.password=password.toString();
 			myUser.firstName='pieter';
 			myUser.lastName='massoels';
 			myUser.languageId=1;
 			myUser.memberSince=new Date('2011-10-10');
-			myUser.lastLogin=new Date('2011-10-10');
-			email = txtEmail.text;
-			password = txtPassword.text;
+			myUser.lastLogin=new Date('2011-10-10');		
 			rmoTtrophy.getOperation('RegisterUser').send();
 		}
 		protected function faultHandler(event:FaultEvent):void
@@ -73,6 +71,6 @@
 	<s:TextInput id="txtEmail" text="email"/>
 	<s:TextInput id="txtPassword" text="password"/>
 	<s:Button id="btnRegister" label="Registreer gebruiker" click="ClickRegisterButton(event)"/>
-	<s:Label id="lblInfo" width="131" height="306" text="De gebruikersinfo zal hier geladen worden"/>
+	<s:Label id="lblInfo" width="131" height="306" />
 
 </s:Application>

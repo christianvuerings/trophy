@@ -67,11 +67,11 @@ class UserDAO implements UserDAOInterface {
         // get database
         $db = MySQLDatabase::getInstance();
         $password = md5($password);
-        
-        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email= ? AND password= ? ";
-        
+
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE email= ? AND password= ? ";
+
         // get record from database
-        $record = $db->getRecord($query,array($email,$password));
+        $record = $db->getRecord($query, array($email, $password));
 
         // translate record to User object
         $user = new User();
@@ -87,8 +87,7 @@ class UserDAO implements UserDAOInterface {
 
         return $user;
     }
-    
-    
+
     /**
      * Registers a user
      * 
@@ -98,16 +97,14 @@ class UserDAO implements UserDAOInterface {
     public function register($user) {
         // get database
         $db = MySQLDatabase::getInstance();
+        
 
-        
-        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email= ?  ";
-        
+
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE email= ?  ";
+
         // get record from database
-        $record = $db->getRecord($query,array($user['_email']));
-        
+        $record = $db->getRecord($query, array($user['_email']));
         if (is_null($record)) {
-            // if there is no record found we insert a new user in the database
-            // validation of the data happens on the flex side
             $newRecord = array();
             $newRecord['first_name'] = $user['_firstName'];
             $newRecord['last_name'] = $user['_lastName'];
@@ -116,14 +113,11 @@ class UserDAO implements UserDAOInterface {
             $newRecord['last_login'] = $user['_lastLogin'];
             $newRecord['member_since'] = $user['_memberSince'];
             $newRecord['language_id'] = $user['_languageId'];
-
-             $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
-            
+            $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
             $message = true;
         } else {
             $message = false;
         }
-
         // return key
         return $message;
     }
@@ -288,10 +282,10 @@ class UserDAO implements UserDAOInterface {
     }
 
     public function getUserOccupations($userId) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// get records
+
+        // get records
         $records = $db->getRecord('SELECT occupations_id FROM ' . self::OCCUPATION_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $occupationArray = array();
         foreach ($records as $record) {
@@ -305,10 +299,10 @@ class UserDAO implements UserDAOInterface {
     }
 
     public function getSpecialies($userId) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// get records
+
+        // get records
         $records = $db->getRecord('SELECT specialties_id FROM ' . self::SPECIALTY_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $specialtiesArray = array();
         foreach ($records as $record) {
@@ -328,10 +322,10 @@ class UserDAO implements UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// insert link
+
+        // insert link
         $db->insert(self::OCCUPATION_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'occupation_id' => $occupation->getOccupationId()));
     }
 
@@ -344,7 +338,7 @@ class UserDAO implements UserDAOInterface {
     public function saveLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
         $db->insert(self::specialtY_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'specialty_id' => $specialty->getspecialtyId()));
     }
-    
+
     /**
      * Searches the database for users with a practice in a specified city
      * The query can be the name of the city (or something that looks like it)
@@ -355,23 +349,22 @@ class UserDAO implements UserDAOInterface {
      * @param CountryInterface $country
      * @return array<User> 
      */
-    public function searchUsersByPostalCodeOrCityname($query, OccupationInterface $occupation, CountryInterface $country){
-	// get database
+    public function searchUsersByPostalCodeOrCityname($query, OccupationInterface $occupation, CountryInterface $country) {
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// get user ids
-	$userIds = $db->getColumn("SELECT u.user_id 
+
+        // get user ids
+        $userIds = $db->getColumn("SELECT u.user_id 
 			FROM " . self::TABLE_NAME . " AS u
-			LEFT JOIN ". self::OCCUPATION_LINK_TABLE_NAME . " AS ou ON ou.user_id = u.user_id
+			LEFT JOIN " . self::OCCUPATION_LINK_TABLE_NAME . " AS ou ON ou.user_id = u.user_id
 			LEFT JOIN practice AS p ON p.user_id = u.user_id
 			LEFT JOIN city AS c ON c.city_id = p.city_id
 			LEFT JOIN province ON province.province_id = c.province_id
 			WHERE ou.occupation_id = ? 
 			AND province.country_id = ?
-			AND (c.name LIKE ? OR c.zipcode = ?)",
-			array($occupation->getOccupationId(), $country->getCountryId(), $query, $query));
-	
-	// return these users
+			AND (c.name LIKE ? OR c.zipcode = ?)", array($occupation->getOccupationId(), $country->getCountryId(), $query, $query));
+
+        // return these users
         return $this->loadMultiple($userIds);
     }
 
@@ -382,10 +375,10 @@ class UserDAO implements UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// delete link
+
+        // delete link
         $db->delete(self::OCCUPATION_LINK_TABLE_NAME, 'user_id = ? AND occupation_id = ?', array($user->getUserId(), $occupation->getOccupationId()));
     }
 
@@ -396,10 +389,10 @@ class UserDAO implements UserDAOInterface {
      * @param specialtyInterface $specialty 
      */
     public function removeLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// delete link
+
+        // delete link
         $db->delete(self::specialtY_LINK_TABLE_NAME, 'user_id = ? AND specialty_id = ?', array($user->getUserId(), $specialty->getspecialtyId()));
     }
 

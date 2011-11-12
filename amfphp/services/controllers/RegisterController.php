@@ -13,6 +13,7 @@ class RegisterController {
      */
     public static function RegisterUser($myUser) {
         $message = UserDAO::getInstance()->register($myUser);
+        return $message;
     }
 
 }
