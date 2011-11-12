@@ -46,6 +46,22 @@ class SearchController {
         $possibleMatches = CityDAO::getInstance()->autocompleteCities($searchTerm);
         return $possibleMatches;
     }
+    
+     /**
+     * After as city is selected, the nearby cities will also be selected 
+     * to load all the users from that area
+     * 
+     * @param string $searchTerm
+     * @return array<user>  
+     */
+    public static function GiveNearbyCities($searchTerm){
+        $possibleUsers = CityDAO::getInstance()->getNearbyCities($searchTerm);
+        return $possibleUsers;
+    }
+    
+
+    
+    
 }
 
 ?>

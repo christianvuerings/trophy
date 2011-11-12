@@ -120,7 +120,8 @@ class CityDAO implements CityDAOInterface {
         public function autocompleteCities($searchTerm){
         $validCities = array();
         $db = MySQLDatabase::getInstance();
-        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE alpha LIKE '%".$searchTerm."%' ";
+        //TODO : fix sql injection
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE alpha LIKE '%".$search."%' ";
         $results = $db->getRecords($query);
         foreach ($results as $result) {
             array_push($validCities, $result['alpha']);

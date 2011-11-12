@@ -27,7 +27,7 @@ class controllers {
         return RegisterController::RegisterUser($user);
     }
 
-   /**
+    /**
      * Autocomplete a city name
      * @param string $searchTerm
      * @return array<user>  
@@ -36,6 +36,8 @@ class controllers {
         return SearchController::SearchCityAutoComplete($searchTerm);
     }
 
+    //TODO : next i'll add a controller to get all the cities nearby the city entered until there are x users to show
+    // i'll return this in an array of user object, i know how i want to do this but i dont have time now to finish it
 }
 
 ?>
