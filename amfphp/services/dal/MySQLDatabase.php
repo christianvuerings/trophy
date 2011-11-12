@@ -754,7 +754,7 @@ class MySQLDatabase implements Database {
 	    $numFields = count($actualValues);
 
 	    // prefix with table name
-            // TODO : voorlopig in comment gezet, weghalen
+            // TODO : voorlopig in comment gezet, weghalen indien mogelijk want geeft problemen bij insert register controller
 	    //array_walk($keys, create_function('&amp;$key', '$key = "' . $this->quoteName($table) . '.$key";'));
 
 	    // build query

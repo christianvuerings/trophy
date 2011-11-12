@@ -27,15 +27,16 @@
 		private var result:Boolean;
 
 			
-		private function RegisterHandler(event:ResultEvent):void{		
+		private function RegisterHandler(event:ResultEvent):void{	
+		
 			for each (var tempResult:Boolean in event.result){
 				result = tempResult;
 			}
-			result = true;			
+			
 			if(result){
 				lblInfo.text = 'Registreren gelukt';
 			}else{
-				lblInfo.text = 'Registreren mislukt';
+				lblInfo.text = 'Registreren mislukt,gebruiker bestaat al';
 			}
 
 		}
