@@ -1,6 +1,6 @@
 <?php
 
-require_once '../model/interfaces/UserInterface.php';
+require_once 'model/interfaces/UserInterface.php';
 
 /**
  * interface  for UserDAO

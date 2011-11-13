@@ -1,6 +1,6 @@
 <?php
 
-require_once '../dal/OccupationDAO.php';
+require_once 'dal/OccupationDAO.php';
 require_once 'interfaces/OccupationInterface.php';
 
 /**

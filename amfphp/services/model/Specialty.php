@@ -1,6 +1,6 @@
 <?php
 
-require_once '../dal/specialtyDAO.php';
+require_once 'dal/specialtyDAO.php';
 require_once 'interfaces/specialtyInterface.php';
 
 /**

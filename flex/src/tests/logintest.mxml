@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
+			   xmlns:s="library://ns.adobe.com/flex/spark"
+			   xmlns:mx="library://ns.adobe.com/flex/mx"
+			   xmlns:view="views.*"
+			   minWidth="955" minHeight="600">
+	<s:layout>
+		<s:VerticalLayout horizontalAlign="center"/>
+	</s:layout>
+	<fx:Script>
+		<![CDATA[
+		import classestrophy.*;
+		
+		import mx.collections.ArrayCollection;
+		import mx.controls.Alert;
+		import mx.rpc.events.FaultEvent;
+		import mx.rpc.events.ResultEvent;
+		import mx.utils.ArrayUtil;
+		[Bindable]
+		private var email:String;
+		[Bindable]
+		private var password:String;
+		[Bindable]
+		private var myUser:User;
+
+		private function LoginHandler(event:ResultEvent):void{		
+			for each (var user:User in event.result){
+				myUser = user;
+			}
+			if(myUser.userId != 0){
+				lblInfo.text = myUser.userId.toString()+'/'+myUser.firstName+'/'+myUser.lastName;
+			}else{
+				lblInfo.text = 'Gebruikersnaam of wachtwoord verkeerd';
+			}
+
+		}
+			
+		private function ClickLoginButton(event:Event):void{
+			email = txtEmail.text;
+			password = txtPassword.text;
+			rmoTtrophy.getOperation('LoginUser').send();
+		}
+		protected function faultHandler(event:FaultEvent):void
+		{
+			Alert.show(event.fault.faultString, event.fault.faultCode);
+				
+		}
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+		<s:RemoteObject id="rmoTtrophy" destination="amfphp" fault="faultHandler(event)"
+						showBusyCursor="true" source="controllers">
+			<s:method fault="faultHandler(event)" name="LoginUser" result="LoginHandler(event)">
+				<s:arguments>        	
+					<email>{email}</email>
+					<password>{password}</password>					
+				</s:arguments>					      	
+			</s:method>
+		</s:RemoteObject>
+	</fx:Declarations>
+	<s:TextInput id="txtEmail" text="email"/>
+	<s:TextInput id="txtPassword" text="password"/>
+	<s:Button id="btnLogin" label="Vraag gebruiker op" click="ClickLoginButton(event)"/>
+	<s:Label id="lblInfo" width="131" height="306" text="De gebruikersinfo zal hier geladen worden"/>
+
+</s:Application>

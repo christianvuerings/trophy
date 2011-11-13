@@ -2,8 +2,8 @@
 
 require_once 'MySQLDatabase.php';
 require_once 'interfaces/specialtyDAOInterface.php';
-require_once '../model/interfaces/specialtyInterface.php';
-require_once '../model/specialty.php';
+require_once 'model/interfaces/specialtyInterface.php';
+require_once 'model/specialty.php';
 
 /**
  * DAO for specialty

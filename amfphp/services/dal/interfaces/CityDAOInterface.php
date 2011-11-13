@@ -1,6 +1,6 @@
 <?php
 
-require_once '../model/interfaces/CityInterface.php';
+require_once 'model/interfaces/CityInterface.php';
 
 /**
  * interface  for CityDAO
@@ -22,7 +22,7 @@ interface CityDAOInterface {
      * @param $int $cityId
      * @return int  number of deleted rows
      */
-    public function delete($cityId)
+    public function delete($cityId);
     
     /**
      * loads a City object from the database
@@ -39,5 +39,6 @@ interface CityDAOInterface {
      * @return int $primaryKey
      */
     public function save(CityInterface $city);
+    
 }
 ?>
