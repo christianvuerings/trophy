@@ -98,7 +98,7 @@ class UserDAO implements UserDAOInterface {
 
             $extraCities = array();
             $query = "select alpha from city where longitude between $longitudeLow and $longitudeHigh and latitude between $latitudeLow and $latitudeHigh  ";
-           
+
             $records = $db->getRecords($query);
             if ($records != null) {
                 foreach ($records as $record) {
@@ -122,21 +122,60 @@ class UserDAO implements UserDAOInterface {
             }
         }
 
-        return $userids;
+        $userids = $this->del_duplicate($userids);
+        $users = array();
+        foreach ($userids as $key =>$value) {
+            $user = new User();
+
+            $record = $db->getRecord('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id FROM ' . self::TABLE_NAME . ' WHERE user_id = ?', array($value));
+
+            $user = new User();
+            $user->setUserId($record['user_id']);
+            $user->setFirstName($record['first_name']);
+            $user->setLastName($record['last_name']);
+            $user->setEmail($record['email']);
+            $user->setPassword($record['password']);
+            $user->setLastLogin($record['last_login']);
+            $user->setMemberSince($record['member_since']);
+            $user->setLanguageId($record['language_id']);
+            
+            array_push($users, $user);
+        }
+
+        return $users;
     }
 
     private function inHelper($array) {
         if ($array != null) {
             $amount = count($array);
-            $returnString = "('" . $array[0]."'";
+            $returnString = "('" . $array[0] . "'";
             for ($i = 1; $i < $amount - 1; $i++) {
-                $returnString .= "'".$array[$i] . "',";
+                $returnString .= "'" . $array[$i] . "',";
             }
-            $returnString .= "'".$array[$amount] . "')";
+            $returnString .= "'" . $array[$amount] . "')";
         } else {
-           $returnString = '';
+            $returnString = '';
         }
-         return $returnString;
+        return $returnString;
+    }
+
+    private function del_duplicate($arr, $bNew_keys=FALSE) {
+        if (!is_array($arr)) {
+            return false;
+            ;
+        }
+
+        $arr2 = array();
+        foreach ($arr as $key => $value) {
+            if (!in_array($value, $arr2)) {
+                if ($bNew_keys) {
+                    $arr2[] = $value;
+                } else {
+                    $arr2[$key] = $value;
+                }
+            }
+        }
+        return $arr2;
     }
 
     /**
