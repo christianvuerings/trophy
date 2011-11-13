@@ -49,14 +49,14 @@ class SearchController {
     
      /**
      * After as city is selected, the nearby cities will also be selected 
-     * to load all the users from that area
+     * to load all the users from that area until there are enough users to show
      * 
      * @param string $searchTerm
      * @return array<user>  
      */
-    public static function GiveNearbyCities($searchTerm){
-        $possibleUsers = CityDAO::getInstance()->getNearbyCities($searchTerm);
-        return $possibleUsers;
+    public static function SearchUserNearbyCity($city){
+        $$users = UserDAO::getInstance()->SearchUserNearbyCity($city);
+        return $users;
     }
     
 

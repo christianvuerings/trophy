@@ -56,6 +56,22 @@ class UserDAO implements UserDAOInterface {
         return $db->delete(TABLE_NAME, 'user_id = ?', array($primaryKey));
     }
 
+    //TODO : complete this search controller
+     /**
+     * Function to search users nearby a city
+     * After a city is selected with the other function all users from that city 
+     * and the citys nearby will be given until there are enough users to show
+     * 
+     * @param string $city
+     * @return array<users>
+     */
+    public function SearchUserNearbyCity($city) {
+        $users = array();
+
+
+        return $user;
+    }
+    
     /**
      * Function to login a user by email and password
      * 
