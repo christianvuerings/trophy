@@ -56,7 +56,7 @@ class UserDAO implements UserDAOInterface {
         return $db->delete(TABLE_NAME, 'user_id = ?', array($primaryKey));
     }
 
-    //TODO : complete this search controller
+    //TODO : Voor verbetering vatbaar -> methode om nabijgelegen dorpen te vinden moet beter. Hoeveel users weergeven? ->instellen 
     /**
      * Function to search users nearby a city
      * After a city is selected with the other function all users from that city 
