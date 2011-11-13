@@ -7,7 +7,7 @@ require_once '../model/interfaces/PracticeInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class PracticeDAOInterface {   
+interface PracticeDAOInterface {   
     /**
      * Returns an instance of this PracticeDAO
      * Singleton pattern

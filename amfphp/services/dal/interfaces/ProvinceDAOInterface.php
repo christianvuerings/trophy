@@ -7,7 +7,7 @@ require_once '../model/interfaces/ProvinceInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class ProvinceDAOInterface {   
+interface ProvinceDAOInterface {   
     /**
      * Returns an instance of this ProvinceDAO
      * Singleton pattern

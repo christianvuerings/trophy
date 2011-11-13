@@ -7,7 +7,7 @@ require_once '../model/interfaces/CountryInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class CountryDAOInterface {   
+interface CountryDAOInterface {   
     /**
      * Returns an instance of this CountryDAO
      * Singleton pattern

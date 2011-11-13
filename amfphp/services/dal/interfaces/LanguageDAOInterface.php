@@ -7,7 +7,7 @@ require_once '../model/interfaces/LanguageInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class LanguageDAOInterface {   
+interface LanguageDAOInterface {   
     /**
      * Returns an instance of this LanguageDAO
      * Singleton pattern

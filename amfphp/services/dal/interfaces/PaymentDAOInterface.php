@@ -7,7 +7,7 @@ require_once '../model/interfaces/PaymentInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class PaymentDAOInterface {   
+interface PaymentDAOInterface {   
     /**
      * Returns an instance of this PaymentDAO
      * Singleton pattern

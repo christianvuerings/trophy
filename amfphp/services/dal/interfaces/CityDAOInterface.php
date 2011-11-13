@@ -7,7 +7,7 @@ require_once '../model/interfaces/CityInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class CityDAOInterface {   
+interface CityDAOInterface {   
     /**
      * Returns an instance of this CityDAO
      * Singleton pattern
