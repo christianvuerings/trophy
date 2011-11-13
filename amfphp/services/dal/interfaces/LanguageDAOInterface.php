@@ -22,7 +22,7 @@ interface LanguageDAOInterface {
      * @param $int $languageId
      * @return int  number of deleted rows
      */
-    public function delete($languageId)
+    public function delete($languageId);
     
     /**
      * loads a Language object from the database

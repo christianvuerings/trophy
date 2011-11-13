@@ -22,7 +22,7 @@ interface ProvinceDAOInterface {
      * @param $int $provinceId
      * @return int  number of deleted rows
      */
-    public function delete($provinceId)
+    public function delete($provinceId);
     
     /**
      * loads a Province object from the database

@@ -22,7 +22,7 @@ interface PracticeDAOInterface {
      * @param $int $practiceId
      * @return int  number of deleted rows
      */
-    public function delete($practiceId)
+    public function delete($practiceId);
     
     /**
      * loads a Practice object from the database

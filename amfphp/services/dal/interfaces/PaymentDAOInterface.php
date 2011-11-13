@@ -22,7 +22,7 @@ interface PaymentDAOInterface {
      * @param $int $paymentId
      * @return int  number of deleted rows
      */
-    public function delete($paymentId)
+    public function delete($paymentId);
     
     /**
      * loads a Payment object from the database
