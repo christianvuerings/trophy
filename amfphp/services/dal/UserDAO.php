@@ -57,7 +57,7 @@ class UserDAO implements UserDAOInterface {
     }
 
     //TODO : complete this search controller
-     /**
+    /**
      * Function to search users nearby a city
      * After a city is selected with the other function all users from that city 
      * and the citys nearby will be given until there are enough users to show
@@ -67,11 +67,27 @@ class UserDAO implements UserDAOInterface {
      */
     public function SearchUserNearbyCity($city) {
         $users = array();
+        $db = MySQLDatabase::getInstance();
 
+        $query = "SELECT distinct(u.user_id) AS 'user_id' ";
+        $query.="FROM practice_user_specialty pus ";
+        $query.="LEFT JOIN  user u ON pus.user_id = u.user_id ";
+        $query.="LEFT JOIN practice p ON p.practice_id = pus.practice_id ";
+        $query.="LEFT JOIN city c ON c.id =p.city_id ";
+        $query.="WHERE c.alpha = ? ";
+
+        $records = $db->getRecords($query, array($city));
+        $user = array();
+
+        if ($records != null) {
+            foreach ($records as $record) {
+                array_push($user, $record['user_id']);
+            }
+        }
 
         return $user;
     }
-    
+
     /**
      * Function to login a user by email and password
      * 

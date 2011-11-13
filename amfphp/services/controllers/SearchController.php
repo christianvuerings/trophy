@@ -55,7 +55,7 @@ class SearchController {
      * @return array<user>  
      */
     public static function SearchUserNearbyCity($city){
-        $$users = UserDAO::getInstance()->SearchUserNearbyCity($city);
+        $users = UserDAO::getInstance()->SearchUserNearbyCity($city);
         return $users;
     }
     
