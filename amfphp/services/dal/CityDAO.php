@@ -121,7 +121,7 @@ class CityDAO implements CityDAOInterface {
         $validCities = array();
         $db = MySQLDatabase::getInstance();
         //TODO : fix sql injection
-        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE alpha LIKE '%".$search."%' ";
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE alpha LIKE '%".$searchTerm."%' ";
         $results = $db->getRecords($query);
         foreach ($results as $result) {
             array_push($validCities, $result['alpha']);

@@ -5,7 +5,7 @@ require_once('controllers/RegisterController.php');
 require_once('controllers/SearchController.php');
 
 
-$value = 'ie';
+$value = 'hass';
 $array = SearchController::SearchCityAutoComplete($value);
 var_dump($array);
 
