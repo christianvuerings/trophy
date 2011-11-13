@@ -77,15 +77,66 @@ class UserDAO implements UserDAOInterface {
         $query.="WHERE c.alpha = ? ";
 
         $records = $db->getRecords($query, array($city));
-        $user = array();
+        $userids = array();
 
         if ($records != null) {
             foreach ($records as $record) {
-                array_push($user, $record['user_id']);
+                array_push($userids, $record['user_id']);
             }
         }
 
-        return $user;
+        //If we find less then 10 users we will look in the nearby cities
+        if (count($userids) <= 10) {
+            $query = "select longitude,latitude from city where alpha = ? ";
+            $record = $db->getRecord($query, array($city));
+            $longitude = $record['longitude'];
+            $latitude = $record['latitude'];
+            $longitudeLow = $longitude - 0.2;
+            $longitudeHigh = $longitude + 0.2;
+            $latitudeLow = $latitude - 0.2;
+            $latitudeHigh = $latitude + 0.2;
+
+            $extraCities = array();
+            $query = "select alpha from city where longitude between $longitudeLow and $longitudeHigh and latitude between $latitudeLow and $latitudeHigh  ";
+           
+            $records = $db->getRecords($query);
+            if ($records != null) {
+                foreach ($records as $record) {
+                    array_push($extraCities, $record['alpha']);
+                }
+            }
+
+            $query = "SELECT distinct(u.user_id) AS 'user_id' ";
+            $query.="FROM practice_user_specialty pus ";
+            $query.="LEFT JOIN  user u ON pus.user_id = u.user_id ";
+            $query.="LEFT JOIN practice p ON p.practice_id = pus.practice_id ";
+            $query.="LEFT JOIN city c ON c.id =p.city_id ";
+            $query.="WHERE c.alpha IN " . $this->inHelper($extraCities);
+
+            $records = $db->getRecords($query);
+
+            if ($records != null) {
+                foreach ($records as $record) {
+                    array_push($userids, $record['user_id']);
+                }
+            }
+        }
+
+        return $userids;
+    }
+
+    private function inHelper($array) {
+        if ($array != null) {
+            $amount = count($array);
+            $returnString = "('" . $array[0]."'";
+            for ($i = 1; $i < $amount - 1; $i++) {
+                $returnString .= "'".$array[$i] . "',";
+            }
+            $returnString .= "'".$array[$amount] . "')";
+        } else {
+           $returnString = '';
+        }
+         return $returnString;
     }
 
     /**
