@@ -2,6 +2,7 @@
 
 require_once 'MySQLDatabase.php';
 require_once 'interfaces/UserDAOInterface.php';
+require_once 'OccupationDAO.php';
 require_once './model/interfaces/UserInterface.php';
 require_once './model/User.php';
 require_once './model/interfaces/OccupationInterface.php';
@@ -195,19 +196,8 @@ class UserDAO implements UserDAOInterface {
         // get record from database
         $record = $db->getRecord($query, array($email, $password));
 
-        // translate record to User object
-        $user = new User();
-        $user->setUserId($record['user_id']);
-        $user->setFirstName($record['first_name']);
-        $user->setLastName($record['last_name']);
-        $user->setEmail($record['email']);
-        $user->setPassword($record['password']);
-        $user->setLastLogin($record['last_login']);
-        $user->setMemberSince($record['member_since']);
-        $user->setLanguageId($record['language_id']);
-
-
-        return $user;
+	// return User object
+        return $this->recordToObject($record);
     }
 
     /**
@@ -256,31 +246,8 @@ class UserDAO implements UserDAOInterface {
         // get record from database
         $record = $db->getRecord('SELECT user_id, first_name, last_name, email, password, last_login, member_since, twitter_id, facebook_id, blog_rss, address_street, address_number, address_bus, city_id, telephone, fax, gsm, language_id FROM ' . self::TABLE_NAME . 'WHERE user_id = ?', array($userId));
 
-        // translate record to User object
-        $user = new User();
-        $user->setUserId($record['user_id']);
-        $user->setFirstName($record['first_name']);
-        $user->setLastName($record['last_name']);
-        $user->setEmail($record['email']);
-        $user->setPassword($record['password']);
-        $user->setLastLogin($record['last_login']);
-        $user->setMemberSince($record['member_since']);
-        $user->setTwitterId($record['twitter_id']);
-        $user->setFacebookId($record['facebook_id']);
-        $user->setBlogRss($record['blog_rss']);
-        $user->setAddressStreet($record['address_street']);
-        $user->setAddressNumber($record['address_number']);
-        $user->setAddressBus($record['address_bus']);
-        $user->setCityId($record['city_id']);
-        $user->setTelephone($record['telephone']);
-        $user->setFax($record['fax']);
-        $user->setGsm($record['gsm']);
-        $user->setLanguageId($record['language_id']);
-
-        // TODO: load the users occupations
-        // TODO: load the users specialties
-        // return User object
-        return $user;
+	// return User object from record
+        return $this->recordToObject($record);
     }
 
     /**
@@ -296,37 +263,63 @@ class UserDAO implements UserDAOInterface {
         // get records from database
         $records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, twitter_id, facebook_id, blog_rss, address_street, address_number, address_bus, city_id, telephone, fax, gsm, language_id FROM ' . self::TABLE_NAME . 'WHERE user_id IN (?)', array(implode(', ', $userIds)));
 
-        $users = array();
-        foreach ($records as $record) {
-            // translate record to User object
-            $user = new User();
-            $user->setUserId($record['user_id']);
-            $user->setFirstName($record['first_name']);
-            $user->setLastName($record['last_name']);
-            $user->setEmail($record['email']);
-            $user->setPassword($record['password']);
-            $user->setLastLogin($record['last_login']);
-            $user->setMemberSince($record['member_since']);
-            $user->setTwitterId($record['twitter_id']);
-            $user->setFacebookId($record['facebook_id']);
-            $user->setBlogRss($record['blog_rss']);
-            $user->setAddressStreet($record['address_street']);
-            $user->setAddressNumber($record['address_number']);
-            $user->setAddressBus($record['address_bus']);
-            $user->setCityId($record['city_id']);
-            $user->setTelephone($record['telephone']);
-            $user->setFax($record['fax']);
-            $user->setGsm($record['gsm']);
-            $user->setLanguageId($record['language_id']);
-
-            // TODO: load the users occupations
-            // TODO: load the users specialties
-
-            $users[] = $user;
-        }
-
         // return array of User objects
-        return $users;
+        return $this->recordsToObjects($records);
+    }
+    
+    /**
+     * Translates an array of a user record to an object
+     *
+     * @param array $record
+     * @return User
+     */
+    private function recordToObject($record){
+	 // translate record to User object
+	$user = new User();
+	$user->setUserId($record['user_id']);
+	$user->setFirstName($record['first_name']);
+	$user->setLastName($record['last_name']);
+	$user->setEmail($record['email']);
+	$user->setPassword($record['password']);
+	$user->setLastLogin($record['last_login']);
+	$user->setMemberSince($record['member_since']);
+	$user->setTwitterId($record['twitter_id']);
+	$user->setFacebookId($record['facebook_id']);
+	$user->setBlogRss($record['blog_rss']);
+	$user->setAddressStreet($record['address_street']);
+	$user->setAddressNumber($record['address_number']);
+	$user->setAddressBus($record['address_bus']);
+	$user->setCityId($record['city_id']);
+	$user->setTelephone($record['telephone']);
+	$user->setFax($record['fax']);
+	$user->setGsm($record['gsm']);
+	$user->setLanguageId($record['language_id']);
+
+	// load the users occupations
+	$occupationDAO = OccupationDAO::getInstance();
+	$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
+	
+	// load the users specialties
+	$specialtyDAO = specialtyDAO::getInstance();
+	$user->setSpecialities($specialtyDAO->getSpecialtiesForUserId($user->getUserId()));
+	
+	return $user;
+    }
+    
+    /**
+     * Translates an array of user records to objects
+     *
+     * @param array $records
+     * @return array<User> 
+     */
+    private function recordsToObjects($records){
+	$users = array();
+	
+	foreach ($records as $record) {    
+	    $users[] = $this->recordToObject($record);
+	}
+	
+	return $users;
     }
 
     /**

@@ -30,11 +30,13 @@ class User implements UserInterface {
     public $fax;
     public $gsm;
     public $languageId;
-    public $_explicitType = "classestrophy.User";
-    //private $occupations = array();	
-    //private $specialties = array();
+    
+    private $occupations = array();	
+    private $specialties = array();
+    
     //mapping with flex
-
+    public $_explicitType = "classestrophy.User";
+    
     public function __construct() {
         
     }
@@ -85,8 +87,8 @@ class User implements UserInterface {
         $instance->fax = $fax;
         $instance->gsm = $gsm;
         $instance->languageId = $languageId;
-        //$instance->occupations = $occupations;
-        //$instance->specialties = $specialtis;
+        $instance->occupations = $occupations;
+        $instance->specialties = $specialties;
 
         return $instance;
     }
@@ -348,7 +350,7 @@ class User implements UserInterface {
      *
      * @param specialtyInterface $specialty 
      */
-    public function removespecialty(specialtyInterface $specialty) {
+    public function removeSpecialty(specialityInterface $specialty) {
         unset($this->specialties[$specialty->getspecialtyId()]);
     }
 
@@ -513,7 +515,24 @@ class User implements UserInterface {
     public function setLanguageId($languageId) {
         $this->languageId = $languageId;
     }
-
+    
+    /**
+     * Sets the occupations
+     * 
+     * @param array<Occupations>
+     */
+    public function setOccupations($occupations) {
+        $this->occupations = $occupations;
+    }
+    
+    /**
+     * sets an array of specialties linked to this user
+     *
+     * @return Array<specialty>
+     */
+    public function setSpecialties($specialties) {
+        $this->specialties = $specialties;
+    }
 }
 
 ?>

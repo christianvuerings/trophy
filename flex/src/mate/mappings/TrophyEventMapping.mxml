@@ -5,19 +5,32 @@
 		<![CDATA[
 			import mate.business.*;
 			import mate.events.*;
+
 			import views.*;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
 		<EventHandlers debug="true" type="{LanguageEvent.GETLOCALE}" >
-			<!--<MethodInvoker generator="{LanguageManager}" method="storeLocale" />-->
 			<PropertyGetter generator="{LanguageManager}" targetKey="locale" />
 		</EventHandlers>
 		<EventHandlers debug="true" type="{LanguageEvent.SETLOCALE}">
 			<PropertySetter generator="{LanguageManager}" targetKey="locale" sourceKey="locale" />
 			<MethodInvoker generator="{mainsearch}" method="languageChanged" />
-			<!--<MethodInvoker generator="{LanguageManager}" method="storeLocale" arguments="{['locale']}" />-->
+		</EventHandlers>
+
+		<EventHandlers debug="true" type="{RegisterEvent.REGISTER}">
+			<RemoteObjectInvoker destination="amfphp"
+							showBusyCursor="true" source="controllers">
+				<resultHandlers>
+					<MethodInvoker generator="{TrophyManager}" method="registerUser"
+								   arguments="{resultObject}" />
+				</resultHandlers>
+				<faultHandlers>
+					<MethodInvoker generator="{TrophyManager}" method="HandleFault"
+								   arguments="{fault}" />
+				</faultHandlers>
+			</RemoteObjectInvoker>
 		</EventHandlers>
 
 		<Injectors target="{mainsearch}">

@@ -12,6 +12,7 @@ require_once 'model/specialty.php';
  */
 class specialtyDAO implements specialtyDAOInterface {
     const TABLE_NAME = 'specialty';
+    const SPECIALTY_LINK_TABLE_NAME = 'user_specialty';
     
     private static $instance;
     
@@ -43,6 +44,24 @@ class specialtyDAO implements specialtyDAOInterface {
 	return $db->delete(TABLE_NAME, 'specialty_id = ?', array($primaryKey));
     }
     
+    
+    public function getSpecialtiesForUserId($userId){
+	// get database
+	$db = MySQLDatabase::getInstance();
+	
+	// build query
+	$query = "SELECT specialty_id, label 
+		    FROM self::TABLE_NAME as o
+		    LEFT JOIN self::SPECIALTY_LINK_TABLE_NAME AS uo ON uo.occupation_id = o.occupation_id 
+		    WHERE UO.user_id = ?";
+	
+	// get records
+	$records = $db->getRecords($query, array($userId));
+	
+	// return objects of the array
+	return $this->recordsToObjects($records);
+    }
+    
     /**
      * loads a specialty object from the database
      * 
@@ -57,12 +76,36 @@ class specialtyDAO implements specialtyDAOInterface {
 	$record = $db->getRecord('SELECT specialty_id, label FROM ' . self::TABLE_NAME . 'WHERE specialty_id = ?', array($specialtyId));
 	
 	// translate record to specialty object
-	$specialty = new specialty();
-	$specialty->setspecialtyId($record['specialty_id']);   
-	$specialty->setLabel($record['label']);   
-
 	// return specialty object
+	return $this->recordToObject($record);
+    }
+    
+    /**
+     * Translates a records to an object
+     *
+     * @param array $record
+     * @return array<Specialty> 
+     */
+    private function recordToObject($record){
+	$specialty = specialty::createNew($record['id'], $record['label']);
+	
 	return $specialty;
+    }
+    
+    /**
+     * Translates an array of specialty records to objects
+     *
+     * @param array $records
+     * @return array<Specialty> 
+     */
+    private function recordsToObjects($records){
+	$specialties = array();
+	
+	foreach ($records as $record) {
+	    $specialties[] = $this->recordToObject($record);
+	}
+	
+	return $specialties;
     }
     
     /**

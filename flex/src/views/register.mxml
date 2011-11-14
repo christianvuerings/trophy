@@ -1,25 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="views.*">
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="views.*"
+		 creationComplete="registerViewCreatedHandler(event)">
 	<fx:Declarations>
 		<!-- Place non-visual elements (e.g., services, value objects) here -->
 	</fx:Declarations>
+	<fx:Script>
+		<![CDATA[
+			import mate.events.RegisterEvent;
+
+			import mx.events.FlexEvent;
+
+			[Bindable]
+			private var user:Object;
+
+			private function registerUser(event:MouseEvent):void {
+				user = new Object();
+				user.email= txtEmail.text;
+				user.password= txtPassword.text;
+				user.firstName= txtFirstname.text;
+				user.lastName = txtName.text;
+				user.languageId = 1;
+				user.memberSince = new Date('2011-10-10');
+				user.lastLogin = new Date('2011-10-10');
+				//rmoTtrophy.getOperation('RegisterUser').send();
+
+				var registerEvent:RegisterEvent = new RegisterEvent(RegisterEvent.REGISTER);
+				registerEvent.user = user;
+				dispatchEvent(registerEvent);
+			}
+
+			private function addEventListeners():void {
+				btnRegister.addEventListener(MouseEvent.CLICK, registerUser);
+			}
+
+			protected function registerViewCreatedHandler(event:FlexEvent):void
+			{
+				addEventListeners();
+			}
+
+		]]>
+	</fx:Script>
 	<views:header />
 	<s:Label text="{resourceManager.getString('main','registration')}" />
 	<s:Form>
 		<s:FormHeading label="{resourceManager.getString('main','personal_data')}" />
 		<s:FormItem label="{resourceManager.getString('main','name')}:">
-			<s:TextInput name="name" />
+			<s:TextInput id="txtName" />
 		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','firstname')}:">
-			<s:TextInput name="firstname" />
+			<s:TextInput id="txtFirstname" />
 		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','email')}:">
-			<s:TextInput name="email" />
+			<s:TextInput id="txtEmail" />
 		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','password')}:">
-			<s:TextInput name="password" displayAsPassword="true" />
+			<s:TextInput id="txtPassword" displayAsPassword="true" />
 		</s:FormItem>
+		<s:Button label="{resourceManager.getString('main','register')}" id="btnRegister" />
 	</s:Form>
 </s:VGroup>
