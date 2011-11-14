@@ -12,6 +12,7 @@ require_once 'model/Occupation.php';
  */
 class OccupationDAO implements OccupationDAOInterface {
     const TABLE_NAME = 'occupation';
+    const OCCUPATION_LINK_TABLE_NAME = 'user_occupation';
     
     private static $instance;
     
@@ -41,7 +42,7 @@ class OccupationDAO implements OccupationDAOInterface {
 	
 	// delete and return affected rows
         //TODO:delete lines in the link table
-	return $db->delete(TABLE_NAME, 'occupation_id = ?', array($primaryKey));
+	return $db->delete(self::TABLE_NAME, 'occupation_id = ?', array($primaryKey));
     }
     
     public function getOccupationsForUserId($userId) {
@@ -51,7 +52,7 @@ class OccupationDAO implements OccupationDAOInterface {
 	// build query
 	$query = "SELECT occupation_id, label 
 		    FROM self::TABLE_NAME as o
-		    LEFT JOIN user_occupation AS uo ON uo.occupation_id = o.occupation_id 
+		    LEFT JOIN self::OCCUPATION_LINK_TABLE_NAME AS uo ON uo.occupation_id = o.occupation_id 
 		    WHERE UO.user_id = ?";
 	
 	// get records
@@ -72,15 +73,24 @@ class OccupationDAO implements OccupationDAOInterface {
 	$db = MySQLDatabase::getInstance();
 	
 	// get record from database
-	$record = $db->getRecord('SELECT occupation_id, label FROM ' . self::TABLE_NAME . 'WHERE occupation_id = ?', array($occupationId));
-	
-	// translate record to Occupation object
-	$occupation = new Occupation();
-	$occupation->setOccupationId($record['occupation_id']);   
-	$occupation->setLabel($record['label']);   
+	$record = $db->getRecord('SELECT occupation_id, label FROM ' . self::TABLE_NAME . 'WHERE occupation_id = ?', array($occupationId));   
 
 	// return Occupation object
-	return $occupation;
+	return $this->recordToObject($record);
+    }
+    
+    /**
+     * Translates a records to an object
+     *
+     * @param array $record
+     * @return array<Occupation> 
+     */
+    private function recordToObject($record){
+	$occupations = array();
+	
+	$occupations = Occupation::createNew($record['id'], $record['label']);
+	
+	return $occupations;
     }
     
     /**
@@ -93,7 +103,7 @@ class OccupationDAO implements OccupationDAOInterface {
 	$occupations = array();
 	
 	foreach ($records as $record) {
-	    $occupations[] = Occupation::createNew($record['id'], $record['label']);
+	    $occupations[] = recordToObject($record);
 	}
 	
 	return $occupations;
