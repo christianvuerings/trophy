@@ -2,6 +2,7 @@
 
 require_once 'MySQLDatabase.php';
 require_once 'interfaces/UserDAOInterface.php';
+require_once 'OccupationDAO.php';
 require_once './model/interfaces/UserInterface.php';
 require_once './model/User.php';
 require_once './model/interfaces/OccupationInterface.php';
