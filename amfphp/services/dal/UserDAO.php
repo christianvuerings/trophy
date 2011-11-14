@@ -157,19 +157,8 @@ class UserDAO implements UserDAOInterface {
         // get record from database
         $record = $db->getRecord($query, array($email, $password));
 
-        // translate record to User object
-        $user = new User();
-        $user->setUserId($record['user_id']);
-        $user->setFirstName($record['first_name']);
-        $user->setLastName($record['last_name']);
-        $user->setEmail($record['email']);
-        $user->setPassword($record['password']);
-        $user->setLastLogin($record['last_login']);
-        $user->setMemberSince($record['member_since']);
-        $user->setLanguageId($record['language_id']);
-
-
-        return $user;
+	// return User object
+        return $this->recordToObject($record);
     }
 
     /**
