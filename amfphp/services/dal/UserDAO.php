@@ -207,34 +207,8 @@ class UserDAO implements UserDAOInterface {
         // get record from database
         $record = $db->getRecord('SELECT user_id, first_name, last_name, email, password, last_login, member_since, twitter_id, facebook_id, blog_rss, address_street, address_number, address_bus, city_id, telephone, fax, gsm, language_id FROM ' . self::TABLE_NAME . 'WHERE user_id = ?', array($userId));
 
-        // translate record to User object
-        $user = new User();
-        $user->setUserId($record['user_id']);
-        $user->setFirstName($record['first_name']);
-        $user->setLastName($record['last_name']);
-        $user->setEmail($record['email']);
-        $user->setPassword($record['password']);
-        $user->setLastLogin($record['last_login']);
-        $user->setMemberSince($record['member_since']);
-        $user->setTwitterId($record['twitter_id']);
-        $user->setFacebookId($record['facebook_id']);
-        $user->setBlogRss($record['blog_rss']);
-        $user->setAddressStreet($record['address_street']);
-        $user->setAddressNumber($record['address_number']);
-        $user->setAddressBus($record['address_bus']);
-        $user->setCityId($record['city_id']);
-        $user->setTelephone($record['telephone']);
-        $user->setFax($record['fax']);
-        $user->setGsm($record['gsm']);
-        $user->setLanguageId($record['language_id']);
-
-        // load the users occupations
-	$occupationDAO = OccupationDAO::getInstance();
-	$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
-	
-        // TODO: load the users specialties
-        // return User object
-        return $user;
+	// return User object from record
+        return $this->recordToObject($record);
     }
 
     /**
