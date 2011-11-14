@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Database.php';
-require_once '../../globals.php';
+require_once 'globals.php';
 /**
  * Spoon Library
  *
@@ -689,7 +689,7 @@ class MySQLDatabase implements Database {
 	// array has values
 	if (count($values) == 0)
 	    throw new DatabaseException('You need to provide values for an insert query.', 0, $this->password);
-
+        
 	// init vars
 	$query = 'INSERT INTO ' . $this->quoteName((string) $table) . ' (';
 	$keys = array_keys($values);
@@ -754,7 +754,8 @@ class MySQLDatabase implements Database {
 	    $numFields = count($actualValues);
 
 	    // prefix with table name
-	    array_walk($keys, create_function('&amp;$key', '$key = "' . $this->quoteName($table) . '.$key";'));
+            // TODO : voorlopig in comment gezet, weghalen indien mogelijk want geeft problemen bij insert register controller
+	    //array_walk($keys, create_function('&amp;$key', '$key = "' . $this->quoteName($table) . '.$key";'));
 
 	    // build query
 	    $query .= implode(', ', $keys) . ') VALUES (';

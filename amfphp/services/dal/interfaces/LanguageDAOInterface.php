@@ -7,7 +7,7 @@ require_once '../model/interfaces/LanguageInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class LanguageDAOInterface {   
+interface LanguageDAOInterface {   
     /**
      * Returns an instance of this LanguageDAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class LanguageDAOInterface {
      * @param $int $languageId
      * @return int  number of deleted rows
      */
-    public function delete($languageId)
+    public function delete($languageId);
     
     /**
      * loads a Language object from the database

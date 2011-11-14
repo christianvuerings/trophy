@@ -7,7 +7,7 @@ require_once '../model/interfaces/ProvinceInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class ProvinceDAOInterface {   
+interface ProvinceDAOInterface {   
     /**
      * Returns an instance of this ProvinceDAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class ProvinceDAOInterface {
      * @param $int $provinceId
      * @return int  number of deleted rows
      */
-    public function delete($provinceId)
+    public function delete($provinceId);
     
     /**
      * loads a Province object from the database

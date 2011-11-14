@@ -7,7 +7,7 @@ require_once '../model/interfaces/CountryInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class CountryDAOInterface {   
+interface CountryDAOInterface {   
     /**
      * Returns an instance of this CountryDAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class CountryDAOInterface {
      * @param $int $countryId
      * @return int  number of deleted rows
      */
-    public function delete($countryId)
+    public function delete($countryId);
     
     /**
      * loads a Country object from the database

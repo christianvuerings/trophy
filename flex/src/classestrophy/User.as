@@ -4,7 +4,7 @@ package classestrophy
 	public class User
 	{
 		
-		private var _userId:Number;
+		private var _userId:int;
 		private var _firstName:String;
 		private var _lastName:String;
 		private var _email:String;
@@ -17,14 +17,14 @@ package classestrophy
 		private var _addressStreet:String;
 		private var _addressNumber:String;
 		private var _addressBus:String;
-		private var _cityId:Number;
+		private var _cityId:int;
 		private var _telephone:String;
 		private var _fax:String;
 		private var _gsm:String;
-		private var _languageId:Number;
+		private var _languageId:int;
 		
 		// Getters
-		public function get userId():Number{
+		public function get userId():int{
 			return this._userId;
 		}
 		
@@ -75,7 +75,7 @@ package classestrophy
 		public function get addressBus():String{
 			return this._addressBus;
 		}
-		public function get cityId():Number{
+		public function get cityId():int{
 			return this._cityId;
 		}
 		
@@ -91,12 +91,12 @@ package classestrophy
 			return this._gsm;
 		}
 		
-		public function get languageId():Number{
+		public function get languageId():int{
 			return this._languageId;
 		}
 		
 		// Setters
-		public function set userId(userId:Number):void{
+		public function set userId(userId:int):void{
 			this._userId = userId;
 		}
 		public function set firstName(firstName:String):void{
@@ -135,7 +135,7 @@ package classestrophy
 		public function set addressBus(addressBus:String):void{
 			this._addressBus = addressBus;
 		}
-		public function set cityId(cityId:Number):void{
+		public function set cityId(cityId:int):void{
 			this._cityId = cityId;
 		}
 		public function set telephone(telephone:String):void{
@@ -147,7 +147,7 @@ package classestrophy
 		public function set gsm(gsm:String):void{
 			this._gsm = gsm;
 		}
-		public function set languageId(languageId:Number):void{
+		public function set languageId(languageId:int):void{
 			this._languageId = languageId;		
 		}
 		

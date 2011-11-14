@@ -7,7 +7,7 @@ require_once '../model/interfaces/PracticeInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class PracticeDAOInterface {   
+interface PracticeDAOInterface {   
     /**
      * Returns an instance of this PracticeDAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class PracticeDAOInterface {
      * @param $int $practiceId
      * @return int  number of deleted rows
      */
-    public function delete($practiceId)
+    public function delete($practiceId);
     
     /**
      * loads a Practice object from the database

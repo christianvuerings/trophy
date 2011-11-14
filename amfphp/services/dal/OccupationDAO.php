@@ -2,8 +2,8 @@
 
 require_once 'MySQLDatabase.php';
 require_once 'interfaces/OccupationDAOInterface.php';
-require_once '../model/interfaces/OccupationInterface.php';
-require_once '../model/Occupation.php';
+require_once 'model/interfaces/OccupationInterface.php';
+require_once 'model/Occupation.php';
 
 /**
  * DAO for Occupation

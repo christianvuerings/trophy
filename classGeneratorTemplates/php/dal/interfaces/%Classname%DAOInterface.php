@@ -7,7 +7,7 @@ require_once '../model/interfaces/{$className}Interface.php';
  *
  * @author {$authorName} <{$authorEmail}>
  */
-class {$className}DAOInterface {   
+interface {$className}DAOInterface {   
     /**
      * Returns an instance of this {$className}DAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class {$className}DAOInterface {
      * @param ${$fields.primaryKey.type.php} ${$fields.primaryKey.fieldName}
      * @return int  number of deleted rows
      */
-    public function delete(${$fields.primaryKey.fieldName})
+    public function delete(${$fields.primaryKey.fieldName});
     
     /**
      * loads a {$className} object from the database

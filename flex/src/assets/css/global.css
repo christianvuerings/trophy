@@ -1,10 +1,10 @@
 @namespace s "library://ns.adobe.com/flex/spark";
 @namespace mx "library://ns.adobe.com/flex/mx";
-@font-face {
+/*@font-face {
 	src: url("../fonts/jasmineupc.ttf");
 	fontFamily: jasmineUPC;
 	advancedAntiAliasing: true;
-}
+}*/
 
 /* Buttons, text inputs */
 s|TextInput {

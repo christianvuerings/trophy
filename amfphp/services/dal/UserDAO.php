@@ -2,12 +2,12 @@
 
 require_once 'MySQLDatabase.php';
 require_once 'interfaces/UserDAOInterface.php';
-require_once '../model/interfaces/UserInterface.php';
-require_once '../model/User.php';
-require_once '../model/interfaces/OccupationInterface.php';
-require_once '../model/Occupation.php';
-require_once '../model/interfaces/SpecialtyInterface.php';
-require_once '../model/Specialty.php';
+require_once './model/interfaces/UserInterface.php';
+require_once './model/User.php';
+require_once './model/interfaces/OccupationInterface.php';
+require_once './model/Occupation.php';
+require_once './model/interfaces/SpecialtyInterface.php';
+require_once './model/Specialty.php';
 
 /**
  * DAO for User
@@ -56,6 +56,89 @@ class UserDAO implements UserDAOInterface {
         return $db->delete(TABLE_NAME, 'user_id = ?', array($primaryKey));
     }
 
+    //TODO : Voor verbetering vatbaar -> methode om nabijgelegen dorpen te vinden moet beter. Hoeveel users weergeven? ->instellen 
+    /**
+     * Function to search users nearby a city
+     * After a city is selected with the other function all users from that city 
+     * and the citys nearby will be given until there are enough users to show
+     * 
+     * @param string $city
+     * @return array<users>
+     */
+    public function SearchUserNearbyCity($city) {
+        $users = array();
+        $db = MySQLDatabase::getInstance();
+
+        $query = "SELECT distinct(u.user_id) AS 'user_id' ";
+        $query.="FROM practice_user_specialty pus ";
+        $query.="LEFT JOIN  user u ON pus.user_id = u.user_id ";
+        $query.="LEFT JOIN practice p ON p.practice_id = pus.practice_id ";
+        $query.="LEFT JOIN city c ON c.id =p.city_id ";
+        $query.="WHERE c.alpha = ? ";
+
+        $records = $db->getRecords($query, array($city));
+        $userids = array();
+
+        if ($records != null) {
+            foreach ($records as $record) {
+                array_push($userids, $record['user_id']);
+            }
+        }
+
+        //If we find less then 10 users we will look in the nearby cities
+        if (count($userids) <= 10) {
+            $query = "select longitude,latitude from city where alpha = ? ";
+            $record = $db->getRecord($query, array($city));
+            $longitude = $record['longitude'];
+            $latitude = $record['latitude'];
+            $longitudeLow = $longitude - 0.2;
+            $longitudeHigh = $longitude + 0.2;
+            $latitudeLow = $latitude - 0.2;
+            $latitudeHigh = $latitude + 0.2;
+
+            $extraCities = array();
+            $query = "select alpha from city where longitude between $longitudeLow and $longitudeHigh and latitude between $latitudeLow and $latitudeHigh  ";
+           
+            $records = $db->getRecords($query);
+            if ($records != null) {
+                foreach ($records as $record) {
+                    array_push($extraCities, $record['alpha']);
+                }
+            }
+
+            $query = "SELECT distinct(u.user_id) AS 'user_id' ";
+            $query.="FROM practice_user_specialty pus ";
+            $query.="LEFT JOIN  user u ON pus.user_id = u.user_id ";
+            $query.="LEFT JOIN practice p ON p.practice_id = pus.practice_id ";
+            $query.="LEFT JOIN city c ON c.id =p.city_id ";
+            $query.="WHERE c.alpha IN " . $this->inHelper($extraCities);
+
+            $records = $db->getRecords($query);
+
+            if ($records != null) {
+                foreach ($records as $record) {
+                    array_push($userids, $record['user_id']);
+                }
+            }
+        }
+
+        return $userids;
+    }
+
+    private function inHelper($array) {
+        if ($array != null) {
+            $amount = count($array);
+            $returnString = "('" . $array[0]."'";
+            for ($i = 1; $i < $amount - 1; $i++) {
+                $returnString .= "'".$array[$i] . "',";
+            }
+            $returnString .= "'".$array[$amount] . "')";
+        } else {
+           $returnString = '';
+        }
+         return $returnString;
+    }
+
     /**
      * Function to login a user by email and password
      * 
@@ -67,11 +150,11 @@ class UserDAO implements UserDAOInterface {
         // get database
         $db = MySQLDatabase::getInstance();
         $password = md5($password);
-        
-	// TODO: sql injection, fix this!!
-        $query = "SELECT * FROM " .self::TABLE_NAME." WHERE email='".$email."' AND password='".$password."'";
+
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE email= ? AND password= ? ";
+
         // get record from database
-        $record = $db->getRecord($query);
+        $record = $db->getRecord($query, array($email, $password));
 
         // translate record to User object
         $user = new User();
@@ -86,6 +169,39 @@ class UserDAO implements UserDAOInterface {
 
 
         return $user;
+    }
+
+    /**
+     * Registers a user
+     * 
+     * @param UserInterface $user
+     * @return message
+     */
+    public function register($user) {
+        // get database
+        $db = MySQLDatabase::getInstance();
+
+
+        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE email= ?  ";
+
+        // get record from database
+        $record = $db->getRecord($query, array($user['email']));
+        if (is_null($record)) {
+            $newRecord = array();
+            $newRecord['first_name'] = $user['firstName'];
+            $newRecord['last_name'] = $user['lastName'];
+            $newRecord['email'] = $user['email'];
+            $newRecord['password'] = $user['password'];
+            $newRecord['last_login'] = $user['lastLogin'];
+            $newRecord['member_since'] = $user['memberSince'];
+            $newRecord['language_id'] = $user['languageId'];
+            $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
+            $message = true;
+        } else {
+            $message = false;
+        }
+        // return key
+        return $message;
     }
 
     /**
@@ -248,10 +364,10 @@ class UserDAO implements UserDAOInterface {
     }
 
     public function getUserOccupations($userId) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// get records
+
+        // get records
         $records = $db->getRecord('SELECT occupations_id FROM ' . self::OCCUPATION_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $occupationArray = array();
         foreach ($records as $record) {
@@ -265,11 +381,11 @@ class UserDAO implements UserDAOInterface {
     }
 
     public function getSpecialies($userId) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// get records
-        $records = $db->getRecord('SELECT specialties_id FROM ' . self::specialtY_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
+
+        // get records
+        $records = $db->getRecord('SELECT specialties_id FROM ' . self::SPECIALTY_LINK_TABLE_NAME . 'WHERE user_id = ?', array($userId));
         $specialtiesArray = array();
         foreach ($records as $record) {
             $specialtiesId = $record['specialties_id'];
@@ -288,10 +404,10 @@ class UserDAO implements UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// insert link
+
+        // insert link
         $db->insert(self::OCCUPATION_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'occupation_id' => $occupation->getOccupationId()));
     }
 
@@ -304,7 +420,7 @@ class UserDAO implements UserDAOInterface {
     public function saveLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
         $db->insert(self::specialtY_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'specialty_id' => $specialty->getspecialtyId()));
     }
-    
+
     /**
      * Searches the database for users with a practice in a specified city
      * The query can be the name of the city (or something that looks like it)
@@ -315,23 +431,22 @@ class UserDAO implements UserDAOInterface {
      * @param CountryInterface $country
      * @return array<User> 
      */
-    public function searchUsersByPostalCodeOrCityname($query, OccupationInterface $occupation, CountryInterface $country){
-	// get database
+    public function searchUsersByPostalCodeOrCityname($query, OccupationInterface $occupation, CountryInterface $country) {
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// get user ids
-	$userIds = $db->getColumn("SELECT u.user_id 
+
+        // get user ids
+        $userIds = $db->getColumn("SELECT u.user_id 
 			FROM " . self::TABLE_NAME . " AS u
-			LEFT JOIN ". self::OCCUPATION_LINK_TABLE_NAME . " AS ou ON ou.user_id = u.user_id
+			LEFT JOIN " . self::OCCUPATION_LINK_TABLE_NAME . " AS ou ON ou.user_id = u.user_id
 			LEFT JOIN practice AS p ON p.user_id = u.user_id
 			LEFT JOIN city AS c ON c.city_id = p.city_id
 			LEFT JOIN province ON province.province_id = c.province_id
 			WHERE ou.occupation_id = ? 
 			AND province.country_id = ?
-			AND (c.name LIKE ? OR c.zipcode = ?)",
-			array($occupation->getOccupationId(), $country->getCountryId(), $query, $query));
-	
-	// return these users
+			AND (c.name LIKE ? OR c.zipcode = ?)", array($occupation->getOccupationId(), $country->getCountryId(), $query, $query));
+
+        // return these users
         return $this->loadMultiple($userIds);
     }
 
@@ -342,10 +457,10 @@ class UserDAO implements UserDAOInterface {
      * @param OccupationInterface $occupation 
      */
     public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// delete link
+
+        // delete link
         $db->delete(self::OCCUPATION_LINK_TABLE_NAME, 'user_id = ? AND occupation_id = ?', array($user->getUserId(), $occupation->getOccupationId()));
     }
 
@@ -356,10 +471,10 @@ class UserDAO implements UserDAOInterface {
      * @param specialtyInterface $specialty 
      */
     public function removeLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
-	// get database
+        // get database
         $db = MySQLDatabase::getInstance();
-	
-	// delete link
+
+        // delete link
         $db->delete(self::specialtY_LINK_TABLE_NAME, 'user_id = ? AND specialty_id = ?', array($user->getUserId(), $specialty->getspecialtyId()));
     }
 

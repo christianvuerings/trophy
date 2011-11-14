@@ -7,7 +7,7 @@ require_once '../model/interfaces/PaymentInterface.php';
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class PaymentDAOInterface {   
+interface PaymentDAOInterface {   
     /**
      * Returns an instance of this PaymentDAO
      * Singleton pattern
@@ -22,7 +22,7 @@ class PaymentDAOInterface {
      * @param $int $paymentId
      * @return int  number of deleted rows
      */
-    public function delete($paymentId)
+    public function delete($paymentId);
     
     /**
      * loads a Payment object from the database

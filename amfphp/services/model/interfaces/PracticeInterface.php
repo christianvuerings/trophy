@@ -22,7 +22,7 @@ interface PracticeInterface {
      *      * @param $string   $gsm
      *      * @return Practice $instance
      */
-    public static function createNew($practiceId, $userId, $addressStreet, $addressNumber, $addressBus, $cityId, , $name = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL);
+    public static function createNew($practiceId, $userId, $addressStreet, $addressNumber, $addressBus, $cityId, $name = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL);
     
     /**
      * deletes an object from permanent storage
