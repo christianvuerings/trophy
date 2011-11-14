@@ -86,8 +86,6 @@ class OccupationDAO implements OccupationDAOInterface {
      * @return array<Occupation> 
      */
     private function recordToObject($record){
-	$occupations = array();
-	
 	$occupations = Occupation::createNew($record['id'], $record['label']);
 	
 	return $occupations;
@@ -103,7 +101,7 @@ class OccupationDAO implements OccupationDAOInterface {
 	$occupations = array();
 	
 	foreach ($records as $record) {
-	    $occupations[] = recordToObject($record);
+	    $occupations[] = $this->recordToObject($record);
 	}
 	
 	return $occupations;

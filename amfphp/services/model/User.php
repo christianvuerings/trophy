@@ -32,7 +32,7 @@ class User implements UserInterface {
     public $languageId;
     
     private $occupations = array();	
-    //private $specialties = array();
+    private $specialties = array();
     
     //mapping with flex
     public $_explicitType = "classestrophy.User";
@@ -88,7 +88,7 @@ class User implements UserInterface {
         $instance->gsm = $gsm;
         $instance->languageId = $languageId;
         $instance->occupations = $occupations;
-        //$instance->specialties = $specialties;
+        $instance->specialties = $specialties;
 
         return $instance;
     }
@@ -350,7 +350,7 @@ class User implements UserInterface {
      *
      * @param specialtyInterface $specialty 
      */
-    public function removespecialty(specialtyInterface $specialty) {
+    public function removeSpecialty(specialityInterface $specialty) {
         unset($this->specialties[$specialty->getspecialtyId()]);
     }
 
@@ -524,7 +524,15 @@ class User implements UserInterface {
     public function setOccupations($occupations) {
         $this->occupations = $occupations;
     }
-
+    
+    /**
+     * sets an array of specialties linked to this user
+     *
+     * @return Array<specialty>
+     */
+    public function setSpecialties($specialties) {
+        $this->specialties = $specialties;
+    }
 }
 
 ?>
