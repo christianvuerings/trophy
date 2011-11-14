@@ -7,7 +7,8 @@
 			   minHeight="400"
 			   creationComplete="initApp()"
 			   preloader="mx.preloaders.DownloadProgressBar"
-			   xmlns:mappings="mate.mappings.*">
+			   xmlns:mappings="mate.mappings.*"
+			   pageTitle="Trophy">
 	<fx:Style source="assets/css/global.css" />
 	<fx:Declarations>
 		<mappings:TrophyEventMapping />
@@ -20,6 +21,7 @@
 			import mx.controls.Alert;
 			import mx.core.Container;
 			import mx.core.FlexGlobals;
+			import mx.managers.BrowserManager;
 
 			private function submitSearch(event:SearchEvent):void {
 				Alert.show(event.locationname);
@@ -31,8 +33,13 @@
 				viewstack.selectedChild = NavigatorContent(viewstack.getChildByName(event.globalstate));
 			}
 
+			private function languageChanged(event:LanguageEvent):void {
+				setPageTitle();
+			}
+
 			private function addEventListeners():void{
 				addEventListener(GlobalStateEvent.CHANGEGLOBALSTATE, changeGlobalState);
+				addEventListener(LanguageEvent.SETLOCALE, languageChanged);
 				addEventListener(SearchEvent.SUBMITSEARCH, submitSearch);
 			}
 			private function addDispatchEvents():void {
@@ -44,9 +51,15 @@
 				dispatchEvent(changeGlobalStateEvent);
 			}
 
+			private function setPageTitle():void {
+				BrowserManager.getInstance().setTitle(resourceManager.getString('main','psychologist') + " " + resourceManager.getString('main','in_your_neighbourhood'));
+			}
+
 			private function initApp():void {
 				addEventListeners();
 				addDispatchEvents();
+
+				setPageTitle();
 			}
 
 		]]>
