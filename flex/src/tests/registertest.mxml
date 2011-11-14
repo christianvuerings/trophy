@@ -10,12 +10,10 @@
 	<fx:Script>
 		<![CDATA[
 		import classestrophy.*;
-		
-		import mx.collections.ArrayCollection;
+
 		import mx.controls.Alert;
 		import mx.rpc.events.FaultEvent;
 		import mx.rpc.events.ResultEvent;
-		import mx.utils.ArrayUtil;
 		[Bindable]
 		private var email:String;
 		[Bindable]
@@ -26,13 +24,13 @@
 		[Bindable]
 		private var result:Boolean;
 
-			
-		private function RegisterHandler(event:ResultEvent):void{	
-		
+
+		private function RegisterHandler(event:ResultEvent):void{
+
 			for each (var tempResult:Boolean in event.result){
 				result = tempResult;
 			}
-			
+
 			if(result){
 				lblInfo.text = 'Registreren gelukt';
 			}else{
@@ -40,7 +38,7 @@
 			}
 
 		}
-			
+
 		private function ClickRegisterButton(event:Event):void{
 			myUser = new Object();
 			email = txtEmail.text;
@@ -51,13 +49,13 @@
 			myUser.lastName='massoels';
 			myUser.languageId=1;
 			myUser.memberSince=new Date('2011-10-10');
-			myUser.lastLogin=new Date('2011-10-10');		
+			myUser.lastLogin=new Date('2011-10-10');
 			rmoTtrophy.getOperation('RegisterUser').send();
 		}
 		protected function faultHandler(event:FaultEvent):void
 		{
 			Alert.show(event.fault.faultString, event.fault.faultCode);
-				
+
 		}
 		]]>
 	</fx:Script>
@@ -65,9 +63,9 @@
 		<s:RemoteObject id="rmoTtrophy" destination="amfphp" fault="faultHandler(event)"
 						showBusyCursor="true" source="controllers">
 			<s:method fault="faultHandler(event)" name="RegisterUser" result="RegisterHandler(event)">
-				<s:arguments>        	
-					<myUser>{myUser}</myUser>				
-				</s:arguments>					      	
+				<s:arguments>
+					<myUser>{myUser}</myUser>
+				</s:arguments>
 			</s:method>
 		</s:RemoteObject>
 	</fx:Declarations>
