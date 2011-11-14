@@ -238,7 +238,10 @@ class UserDAO implements UserDAOInterface {
         $user->setGsm($record['gsm']);
         $user->setLanguageId($record['language_id']);
 
-        // TODO: load the users occupations
+        // load the users occupations
+	$occupationDAO = OccupationDAO::getInstance();
+	$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
+	
         // TODO: load the users specialties
         // return User object
         return $user;

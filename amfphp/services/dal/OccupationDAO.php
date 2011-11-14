@@ -44,6 +44,23 @@ class OccupationDAO implements OccupationDAOInterface {
 	return $db->delete(TABLE_NAME, 'occupation_id = ?', array($primaryKey));
     }
     
+    public function getOccupationsForUserId($userId) {
+	// get database
+	$db = MySQLDatabase::getInstance();
+	
+	// build query
+	$query = "SELECT occupation_id, label 
+		    FROM self::TABLE_NAME as o
+		    LEFT JOIN user_occupation AS uo ON uo.occupation_id = o.occupation_id 
+		    WHERE UO.user_id = ?";
+	
+	// get records
+	$records = $db->getRecords($query, array($userId));
+	
+	// return objects of the array
+	return $this->recordsToObjects($records);
+    }
+    
     /**
      * loads a Occupation object from the database
      * 
@@ -64,6 +81,22 @@ class OccupationDAO implements OccupationDAOInterface {
 
 	// return Occupation object
 	return $occupation;
+    }
+    
+    /**
+     * Translates an array of occupation records to objects
+     *
+     * @param array $records
+     * @return array<Occupation> 
+     */
+    private function recordsToObjects($records){
+	$occupations = array();
+	
+	foreach ($records as $record) {
+	    $occupations[] = Occupation::createNew($record['id'], $record['label']);
+	}
+	
+	return $occupations;
     }
     
     /**
