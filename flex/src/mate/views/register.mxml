@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="views.*"
+		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
+		 xmlns:mappings="mate.mappings.*"
 		 creationComplete="registerViewCreatedHandler(event)">
 	<fx:Declarations>
-		<!-- Place non-visual elements (e.g., services, value objects) here -->
+		<mappings:TrophyEventMapping />
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.asfusion.mate.core.GlobalDispatcher;
+
 			import mate.events.RegisterEvent;
 
+			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 
 			[Bindable]
 			private var user:Object;
+			[Bindable]
+			public var dispatcher:GlobalDispatcher;
 
 			private function registerUser(event:MouseEvent):void {
 				user = new Object();
@@ -22,13 +28,12 @@
 				user.firstName= txtFirstname.text;
 				user.lastName = txtName.text;
 				user.languageId = 1;
-				user.memberSince = new Date('2011-10-10');
-				user.lastLogin = new Date('2011-10-10');
-				//rmoTtrophy.getOperation('RegisterUser').send();
+				user.memberSince = new Date();
+				user.lastLogin = new Date();
 
 				var registerEvent:RegisterEvent = new RegisterEvent(RegisterEvent.REGISTER);
 				registerEvent.user = user;
-				dispatchEvent(registerEvent);
+				dispatcher.dispatchEvent(registerEvent);
 			}
 
 			private function addEventListeners():void {
@@ -38,26 +43,33 @@
 			protected function registerViewCreatedHandler(event:FlexEvent):void
 			{
 				addEventListeners();
+				dispatcher = new GlobalDispatcher();
 			}
 
 		]]>
 	</fx:Script>
 	<views:header />
-	<s:Label text="{resourceManager.getString('main','registration')}" />
-	<s:Form>
+	<s:Label styleName="heading"
+			 text="{resourceManager.getString('main','registration')}"/>
+	<s:Form styleName="formclass">
+		<s:layout>
+			<s:FormLayout gap="-10" paddingLeft="24"/>
+		</s:layout>
 		<s:FormHeading label="{resourceManager.getString('main','personal_data')}" />
 		<s:FormItem label="{resourceManager.getString('main','name')}:">
-			<s:TextInput id="txtName" />
+			<s:TextInput id="txtName" width="400" />
 		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','firstname')}:">
-			<s:TextInput id="txtFirstname" />
+			<s:TextInput id="txtFirstname" width="400" />
 		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','email')}:">
-			<s:TextInput id="txtEmail" />
+			<s:TextInput id="txtEmail" width="400" />
 		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','password')}:">
-			<s:TextInput id="txtPassword" displayAsPassword="true" />
+			<s:TextInput id="txtPassword" width="400" displayAsPassword="true" />
 		</s:FormItem>
-		<s:Button label="{resourceManager.getString('main','register')}" id="btnRegister" />
+		<s:FormItem>
+			<s:Button label="{resourceManager.getString('main','register')}" id="btnRegister" />
+		</s:FormItem>
 	</s:Form>
 </s:VGroup>

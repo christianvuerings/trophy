@@ -2,7 +2,7 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  xmlns:view="views.*"
+		  xmlns:views="mate.views.*"
 		  creationComplete="mainsearchCreationComplete(event)">
 	<fx:Script>
 		<![CDATA[
@@ -72,7 +72,7 @@
 							required="true" />
 	</fx:Declarations>
 	<s:HGroup horizontalAlign="center" width="400" id="logo_group">
-		<view:logo id="logo" />
+		<views:logo id="logo" />
 	</s:HGroup>
 	<s:Form id="frmSearch">
 		<s:TextInput width="{logo_group.width}"

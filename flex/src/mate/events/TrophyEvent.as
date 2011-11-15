@@ -1,11 +1,12 @@
 package mate.events
 {
 	import flash.events.Event;
+
 	public class TrophyEvent extends Event
 	{
+		public static const GETUSER:String = "getUserEvent";
 
-		// Own type of event
-		public function TrophyEvent(type:String, bubbles:Boolean=true, cancelable:Boolean=false)
+		public function TrophyEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}
