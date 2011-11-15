@@ -350,7 +350,7 @@ class User implements UserInterface {
      *
      * @param specialtyInterface $specialty 
      */
-    public function removeSpecialty(specialityInterface $specialty) {
+    public function removeSpecialty(specialtyInterface $specialty) {
         unset($this->specialties[$specialty->getspecialtyId()]);
     }
 

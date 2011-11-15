@@ -150,6 +150,10 @@ CREATE  TABLE IF NOT EXISTS `trophy`.`user` (
   `language_id` INT(11) NOT NULL ,
   `address_id` INT(11) NOT NULL COMMENT 'invoice address' ,
   `gsm` VARCHAR(30) NULL ,
+  `avatar` VARCHAR(255) NULL ,
+  `twitter` VARCHAR(255) NULL ,
+  `facebook` VARCHAR(255) NULL ,
+  `rss` VARCHAR(255) NULL ,
   PRIMARY KEY (`user_id`) ,
   UNIQUE INDEX `email_UNIQUE` (`email` ASC) )
 ENGINE = MyISAM

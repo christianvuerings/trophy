@@ -117,7 +117,7 @@ interface UserInterface {
      *
      * @param specialtyInterface $specialty 
      */
-    public function removespecialty(specialtyInterface $specialty);
+    public function removeSpecialty(specialtyInterface $specialty);
     
     public function setUserId($userId);
     
