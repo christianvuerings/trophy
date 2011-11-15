@@ -6,24 +6,29 @@
 			import mate.business.*;
 			import mate.events.*;
 
-			import views.*;
+			import mx.events.FlexEvent;
+
+			import mate.views.*;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
-		<EventHandlers debug="true" type="{LanguageEvent.GETLOCALE}" >
-			<PropertyGetter generator="{LanguageManager}" targetKey="locale" />
+		<EventHandlers type="{FlexEvent.INITIALIZE}">
+			<ObjectBuilder generator="{register}">
+				<Properties dispatcher="{scope.dispatcher}"/>
+			</ObjectBuilder>
+			<ObjectBuilder generator="{register}">
+				<Properties dispatcher="{scope.dispatcher}"/>
+			</ObjectBuilder>
 		</EventHandlers>
-		<EventHandlers debug="true" type="{LanguageEvent.SETLOCALE}">
-			<PropertySetter generator="{LanguageManager}" targetKey="locale" sourceKey="locale" />
-			<MethodInvoker generator="{mainsearch}" method="languageChanged" />
-		</EventHandlers>
-
-		<EventHandlers debug="true" type="{RegisterEvent.REGISTER}">
-			<RemoteObjectInvoker destination="amfphp"
-							showBusyCursor="true" source="controllers">
+		<EventHandlers type="{RegisterEvent.REGISTER}" debug="true" dispatcherType="global">
+			<RemoteObjectInvoker destination="amfphp" showBusyCursor="true"
+								 source="controllers"
+								 method="RegisterUser"
+								 debug="true"
+								 arguments="{event.user}">
 				<resultHandlers>
-					<MethodInvoker generator="{TrophyManager}" method="registerUser"
+					<MethodInvoker generator="{TrophyManager}" method="RegisterCompleted"
 								   arguments="{resultObject}" />
 				</resultHandlers>
 				<faultHandlers>
@@ -32,10 +37,5 @@
 				</faultHandlers>
 			</RemoteObjectInvoker>
 		</EventHandlers>
-
-		<Injectors target="{mainsearch}">
-			<PropertyInjector targetKey="locale" source="{LanguageManager}"
-							  sourceKey="locale" />
-		</Injectors>
 	</fx:Declarations>
 </EventMap>

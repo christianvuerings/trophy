@@ -2,7 +2,7 @@
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009"
 			   xmlns:s="library://ns.adobe.com/flex/spark"
 			   xmlns:mx="library://ns.adobe.com/flex/mx"
-			   xmlns:view="views.*"
+			   xmlns:views="mate.views.*"
 			   minWidth="800"
 			   minHeight="400"
 			   creationComplete="initApp()"
@@ -11,9 +11,9 @@
 			   pageTitle="Trophy">
 	<fx:Style source="assets/css/global.css" />
 	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
 		<mappings:TrophyEventMapping />
 	</fx:Declarations>
-
 	<fx:Script>
 		<![CDATA[
 			import mate.events.*;
@@ -55,29 +55,27 @@
 				BrowserManager.getInstance().setTitle(resourceManager.getString('main','psychologist') + " " + resourceManager.getString('main','in_your_neighbourhood'));
 			}
 
-			private function initApp():void {
+			private function initApp():void{
 				addEventListeners();
 				addDispatchEvents();
 
 				setPageTitle();
 			}
-
 		]]>
 	</fx:Script>
-
 	<s:Group width="100%" height="100%">
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<view:topnavigation id="topnavigation" />
+		<views:topnavigation id="topnavigation" />
 		<mx:ViewStack id="viewstack" width="100%" height="100%">
 			<s:NavigatorContent id="mainsearchview">
-				<view:mainsearch id="mainsearch" horizontalCenter="0" verticalCenter="0" />
+				<views:mainsearch id="mainsearch" horizontalCenter="0" verticalCenter="100" />
 			</s:NavigatorContent>
-			<s:NavigatorContent id="registerview" left="200">
-				<view:register id="register"/>
+			<s:NavigatorContent id="registerview">
+				<views:register />
 			</s:NavigatorContent>
 		</mx:ViewStack>
-		<view:languages id="languages" />
+		<views:languages id="languages" />
 	</s:Group>
 </s:Application>

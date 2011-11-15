@@ -6,7 +6,7 @@
 	advancedAntiAliasing: true;
 }*/
 
-/* Buttons, text inputs */
+/* Buttons, text inputs, form */
 s|TextInput {
 	skinClass: ClassReference("assets.skins.textinput");
 }
@@ -16,6 +16,12 @@ mx|LinkButton {
 }
 mx|LinkButton:over {
 	color: #1C4774;
+}
+
+.heading {
+	font-size: 32px;
+	paddingTop: 20px;
+	paddingLeft: 24px;
 }
 
 /* Search */
