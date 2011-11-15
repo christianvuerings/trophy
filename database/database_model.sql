@@ -126,7 +126,7 @@ CREATE  TABLE IF NOT EXISTS `trophy`.`address` (
   `address_id` INT(11) NOT NULL AUTO_INCREMENT ,
   `address_street` VARCHAR(30) NOT NULL ,
   `address_number` INT(11) NOT NULL ,
-  `address_bus` INT(11) NOT NULL ,
+  `address_bus` INT(11) NULL ,
   `city_id` INT(11) NOT NULL ,
   PRIMARY KEY (`address_id`) )
 ENGINE = InnoDB

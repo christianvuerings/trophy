@@ -183,13 +183,12 @@ class UserDAO implements UserDAOInterface {
      * Function to login a user by email and password
      * 
      * @param string $email
-     * @param string $password
-     * @return User
+     * @param string $password (hashed)
+     * @return User (empty user when login failed)
      */
     public function login($email, $password) {
         // get database
         $db = MySQLDatabase::getInstance();
-        $password = md5($password);
 
         $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE email= ? AND password= ? ";
 
@@ -197,7 +196,7 @@ class UserDAO implements UserDAOInterface {
         $record = $db->getRecord($query, array($email, $password));
 
 	// return User object
-        return $this->recordToObject($record);
+        return is_null($record) ? new User() : $this->recordToObject($record);
     }
 
     /**

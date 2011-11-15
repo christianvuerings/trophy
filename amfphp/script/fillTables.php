@@ -167,14 +167,22 @@ mysql_query("INSERT INTO language (label) VALUES ('dutch')");
 mysql_query("INSERT INTO language (label) VALUES ('english')");
 mysql_query("INSERT INTO language (label) VALUES ('french')");
 
+// get cities
+$cityids = array();
+$query = 'select id from city';
+$results = mysql_query($query);
+while($row = mysql_fetch_assoc($results)){
+	array_push($cityids,$row['id']);
+}
 
 $password = '098f6bcd4621d373cade4e832627b4f6';
 foreach ($lastnames as $lastname) {
     foreach ($firstnamesBoys as $firstname) {
         $email = $firstname . "." . $lastname . "@email.com";
         $language_id = rand(1, 3);
-        mysql_query("INSERT INTO user (first_name, last_name, email,password,language_id) VALUES ('$firstname', '$lastname', '$email','$password','$language_id') ON DUPLICATE KEY UPDATE email = email");
-        mysql_query("INSERT INTO languages (label) VALUES ('french')");
+	mysql_query("INSERT INTO address (address_street, address_number, city_id) VALUES ('Streetstraat', '". rand(1,256) ."', '" . array_rand($cityids) . "')");
+	$addressId = mysql_insert_id();
+        mysql_query("INSERT INTO user (first_name, last_name, email, password, language_id, address_id) VALUES ('$firstname', '$lastname', '$email','$password','$language_id', '$addressId') ON DUPLICATE KEY UPDATE email = email");
     }
     foreach ($firstnamesGirls as $firstname) {
         $email = $firstname . "." . $lastname . "@email.com";
@@ -183,9 +191,6 @@ foreach ($lastnames as $lastname) {
     }
 }
 
-mysql_query("INSERT INTO languages (label) VALUES ('dutch')");
-mysql_query("INSERT INTO languages (label) VALUES ('english')");
-mysql_query("INSERT INTO languages (label) VALUES ('french')");
 
 
 
