@@ -30,8 +30,9 @@ while($row = mysql_fetch_assoc($results)){
 }
 
 for($i=0;$i<7000;$i++){
-	$randomCity = array_rand($cityids);
-	mysql_query("INSERT INTO practice (name, address_street, address_number,address_bus,city_id,telephone,fax,gsm) VALUES ('name$i', 'address_street$i', '$i','$i','$randomCity','telephone$i','fax$i','gsm$i') ");
+	$resource = mysql_query("INSERT INTO address (address_street, address_number, city_id) VALUES ('Streetstraat', '". rand(1,256) ."', '" . array_rand($cityids) . "')");
+	$addressId = mysql_insert_id();
+	mysql_query("INSERT INTO practice (name, address_id,telephone,fax) VALUES ('Praktijk $i', '$addressId','telephone$i','fax$i') ");
 }
 
 
