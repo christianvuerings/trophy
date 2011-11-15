@@ -6,13 +6,20 @@
 		  creationComplete="mainsearchCreationComplete(event)">
 	<fx:Script>
 		<![CDATA[
-			import mate.events.LanguageEvent;
-			import mate.events.SearchEvent;
-
+			import mate.events.*;
+			
 			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 
 			public var locale:String;
+
+			private var changeGlobalStateEvent:GlobalStateEvent;
+
+			protected function afterSearchHandler():void {
+				changeGlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "aftersearchview";
+				dispatchEvent(changeGlobalStateEvent);
+			}
 
 			private function performSearch():void{
 				// Check whether the user actually entered something in the textbox
@@ -20,6 +27,7 @@
 					var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SUBMITSEARCH);
 					searchEvent.locationname = txtSearch.text;
 					dispatchEvent(searchEvent);
+					afterSearchHandler();
 				}
 			}
 

@@ -11,7 +11,7 @@ package mate.business
 
 
 		public function RegisterCompleted(resultObject:Object):void {
-			Alert.show("okk");
+			Alert.show("ok");
 		}
 
 		public function HandleFault(fault:Fault):void{

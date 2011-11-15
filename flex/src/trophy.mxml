@@ -75,6 +75,9 @@
 			<s:NavigatorContent id="registerview">
 				<views:register />
 			</s:NavigatorContent>
+			<s:NavigatorContent id="aftersearchview">
+				<views:aftersearch />
+			</s:NavigatorContent>
 		</mx:ViewStack>
 		<views:languages id="languages" />
 	</s:Group>
