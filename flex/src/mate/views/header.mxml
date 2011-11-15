@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		 xmlns:s="library://ns.adobe.com/flex/spark"
+		 xmlns:mx="library://ns.adobe.com/flex/mx"
+		 xmlns:views="mate.views.*">
+	<s:Rect width="{application.width}" height="100%">
+		<s:fill><s:SolidColor color="#F5F5F5" /></s:fill>
+		<s:stroke>
+			<s:SolidColorStroke color="#e5e5e5" />
+		</s:stroke>
+	</s:Rect>
+	<fx:Script>
+		<![CDATA[
+			import mate.events.GlobalStateEvent;
+			import mx.core.FlexGlobals;
+
+			[Bindable]
+			private var application:Object = FlexGlobals.topLevelApplication;
+
+			private function gotomainpage():void {
+				var changeGlobalState:GlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalState.globalstate = "mainsearchview";
+				dispatchEvent(changeGlobalState);
+			}
+
+			protected function logoClickHandler(event:MouseEvent):void
+			{
+				gotomainpage();
+			}
+		]]>
+	</fx:Script>
+
+	<fx:Declarations>
+		<!-- Place non-visual elements (e.g., services, value objects) here -->
+	</fx:Declarations>
+	<s:HGroup contentBackgroundColor="#ff0000"
+			  paddingBottom="10"
+			  paddingTop="10"
+			  paddingLeft="20"
+			  paddingRight="20"
+			  verticalAlign="bottom">
+		<views:logo id="viewlogo" click="logoClickHandler(event)" useHandCursor="true" buttonMode="true" toolTip="{resourceManager.getString('main', 'go_back_to_homepage')}" />
+		<s:Form id="frmSearch">
+			<s:TextInput id="txtSearch" width="{application.width - 450}"
+						 prompt="{resourceManager.getString('main', 'give_postal_code_city_or_town')}"
+						 styleName="search"/>
+		</s:Form>
+	</s:HGroup>
+</s:Group>
