@@ -14,9 +14,6 @@
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
 		<EventHandlers type="{FlexEvent.INITIALIZE}">
-			<ObjectBuilder generator="{register}">
-				<Properties dispatcher="{scope.dispatcher}"/>
-			</ObjectBuilder>
 			<ObjectBuilder generator="{login}">
 				<Properties dispatcher="{scope.dispatcher}"/>
 			</ObjectBuilder>

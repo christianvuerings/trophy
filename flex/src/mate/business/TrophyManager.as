@@ -22,7 +22,9 @@ package mate.business
 		}
 
 		public function RegisterCompleted(resultObject:Object):void {
-			Alert.show("ok");
+			if(resultObject) {
+				Alert.show("ok");
+			}
 		}
 
 		public function LoginCompleted(resultObject:Object):void {

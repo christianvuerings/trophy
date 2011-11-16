@@ -5,9 +5,6 @@
 		 xmlns:mappings="mate.mappings.*"
 		 >
 		 <!--creationComplete="registerViewCreatedHandler(event)">-->
-	<fx:Declarations>
-		<mappings:TrophyEventMapping />
-	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import com.asfusion.mate.core.GlobalDispatcher;

@@ -4,9 +4,6 @@
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
 		 xmlns:mappings="mate.mappings.*"
 		 creationComplete="registerViewCreatedHandler(event)">
-	<fx:Declarations>
-		<mappings:TrophyEventMapping />
-	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
 			import com.adobe.crypto.MD5;
