@@ -12,7 +12,7 @@ USE `trophy` ;
 DROP TABLE IF EXISTS `trophy`.`country` ;
 
 CREATE  TABLE IF NOT EXISTS `trophy`.`country` (
-  `country_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `country_id` VARCHAR(2) NOT NULL COMMENT 'ISO Country Code, 2 Digits' ,
   `label` VARCHAR(255) NOT NULL ,
   PRIMARY KEY (`country_id`) )
 ENGINE = MyISAM
@@ -29,7 +29,7 @@ DROP TABLE IF EXISTS `trophy`.`province` ;
 CREATE  TABLE IF NOT EXISTS `trophy`.`province` (
   `province_id` INT(11) NOT NULL AUTO_INCREMENT ,
   `label` VARCHAR(255) NOT NULL ,
-  `country_id` INT(11) NOT NULL ,
+  `country_id` VARCHAR(2) NOT NULL ,
   PRIMARY KEY (`province_id`) )
 ENGINE = MyISAM
 AUTO_INCREMENT = 24
@@ -66,7 +66,7 @@ COLLATE = utf8_general_ci;
 DROP TABLE IF EXISTS `trophy`.`language` ;
 
 CREATE  TABLE IF NOT EXISTS `trophy`.`language` (
-  `language_id` INT(11) NOT NULL AUTO_INCREMENT ,
+  `language_id` VARCHAR(2) NOT NULL COMMENT 'ISO 639-1 Language Code, 2 Digits' ,
   `label` VARCHAR(30) NOT NULL ,
   PRIMARY KEY (`language_id`) )
 ENGINE = MyISAM
@@ -147,7 +147,7 @@ CREATE  TABLE IF NOT EXISTS `trophy`.`user` (
   `password` VARCHAR(32) NOT NULL ,
   `last_login` TIMESTAMP NULL DEFAULT NULL ,
   `member_since` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ,
-  `language_id` INT(11) NOT NULL ,
+  `language_id` VARCHAR(2) NOT NULL ,
   `address_id` INT(11) NOT NULL COMMENT 'invoice address' ,
   `gsm` VARCHAR(30) NULL ,
   `avatar` VARCHAR(255) NULL ,
@@ -194,14 +194,14 @@ COLLATE = utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `trophy`.`speciality`
+-- Table `trophy`.`specialty`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `trophy`.`speciality` ;
+DROP TABLE IF EXISTS `trophy`.`specialty` ;
 
-CREATE  TABLE IF NOT EXISTS `trophy`.`speciality` (
-  `speciality_id` INT(11) NOT NULL AUTO_INCREMENT ,
+CREATE  TABLE IF NOT EXISTS `trophy`.`specialty` (
+  `specialty_id` INT(11) NOT NULL AUTO_INCREMENT ,
   `label` VARCHAR(30) NOT NULL ,
-  PRIMARY KEY (`speciality_id`) )
+  PRIMARY KEY (`specialty_id`) )
 ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
@@ -260,16 +260,29 @@ COLLATE = utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `trophy`.`practice_user_specialty`
+-- Table `trophy`.`practice_user`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `trophy`.`practice_user_specialty` ;
+DROP TABLE IF EXISTS `trophy`.`practice_user` ;
 
-CREATE  TABLE IF NOT EXISTS `trophy`.`practice_user_specialty` (
+CREATE  TABLE IF NOT EXISTS `trophy`.`practice_user` (
   `practice_id` INT(11) NOT NULL ,
   `user_id` INT(11) NOT NULL ,
-  `specialty_id` INT(11) NOT NULL ,
-  PRIMARY KEY (`practice_id`, `user_id`, `specialty_id`) )
+  PRIMARY KEY (`practice_id`, `user_id`) )
 ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8
+COLLATE = utf8_general_ci;
+
+
+-- -----------------------------------------------------
+-- Table `trophy`.`specialty_user`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `trophy`.`specialty_user` ;
+
+CREATE  TABLE IF NOT EXISTS `trophy`.`specialty_user` (
+  `specialty_id` INT(11) NOT NULL ,
+  `user_id` INT(11) NOT NULL ,
+  PRIMARY KEY (`specialty_id`, `user_id`) )
+ENGINE = MyISAM
 DEFAULT CHARACTER SET = utf8
 COLLATE = utf8_general_ci;
 

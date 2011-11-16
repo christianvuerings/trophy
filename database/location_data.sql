@@ -3,24 +3,24 @@
 --
 
 INSERT INTO `country` (`country_id`, `label`) VALUES
-(1, 'belgium');
+('be', 'belgium');
 
 --
 -- Gegevens worden uitgevoerd voor tabel `province`
 --
 
 INSERT INTO `province` (`province_id`, `label`, `country_id`) VALUES
-(1, 'Antwerpen', 1),
-(2, 'Limburg', 1),
-(3, 'Oost-Vlaanderen', 1),
-(4, 'Vlaams Brabant', 1),
-(5, 'West-Vlaanderen', 1),
-(6, 'Hainaut', 1),
-(7, 'Liége', 1),
-(8, 'Brabant Wallon', 1),
-(9, 'Luxembourg', 1),
-(10, 'Namur', 1),
-(23, 'Brussel', 1);
+(1, 'Antwerpen', 'be'),
+(2, 'Limburg', 'be'),
+(3, 'Oost-Vlaanderen', 'be'),
+(4, 'Vlaams Brabant', 'be'),
+(5, 'West-Vlaanderen', 'be'),
+(6, 'Hainaut', 'be'),
+(7, 'Liége', 'be'),
+(8, 'Brabant Wallon', 'be'),
+(9, 'Luxembourg', 'be'),
+(10, 'Namur', 'be'),
+(23, 'Brussel', 'be');
 
 --
 -- Gegevens worden uitgevoerd voor tabel `city`
