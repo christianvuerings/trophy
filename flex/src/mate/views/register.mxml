@@ -65,7 +65,7 @@
 			<s:TextInput id="txtPassword" width="400" displayAsPassword="true" />
 		</s:FormItem>
 		<s:FormItem>
-			<s:Button label="{resourceManager.getString('main','Register')}" id="btnRegister" />
+			<s:Button label="{resourceManager.getString('main','register')}" id="btnRegister" />
 		</s:FormItem>
 	</s:Form>
 </s:VGroup>

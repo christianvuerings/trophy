@@ -30,7 +30,7 @@
 	<fx:Declarations>
 	</fx:Declarations>
 	<s:Label text="{resourceManager.getString('main', 'i_am_a_psychologist')}:" paddingTop="5" />
-	<mx:LinkButton label="{resourceManager.getString('main', 'Register')}" click="registerClickHandler(event)" />
+	<mx:LinkButton label="{resourceManager.getString('main', 'register')}" click="registerClickHandler(event)" />
 	<s:Label text="{resourceManager.getString('main', 'or')}" paddingTop="5" />
-	<mx:LinkButton label="{resourceManager.getString('main', 'Login')}" click="loginClickHandler(event)" />
+	<mx:LinkButton label="{resourceManager.getString('main', 'login')}" click="loginClickHandler(event)" />
 </s:HGroup>

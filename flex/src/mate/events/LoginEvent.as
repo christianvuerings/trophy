@@ -6,15 +6,31 @@ package mate.events
 	{
 		public static const LOGIN:String = "loginEvent";
 
-		private var _user:Object;
+		private var _email:String;
+		private var _password:String;
+
+		// Getters & Setters
 		[Bindable]
-		public function set user(user:Object):void{
-			this._user = user;
+		public function get password():String
+		{
+			return _password;
 		}
-		public function get user():Object{
-			return this._user;
+		public function set password(value:String):void
+		{
+			_password = value;
 		}
 
+		[Bindable]
+		public function get email():String
+		{
+			return _email;
+		}
+		public function set email(value:String):void
+		{
+			_email = value;
+		}
+
+		// Constructor
 		public function LoginEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);

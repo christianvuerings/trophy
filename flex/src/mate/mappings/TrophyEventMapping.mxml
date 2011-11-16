@@ -12,11 +12,6 @@
 	</fx:Script>
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
-		<EventHandlers type="{FlexEvent.INITIALIZE}">
-			<ObjectBuilder generator="{login}">
-				<Properties dispatcher="{scope.dispatcher}"/>
-			</ObjectBuilder>
-		</EventHandlers>
 		<EventHandlers type="{RegisterEvent.REGISTER}" debug="true" dispatcherType="global">
 			<RemoteObjectInvoker destination="amfphp" showBusyCursor="true"
 								 source="controllers"
@@ -25,6 +20,22 @@
 								 arguments="{event.user}">
 				<resultHandlers>
 					<MethodInvoker generator="{TrophyManager}" method="RegisterCompleted"
+								   arguments="{resultObject}" />
+				</resultHandlers>
+				<faultHandlers>
+					<MethodInvoker generator="{TrophyManager}" method="HandleFault"
+								   arguments="{fault}" />
+				</faultHandlers>
+			</RemoteObjectInvoker>
+		</EventHandlers>
+		<EventHandlers type="{LoginEvent.LOGIN}" debug="true" dispatcherType="global">
+			<RemoteObjectInvoker destination="amfphp" showBusyCursor="true"
+								 source="controllers"
+								 method="LoginUser"
+								 debug="true"
+								 arguments="{[event.email, event.password]}">
+				<resultHandlers>
+					<MethodInvoker generator="{TrophyManager}" method="LoginCompleted"
 								   arguments="{resultObject}" />
 				</resultHandlers>
 				<faultHandlers>
