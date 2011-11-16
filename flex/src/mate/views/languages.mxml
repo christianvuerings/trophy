@@ -9,10 +9,6 @@
 		<![CDATA[
 			import mate.events.LanguageEvent;
 
-			import mx.collections.ArrayCollection;
-			import mx.controls.Alert;
-			import mx.resources.ResourceBundle;
-
 			private var _locales_mapping:Object = new Object();
 
 			// Event listener

@@ -8,8 +8,8 @@ package mate.events
 
 		private var _user:Object;
 		[Bindable]
-		public function set user(category_id:Object):void{
-			this._user = category_id;
+		public function set user(user:Object):void{
+			this._user = user;
 		}
 		public function get user():Object{
 			return this._user;

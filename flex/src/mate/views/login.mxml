@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
+		  creationComplete="loginViewCreatedHandler(event)">
+	<fx:Script>
+		<![CDATA[
+			import com.adobe.crypto.MD5;
+			import com.asfusion.mate.core.GlobalDispatcher;
+
+			import mate.events.LoginEvent;
+
+			import mx.events.FlexEvent;
+
+			[Bindable]
+			private var user:Object;
+			[Bindable]
+			public var dispatcher:GlobalDispatcher;
+
+			private function loginUser(event:MouseEvent):void {
+
+				var loginEvent:LoginEvent = new LoginEvent(LoginEvent.LOGIN);
+				loginEvent.email = txtEmail.text;
+				loginEvent.password = MD5.hash(txtPassword.text);
+				dispatcher.dispatchEvent(loginEvent);
+			}
+
+			private function addEventListeners():void {
+				btnLogin.addEventListener(MouseEvent.CLICK, loginUser);
+			}
+
+			protected function loginViewCreatedHandler(event:FlexEvent):void
+			{
+				addEventListeners();
+				dispatcher = new GlobalDispatcher();
+			}
+
+		]]>
+	</fx:Script>
+	<views:header />
+	<s:Label styleName="heading"
+			 text="{resourceManager.getString('main','login')}"/>
+	<s:Form styleName="formclass">
+		<s:layout>
+			<s:FormLayout gap="-10" paddingLeft="24"/>
+		</s:layout>
+		<s:FormItem label="{resourceManager.getString('main','email')}:">
+			<s:TextInput id="txtEmail" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','password')}:">
+			<s:TextInput id="txtPassword" width="400" displayAsPassword="true" />
+		</s:FormItem>
+		<s:FormItem>
+			<s:Button label="{resourceManager.getString('main','login')}" id="btnLogin" />
+		</s:FormItem>
+	</s:Form>
+</s:VGroup>

@@ -2,18 +2,14 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
-		 xmlns:mappings="mate.mappings.*"
 		 creationComplete="registerViewCreatedHandler(event)">
-	<fx:Declarations>
-		<mappings:TrophyEventMapping />
-	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import com.adobe.crypto.MD5;
 			import com.asfusion.mate.core.GlobalDispatcher;
 
 			import mate.events.RegisterEvent;
 
-			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 
 			[Bindable]
@@ -24,8 +20,8 @@
 			private function registerUser(event:MouseEvent):void {
 				user = new Object();
 				user.email= txtEmail.text;
-				user.password= txtPassword.text;
-				user.firstName= txtFirstname.text;
+				user.password =  MD5.hash(txtPassword.text);
+				user.firstName = txtFirstname.text;
 				user.lastName = txtName.text;
 				user.languageId = 1;
 				user.memberSince = new Date();

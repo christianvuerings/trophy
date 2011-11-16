@@ -146,12 +146,6 @@ class UserDAO implements UserDAOInterface {
         return $users;
     }
 
-    /**
-     * makes an array ready for the sql statement
-     *
-     * @param type $array
-     * @return string
-     */
     private function inHelper($array) {
         if ($array != null) {
             $amount = count($array);
@@ -166,13 +160,7 @@ class UserDAO implements UserDAOInterface {
         return $returnString;
     }
 
-    /**
-     * Removes duplicates from arrau
-     *
-     * @param array  $arr
-     * @return array
-     */
-    private function del_duplicate($arr) {
+    private function del_duplicate($arr, $bNew_keys=FALSE) {
         if (!is_array($arr)) {
             return false;
             ;
@@ -181,7 +169,11 @@ class UserDAO implements UserDAOInterface {
         $arr2 = array();
         foreach ($arr as $key => $value) {
             if (!in_array($value, $arr2)) {
-		$arr2[$key] = $value;
+                if ($bNew_keys) {
+                    $arr2[] = $value;
+                } else {
+                    $arr2[$key] = $value;
+                }
             }
         }
         return $arr2;
@@ -304,11 +296,11 @@ class UserDAO implements UserDAOInterface {
 
 	// load the users occupations
 	$occupationDAO = OccupationDAO::getInstance();
-	$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
+	//$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
 
 	// load the users specialties
 	$specialtyDAO = specialtyDAO::getInstance();
-	$user->setSpecialities($specialtyDAO->getSpecialtiesForUserId($user->getUserId()));
+	//$user->setSpecialities($specialtyDAO->getSpecialtiesForUserId($user->getUserId()));
 
 	return $user;
     }
