@@ -240,26 +240,6 @@ COLLATE = utf8_general_ci;
 
 
 -- -----------------------------------------------------
--- Table `trophy`.`contact_information`
--- -----------------------------------------------------
-DROP TABLE IF EXISTS `trophy`.`contact_information` ;
-
-CREATE  TABLE IF NOT EXISTS `trophy`.`contact_information` (
-  `user_id` INT(11) NOT NULL ,
-  `address_street` VARCHAR(30) NOT NULL ,
-  `address_number` INT(11) NOT NULL ,
-  `address_bus` INT(11) NOT NULL ,
-  `city_id` INT(11) NOT NULL ,
-  `telephone` VARCHAR(30) NOT NULL ,
-  `fax` VARCHAR(30) NOT NULL ,
-  `gsm` VARCHAR(30) NOT NULL ,
-  PRIMARY KEY (`user_id`) )
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8
-COLLATE = utf8_general_ci;
-
-
--- -----------------------------------------------------
 -- Table `trophy`.`practice_user`
 -- -----------------------------------------------------
 DROP TABLE IF EXISTS `trophy`.`practice_user` ;
