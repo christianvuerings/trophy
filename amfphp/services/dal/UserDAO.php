@@ -296,11 +296,11 @@ class UserDAO implements UserDAOInterface {
 
 	// load the users occupations
 	$occupationDAO = OccupationDAO::getInstance();
-	$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
+	//$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
 	
 	// load the users specialties
 	$specialtyDAO = specialtyDAO::getInstance();
-	$user->setSpecialities($specialtyDAO->getSpecialtiesForUserId($user->getUserId()));
+	//$user->setSpecialities($specialtyDAO->getSpecialtiesForUserId($user->getUserId()));
 	
 	return $user;
     }
