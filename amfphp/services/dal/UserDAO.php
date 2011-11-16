@@ -23,13 +23,13 @@ class UserDAO implements UserDAOInterface {
     private static $instance;
 
     private function __construct() {
-        
+
     }
 
     /**
      * Returns an instance of this UserDAO
      * Singleton pattern
-     * 
+     *
      * @return UserDAO $instance
      */
     public static function getInstance() {
@@ -41,7 +41,7 @@ class UserDAO implements UserDAOInterface {
 
     /**
      * deletes a User object from the database
-     * 
+     *
      * @param $int $userId
      * @return int  number of deleted rows
      */
@@ -57,12 +57,12 @@ class UserDAO implements UserDAOInterface {
         return $db->delete(TABLE_NAME, 'user_id = ?', array($primaryKey));
     }
 
-    //TODO : Voor verbetering vatbaar -> methode om nabijgelegen dorpen te vinden moet beter. Hoeveel users weergeven? ->instellen 
+    //TODO : Voor verbetering vatbaar -> methode om nabijgelegen dorpen te vinden moet beter. Hoeveel users weergeven? ->instellen
     /**
      * Function to search users nearby a city
-     * After a city is selected with the other function all users from that city 
+     * After a city is selected with the other function all users from that city
      * and the citys nearby will be given until there are enough users to show
-     * 
+     *
      * @param string $city
      * @return array<users>
      */
@@ -139,13 +139,19 @@ class UserDAO implements UserDAOInterface {
             $user->setLastLogin($record['last_login']);
             $user->setMemberSince($record['member_since']);
             $user->setLanguageId($record['language_id']);
-            
+
             array_push($users, $user);
         }
 
         return $users;
     }
 
+    /**
+     * makes an array ready for the sql statement
+     *
+     * @param type $array
+     * @return string
+     */
     private function inHelper($array) {
         if ($array != null) {
             $amount = count($array);
@@ -160,7 +166,13 @@ class UserDAO implements UserDAOInterface {
         return $returnString;
     }
 
-    private function del_duplicate($arr, $bNew_keys=FALSE) {
+    /**
+     * Removes duplicates from arrau
+     *
+     * @param array  $arr
+     * @return array
+     */
+    private function del_duplicate($arr) {
         if (!is_array($arr)) {
             return false;
             ;
@@ -169,11 +181,7 @@ class UserDAO implements UserDAOInterface {
         $arr2 = array();
         foreach ($arr as $key => $value) {
             if (!in_array($value, $arr2)) {
-                if ($bNew_keys) {
-                    $arr2[] = $value;
-                } else {
-                    $arr2[$key] = $value;
-                }
+		$arr2[$key] = $value;
             }
         }
         return $arr2;
@@ -181,7 +189,7 @@ class UserDAO implements UserDAOInterface {
 
     /**
      * Function to login a user by email and password
-     * 
+     *
      * @param string $email
      * @param string $password (hashed)
      * @return User (empty user when login failed)
@@ -201,7 +209,7 @@ class UserDAO implements UserDAOInterface {
 
     /**
      * Registers a user
-     * 
+     *
      * @param UserInterface $user
      * @return message
      */
@@ -234,7 +242,7 @@ class UserDAO implements UserDAOInterface {
 
     /**
      * loads a User object from the database
-     * 
+     *
      * @param $int $userId
      * @return User
      */
@@ -251,7 +259,7 @@ class UserDAO implements UserDAOInterface {
 
     /**
      * loads User objects from the database
-     * 
+     *
      * @param array<int> $userIds
      * @return array<User>
      */
@@ -265,7 +273,7 @@ class UserDAO implements UserDAOInterface {
         // return array of User objects
         return $this->recordsToObjects($records);
     }
-    
+
     /**
      * Translates an array of a user record to an object
      *
@@ -297,33 +305,33 @@ class UserDAO implements UserDAOInterface {
 	// load the users occupations
 	$occupationDAO = OccupationDAO::getInstance();
 	$user->setOccupations($occupationDAO->getOccupationsForUserId($user->getUserId()));
-	
+
 	// load the users specialties
 	$specialtyDAO = specialtyDAO::getInstance();
 	$user->setSpecialities($specialtyDAO->getSpecialtiesForUserId($user->getUserId()));
-	
+
 	return $user;
     }
-    
+
     /**
      * Translates an array of user records to objects
      *
      * @param array $records
-     * @return array<User> 
+     * @return array<User>
      */
     private function recordsToObjects($records){
 	$users = array();
-	
-	foreach ($records as $record) {    
+
+	foreach ($records as $record) {
 	    $users[] = $this->recordToObject($record);
 	}
-	
+
 	return $users;
     }
 
     /**
      * Saves the given object to the database
-     * 
+     *
      * @param UserInterface $user
      * @return int $primaryKey
      */
@@ -336,7 +344,7 @@ class UserDAO implements UserDAOInterface {
 
         if (is_null($primaryKey)) {
             // if the key is NULL, there is no record of it in the database
-            // create array to insert    
+            // create array to insert
             $newRecord = array();
             $newRecord['first_name'] = $user->getFirstName();
             $newRecord['last_name'] = $user->getLastName();
@@ -432,7 +440,7 @@ class UserDAO implements UserDAOInterface {
      * Saves the link between a User and an occupation
      *
      * @param UserInterface $user
-     * @param OccupationInterface $occupation 
+     * @param OccupationInterface $occupation
      */
     public function saveLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
         // get database
@@ -446,7 +454,7 @@ class UserDAO implements UserDAOInterface {
      * Saves the link between a user and a specialty
      *
      * @param UserInterface $user
-     * @param specialtyInterface $specialty 
+     * @param specialtyInterface $specialty
      */
     public function saveLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
         $db->insert(self::specialtY_LINK_TABLE_NAME, array('user_id' => $user->getUserId(), 'specialty_id' => $specialty->getspecialtyId()));
@@ -460,20 +468,20 @@ class UserDAO implements UserDAOInterface {
      * @param string $query
      * @param OccupationInterface $occupation
      * @param CountryInterface $country
-     * @return array<User> 
+     * @return array<User>
      */
     public function searchUsersByPostalCodeOrCityname($query, OccupationInterface $occupation, CountryInterface $country) {
         // get database
         $db = MySQLDatabase::getInstance();
 
         // get user ids
-        $userIds = $db->getColumn("SELECT u.user_id 
+        $userIds = $db->getColumn("SELECT u.user_id
 			FROM " . self::TABLE_NAME . " AS u
 			LEFT JOIN " . self::OCCUPATION_LINK_TABLE_NAME . " AS ou ON ou.user_id = u.user_id
 			LEFT JOIN practice AS p ON p.user_id = u.user_id
 			LEFT JOIN city AS c ON c.city_id = p.city_id
 			LEFT JOIN province ON province.province_id = c.province_id
-			WHERE ou.occupation_id = ? 
+			WHERE ou.occupation_id = ?
 			AND province.country_id = ?
 			AND (c.name LIKE ? OR c.zipcode = ?)", array($occupation->getOccupationId(), $country->getCountryId(), $query, $query));
 
@@ -485,7 +493,7 @@ class UserDAO implements UserDAOInterface {
      * Removes the link between a User and an occupation
      *
      * @param UserInterface $user
-     * @param OccupationInterface $occupation 
+     * @param OccupationInterface $occupation
      */
     public function removeLinkBetweenUserAndOccupation(UserInterface $user, OccupationInterface $occupation) {
         // get database
@@ -499,7 +507,7 @@ class UserDAO implements UserDAOInterface {
      * Removes the link between a user and a specialty
      *
      * @param UserInterface $user
-     * @param specialtyInterface $specialty 
+     * @param specialtyInterface $specialty
      */
     public function removeLinkBetweenUserAndspecialty(UserInterface $user, specialtyInterface $specialty) {
         // get database
