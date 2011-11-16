@@ -17,7 +17,7 @@
 			<ObjectBuilder generator="{register}">
 				<Properties dispatcher="{scope.dispatcher}"/>
 			</ObjectBuilder>
-			<ObjectBuilder generator="{register}">
+			<ObjectBuilder generator="{login}">
 				<Properties dispatcher="{scope.dispatcher}"/>
 			</ObjectBuilder>
 		</EventHandlers>

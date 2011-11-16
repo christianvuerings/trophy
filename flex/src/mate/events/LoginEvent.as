@@ -2,9 +2,9 @@ package mate.events
 {
 	import flash.events.Event;
 
-	public class RegisterEvent extends Event
+	public class LoginEvent extends Event
 	{
-		public static const REGISTER:String = "registerEvent";
+		public static const LOGIN:String = "loginEvent";
 
 		private var _user:Object;
 		[Bindable]
@@ -15,7 +15,7 @@ package mate.events
 			return this._user;
 		}
 
-		public function RegisterEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
+		public function LoginEvent(type:String, bubbles:Boolean=false, cancelable:Boolean=false)
 		{
 			super(type, bubbles, cancelable);
 		}

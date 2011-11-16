@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
-		 xmlns:mappings="mate.mappings.*"
-		 creationComplete="registerViewCreatedHandler(event)">
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
+		  xmlns:mappings="mate.mappings.*"
+		  creationComplete="registerViewCreatedHandler(event)">
 	<fx:Declarations>
 		<mappings:TrophyEventMapping />
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
-			import com.adobe.crypto.MD5;
 			import com.asfusion.mate.core.GlobalDispatcher;
 
 			import mate.events.RegisterEvent;
@@ -22,15 +21,10 @@
 			[Bindable]
 			public var dispatcher:GlobalDispatcher;
 
-			private function registerUser(event:MouseEvent):void {
+			private function loginUser(event:MouseEvent):void {
 				user = new Object();
 				user.email= txtEmail.text;
-				user.password =  MD5.hash(txtPassword.text);
-				user.firstName = txtFirstname.text;
-				user.lastName = txtName.text;
-				user.languageId = 1;
-				user.memberSince = new Date();
-				user.lastLogin = new Date();
+				user.password= txtPassword.text;
 
 				var registerEvent:RegisterEvent = new RegisterEvent(RegisterEvent.REGISTER);
 				registerEvent.user = user;
@@ -38,7 +32,7 @@
 			}
 
 			private function addEventListeners():void {
-				btnRegister.addEventListener(MouseEvent.CLICK, registerUser);
+				btnLogin.addEventListener(MouseEvent.CLICK, loginUser);
 			}
 
 			protected function registerViewCreatedHandler(event:FlexEvent):void
@@ -51,18 +45,11 @@
 	</fx:Script>
 	<views:header />
 	<s:Label styleName="heading"
-			 text="{resourceManager.getString('main','registration')}"/>
+			 text="{resourceManager.getString('main','Login')}"/>
 	<s:Form styleName="formclass">
 		<s:layout>
 			<s:FormLayout gap="-10" paddingLeft="24"/>
 		</s:layout>
-		<s:FormHeading label="{resourceManager.getString('main','personal_data')}" />
-		<s:FormItem label="{resourceManager.getString('main','name')}:">
-			<s:TextInput id="txtName" width="400" />
-		</s:FormItem>
-		<s:FormItem label="{resourceManager.getString('main','firstname')}:">
-			<s:TextInput id="txtFirstname" width="400" />
-		</s:FormItem>
 		<s:FormItem label="{resourceManager.getString('main','email')}:">
 			<s:TextInput id="txtEmail" width="400" />
 		</s:FormItem>
@@ -70,7 +57,7 @@
 			<s:TextInput id="txtPassword" width="400" displayAsPassword="true" />
 		</s:FormItem>
 		<s:FormItem>
-			<s:Button label="{resourceManager.getString('main','Register')}" id="btnRegister" />
+			<s:Button label="{resourceManager.getString('main','login')}" id="btnLogin" />
 		</s:FormItem>
 	</s:Form>
 </s:VGroup>

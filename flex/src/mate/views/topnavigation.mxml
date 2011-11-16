@@ -2,7 +2,8 @@
 <s:HGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  width="100%" horizontalAlign="right">
+		  width="100%" horizontalAlign="right"
+		  paddingTop="5">
 
 	<fx:Script>
 		<![CDATA[
@@ -28,8 +29,8 @@
 
 	<fx:Declarations>
 	</fx:Declarations>
-	<s:Label text="{resourceManager.getString('main', 'i_am_a_psychologist')}" paddingTop="5" />
-	<mx:LinkButton label="{resourceManager.getString('main', 'register')}" click="registerClickHandler(event)" />
+	<s:Label text="{resourceManager.getString('main', 'i_am_a_psychologist')}:" paddingTop="5" />
+	<mx:LinkButton label="{resourceManager.getString('main', 'Register')}" click="registerClickHandler(event)" />
 	<s:Label text="{resourceManager.getString('main', 'or')}" paddingTop="5" />
-	<mx:LinkButton label="{resourceManager.getString('main', 'login')}" click="loginClickHandler(event)" />
+	<mx:LinkButton label="{resourceManager.getString('main', 'Login')}" click="loginClickHandler(event)" />
 </s:HGroup>
