@@ -2,7 +2,6 @@
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*"
-		 xmlns:mappings="mate.mappings.*"
 		 creationComplete="registerViewCreatedHandler(event)">
 	<fx:Script>
 		<![CDATA[
@@ -11,7 +10,6 @@
 
 			import mate.events.RegisterEvent;
 
-			import mx.controls.Alert;
 			import mx.events.FlexEvent;
 
 			[Bindable]

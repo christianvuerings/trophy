@@ -5,10 +5,9 @@
 		<![CDATA[
 			import mate.business.*;
 			import mate.events.*;
+			import mate.views.*;
 
 			import mx.events.FlexEvent;
-
-			import mate.views.*;
 		]]>
 	</fx:Script>
 	<fx:Declarations>
