@@ -86,7 +86,7 @@ class UserDAO implements UserDAOInterface {
 	$db = MySQLDatabase::getInstance();
 
 	// get record from database
-	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . 'WHERE user_id IN (?)', array(implode(', ', $userIds)));
+	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (?)', array(implode(', ', $userIds)));
 
 	// return User object
 	return $this->recordsToObjects($records);
@@ -226,14 +226,14 @@ class UserDAO implements UserDAOInterface {
      * @param string $city
      * @return array<users>
      */
-    public function SearchUserNearbyCity($city) {
+    public function searchUserNearbyCity($city) {
         $users = array();
         $db = MySQLDatabase::getInstance();
 
         $query = "SELECT distinct(u.user_id) AS 'user_id' ";
-        $query.="FROM practice_user_specialty pus ";
-        $query.="LEFT JOIN  user u ON pus.user_id = u.user_id ";
-        $query.="LEFT JOIN practice p ON p.practice_id = pus.practice_id ";
+        $query.="FROM practice_user pu ";
+        $query.="LEFT JOIN  user u ON pu.user_id = u.user_id ";
+        $query.="LEFT JOIN practice p ON p.practice_id = pu.practice_id ";
 	$query.="LEFT JOIN address a ON p.address_id = a.address_id ";
         $query.="LEFT JOIN city c ON c.id = a.city_id ";
         $query.="WHERE c.alpha = ? ";
@@ -243,7 +243,7 @@ class UserDAO implements UserDAOInterface {
 
         if ($records != null) {
             foreach ($records as $record) {
-                array_push($userIds, $record['user_id']);
+                if(!is_null($record['user_id'])) array_push($userIds, (int) $record['user_id']);
             }
         }
 
@@ -269,22 +269,23 @@ class UserDAO implements UserDAOInterface {
             }
 
             $query = "SELECT distinct(u.user_id) AS 'user_id' ";
-            $query.="FROM practice_user_specialty pus ";
-            $query.="LEFT JOIN  user u ON pus.user_id = u.user_id ";
-            $query.="LEFT JOIN practice p ON p.practice_id = pus.practice_id ";
+            $query.="FROM practice_user pu ";
+            $query.="LEFT JOIN  user u ON pu.user_id = u.user_id ";
+            $query.="LEFT JOIN practice p ON p.practice_id = pu.practice_id ";
 	    $query.="LEFT JOIN address a ON p.address_id = a.address_id ";
 	    $query.="LEFT JOIN city c ON c.id = a.city_id ";
-            $query.="WHERE c.alpha IN (?)";
+            $query.="WHERE c.alpha IN ('". implode('\', \'', $extraCities). "') ";
 
-            $records = $db->getRecords($query, array(implode(', ', $extraCities)));
+            $records = $db->getRecords($query);
 
             if ($records != null) {
                 foreach ($records as $record) {
-                    array_push($userIds, $record['user_id']);
+                    if(!is_null($record['user_id'])) array_push($userIds, (int) $record['user_id']);
                 }
             }
         }
 
+	// remove duplicates
         $userIds = $this->removeDuplicatesFromArray($userIds);
 
         return $this->loadMultiple($userIds);
