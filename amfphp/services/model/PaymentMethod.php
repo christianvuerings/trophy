@@ -10,8 +10,8 @@ require_once 'model/interfaces/PaymentMethodInterface.php';
  */
 class PaymentMethod implements PaymentMethodInterface {
 
-    private $paymentMethodId;
-    private $label;
+    public $paymentMethodId;
+    public $label;
     //mapping with flex
     public $_explicitType = "classestrophy.PaymentMethod";
 

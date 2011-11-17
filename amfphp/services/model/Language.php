@@ -10,8 +10,8 @@ require_once 'model/interfaces/LanguageInterface.php';
  */
 class Language implements LanguageInterface {
 
-    private $languageId;
-    private $label;
+    public $languageId;
+    public $label;
     //mapping with flex
     public $_explicitType = "classestrophy.Language";
 

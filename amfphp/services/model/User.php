@@ -10,20 +10,20 @@ require_once 'model/interfaces/UserInterface.php';
  */
 class User implements UserInterface {
 
-    private $userId;
-    private $firstName;
-    private $lastName;
-    private $email;
-    private $password;
-    private $lastLogin;
-    private $memberSince;
-    private $languageId;
-    private $addressId;
-    private $gsm;
-    private $avatar;
-    private $twitter;
-    private $facebook;
-    private $rss;
+    public $userId;
+    public $firstName;
+    public $lastName;
+    public $email;
+    public $password;
+    public $lastLogin;
+    public $memberSince;
+    public $languageId;
+    public $addressId;
+    public $gsm;
+    public $avatar;
+    public $twitter;
+    public $facebook;
+    public $rss;
     //mapping with flex
     public $_explicitType = "classestrophy.User";
 

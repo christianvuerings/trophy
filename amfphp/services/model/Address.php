@@ -10,11 +10,11 @@ require_once 'model/interfaces/AddressInterface.php';
  */
 class Address implements AddressInterface {
 
-    private $addressId;
-    private $addressStreet;
-    private $addressNumber;
-    private $addressBus;
-    private $cityId;
+    public $addressId;
+    public $addressStreet;
+    public $addressNumber;
+    public $addressBus;
+    public $cityId;
     //mapping with flex
     public $_explicitType = "classestrophy.Address";
 

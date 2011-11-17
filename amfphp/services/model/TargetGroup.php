@@ -10,8 +10,8 @@ require_once 'model/interfaces/TargetGroupInterface.php';
  */
 class TargetGroup implements TargetGroupInterface {
 
-    private $targetGroupId;
-    private $label;
+    public $targetGroupId;
+    public $label;
     //mapping with flex
     public $_explicitType = "classestrophy.TargetGroup";
 

@@ -10,8 +10,8 @@ require_once 'model/interfaces/OccupationInterface.php';
  */
 class Occupation implements OccupationInterface {
 
-    private $occupationId;
-    private $label;
+    public $occupationId;
+    public $label;
     //mapping with flex
     public $_explicitType = "classestrophy.Occupation";
 

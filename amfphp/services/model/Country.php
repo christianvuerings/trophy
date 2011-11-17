@@ -10,8 +10,8 @@ require_once 'model/interfaces/CountryInterface.php';
  */
 class Country implements CountryInterface {
 
-    private $countryId;
-    private $label;
+    public $countryId;
+    public $label;
     //mapping with flex
     public $_explicitType = "classestrophy.Country";
 
