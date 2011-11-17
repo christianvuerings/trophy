@@ -85,8 +85,8 @@ class UserDAO implements UserDAOInterface {
 	// get database
 	$db = MySQLDatabase::getInstance();
 
-	// get record from database
-	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (?)', array(implode(', ', $userIds)));
+	// get records from database
+	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (' . implode(', ', $userIds) . ')');
 
 	// return User object
 	return $this->recordsToObjects($records);
