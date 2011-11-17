@@ -31,6 +31,25 @@ class CityDAO implements CityDAOInterface {
     }
 
     /**
+     * Search for cities that match
+     *
+     * @param string $searchTerm
+     * @return array<string> $validCities
+     */
+    public function autocompleteCities($searchTerm) {
+	// get database
+	$db = MySQLDatabase::getInstance();
+
+	// build query
+	$query = "SELECT alpha FROM " . self::TABLE_NAME . " WHERE alpha LIKE ? ";
+
+	// get valid cities
+	$validCities = $db->getColumn($query, array('%' . $searchTerm . '%'));
+
+	return $validCities;
+    }
+
+    /**
      * deletes a City object from the database
      *
      * @param int $id
