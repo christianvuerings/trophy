@@ -6,7 +6,7 @@
 			import mate.business.*;
 			import mate.events.*;
 			import mate.views.*;
-
+			
 			import mx.events.FlexEvent;
 		]]>
 	</fx:Script>
@@ -54,7 +54,7 @@
 								 destination="amfphp" method="SearchUserNearbyCity" showBusyCursor="true"
 								 source="controllers">
 				<resultHandlers>
-					<MethodInvoker arguments="{resultObject}" generator="{aftersearch}"
+					<MethodInvoker arguments="{resultObject}" generator="{TrophyManager}"
 								   method="SearchCompleted"/>
 				</resultHandlers>
 				<faultHandlers>
@@ -65,6 +65,9 @@
 		</EventHandlers>
 		<Injectors target="{topnavigationloggedin}">
 			<PropertyInjector source="{TrophyManager}" sourceKey="user" targetKey="user"/>
+		</Injectors>
+		<Injectors target="{aftersearch}">
+			<PropertyInjector source="{TrophyManager}" sourceKey="users" targetKey="users"/>
 		</Injectors>
 	</fx:Declarations>
 </EventMap>

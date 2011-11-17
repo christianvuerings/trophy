@@ -2,11 +2,13 @@ package mate.business
 {
 
 	import classestrophy.User;
-
+	
 	import com.asfusion.mate.core.GlobalDispatcher;
 	import com.asfusion.mate.events.Dispatcher;
-
+	
 	import flashx.textLayout.factory.TruncationOptions;
+	
+	import mate.views.aftersearch;
 
 	public class TrophyManager{
 
@@ -22,8 +24,19 @@ package mate.business
 
 		private var _isLoggedIn:Boolean = false;
 		private var _user:User;
+		private var _users:ArrayCollection;
 
 		// Getters & Setters
+
+		[Bindable]
+		public function get users():ArrayCollection{
+			return _users;
+		}
+
+		public function set users(value:ArrayCollection):void {
+			_users = value;
+		}
+
 		[Bindable]
 		public function get user():User {
 			return _user;
@@ -66,6 +79,22 @@ package mate.business
 			}
 		}
 
+		public function SearchCompleted(resultObject:Object):void {
+			users = new ArrayCollection();
+			for each (var user:User in resultObject){
+				var userAdd:User = user;
+				users.addItem(user);
+			}
+			/*if (users.length != 0){
+				for each(var showUser:User in users){
+					lblContent.text = showUser.firstName;
+				}
+			} 
+			else{ 
+				lblContent.text = 'Er konden geen gebruikers gevonden worden';
+			}*/
+		}
+		
 		public function HandleFault(fault:Fault):void{
 			Alert.show(fault.faultString, fault.faultCode.toString());
 		}

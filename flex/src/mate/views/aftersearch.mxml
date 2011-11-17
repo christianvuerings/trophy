@@ -19,29 +19,30 @@
 			private var resultObject:Object;
 			[Bindable]
 			public var dispatcher:GlobalDispatcher;
+			private var _users:ArrayCollection;
+			
 			[Bindable]
-			private var users:ArrayCollection;
+			public function get users():ArrayCollection{
+				return _users;
+			}
+			public function set users(value:ArrayCollection):void {
+				_users = value;
+			}
 
 			
 			public function SearchCompleted(resultObject:Object):void {
-				users = new ArrayCollection();
-				for each (var user:User in resultObject){
-					var userAdd:User = user;
-					users.addItem(user);
-				}
-				if (users.length != 0){
-					for each(var showUser:User in users){
-						lblContent.text = showUser.firstName;
-					}
-				} 
-				else{ 
-					lblContent.text = 'Er konden geen gebruikers gevonden worden';
-				}
+				//
 			}
 
 		]]>
 	</fx:Script>
 	<views:header/>
-	<s:Label id="lblContent" text="" />
+	<!-- <s:List dataProvider="{users}" labelField="firstName"/> -->
+	<mx:DataGrid id="detais" dataProvider="{users}">
+		<mx:columns>
+			<mx:DataGridColumn  dataField="firstName" headerText="Voornaam" />
+			<mx:DataGridColumn  dataField="lastName" headerText="Achternaam" />
+		</mx:columns>
+	</mx:DataGrid>	
 
 </s:VGroup>
