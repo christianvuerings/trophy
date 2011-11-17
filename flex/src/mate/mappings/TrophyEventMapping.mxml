@@ -37,6 +37,8 @@
 				<resultHandlers>
 					<MethodInvoker generator="{TrophyManager}" method="LoginCompleted"
 								   arguments="{resultObject}" />
+					<MethodInvoker generator="{topnavigation}" method="LoginCompleted"
+								   arguments="{resultObject}" />
 				</resultHandlers>
 				<faultHandlers>
 					<MethodInvoker generator="{TrophyManager}" method="HandleFault"
@@ -44,5 +46,9 @@
 				</faultHandlers>
 			</RemoteObjectInvoker>
 		</EventHandlers>
+		<Injectors target="{topnavigation}">
+			<PropertyInjector targetKey="user" source="{TrophyManager}"
+							  sourceKey="user" />
+		</Injectors>
 	</fx:Declarations>
 </EventMap>

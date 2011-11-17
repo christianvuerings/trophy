@@ -18,14 +18,11 @@ package mate.business
 		private var _user:User;
 
 		// Getters & Setters
-
-		public function get user():User
-		{
+		[Bindable]
+		public function get user():User {
 			return _user;
 		}
-
-		public function set user(value:User):void
-		{
+		public function set user(value:User):void {
 			_user = value;
 		}
 
@@ -52,7 +49,6 @@ package mate.business
 				user.email = resultObject[0].email;
 				user.userId = resultObject[0].userId;
 				isLoggedIn = true;
-				Alert.show(user.firstName + "");
 			} else {
 				isLoggedIn = false;
 			}
