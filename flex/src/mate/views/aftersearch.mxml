@@ -42,6 +42,6 @@
 		]]>
 	</fx:Script>
 	<views:header/>
-	<s:Label id="lblContent" text="TEST" />
+	<s:Label id="lblContent" text="" />
 
 </s:VGroup>
