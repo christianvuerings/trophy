@@ -10,8 +10,8 @@ require_once 'model/interfaces/SpecialtyInterface.php';
  */
 class Specialty implements SpecialtyInterface {
 
-    private $specialtyId;
-    private $label;
+    public $specialtyId;
+    public $label;
     //mapping with flex
     public $_explicitType = "classestrophy.Specialty";
 

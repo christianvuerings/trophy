@@ -10,11 +10,11 @@ require_once 'model/interfaces/PaymentInterface.php';
  */
 class Payment implements PaymentInterface {
 
-    private $paymentId;
-    private $date;
-    private $amount;
-    private $userId;
-    private $paymentMethodId;
+    public $paymentId;
+    public $date;
+    public $amount;
+    public $userId;
+    public $paymentMethodId;
     //mapping with flex
     public $_explicitType = "classestrophy.Payment";
 

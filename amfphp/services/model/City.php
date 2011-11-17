@@ -10,13 +10,13 @@ require_once 'model/interfaces/CityInterface.php';
  */
 class City implements CityInterface {
 
-    private $id;
-    private $alpha;
-    private $longitude;
-    private $latitude;
-    private $code;
-    private $name;
-    private $provinceId;
+    public $id;
+    public $alpha;
+    public $longitude;
+    public $latitude;
+    public $code;
+    public $name;
+    public $provinceId;
     //mapping with flex
     public $_explicitType = "classestrophy.City";
 

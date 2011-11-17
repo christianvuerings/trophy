@@ -10,9 +10,9 @@ require_once 'model/interfaces/ProvinceInterface.php';
  */
 class Province implements ProvinceInterface {
 
-    private $provinceId;
-    private $label;
-    private $countryId;
+    public $provinceId;
+    public $label;
+    public $countryId;
     //mapping with flex
     public $_explicitType = "classestrophy.Province";
 

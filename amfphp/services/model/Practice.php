@@ -10,11 +10,11 @@ require_once 'model/interfaces/PracticeInterface.php';
  */
 class Practice implements PracticeInterface {
 
-    private $practiceId;
-    private $name;
-    private $telephone;
-    private $fax;
-    private $addressId;
+    public $practiceId;
+    public $name;
+    public $telephone;
+    public $fax;
+    public $addressId;
     //mapping with flex
     public $_explicitType = "classestrophy.Practice";
 
