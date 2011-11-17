@@ -23,7 +23,7 @@
 				user.password =  MD5.hash(txtPassword.text);
 				user.firstName = txtFirstname.text;
 				user.lastName = txtName.text;
-				user.languageId = 1;
+				user.languageId = 'nl';
 				user.memberSince = new Date();
 				user.lastLogin = new Date();
 

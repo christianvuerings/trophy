@@ -1,7 +1,7 @@
 <?php
 
 require_once 'Database.php';
-require_once 'globals.php';
+
 /**
  * Spoon Library
  *
@@ -92,15 +92,15 @@ class MySQLDatabase implements Database {
      * @var	string
      */
     private $username;
-    
+
     /**
      * Instance of the class
-     * Singleton 
-     * 
+     * Singleton
+     *
      * @var MySQLDatabase
      */
     private static $instance;
-    
+
     /**
      * Creates a database connection instance.
      */
@@ -116,7 +116,7 @@ class MySQLDatabase implements Database {
     /**
      * Returns an instance of this MySQLDatabase
      * Singleton pattern
-     * 
+     *
      * @return MySQLDatabase $instance
      */
     public static function getInstance() {
@@ -689,7 +689,7 @@ class MySQLDatabase implements Database {
 	// array has values
 	if (count($values) == 0)
 	    throw new DatabaseException('You need to provide values for an insert query.', 0, $this->password);
-        
+
 	// init vars
 	$query = 'INSERT INTO ' . $this->quoteName((string) $table) . ' (';
 	$keys = array_keys($values);
@@ -1038,6 +1038,6 @@ class MySQLDatabase implements Database {
  * This exception is used to handle database related exceptions.
  */
 class DatabaseException extends Exception {
-    
+
 }
 ?>

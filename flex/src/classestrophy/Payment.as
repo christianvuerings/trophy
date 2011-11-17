@@ -2,52 +2,45 @@ package classestrophy
 {
     [RemoteClass(alias="classestrophy.Payment")]
     public class Payment
-    {		
-        private var paymentId:Number;
-        private var date:Date;
-        private var amount:Number;
-        private var userId:Number;
-        private var paymentMethodId:Number;
-    
-    	public function get paymentId() {
-		return $this.paymentId;
+    {
+	    private var _paymentId:Number;
+	    private var _date:Date;
+	    private var _amount:Number;
+	    private var _userId:Number;
+	    private var _paymentMethodId:Number;
+
+	    // Getters
+	    public function get paymentId():Number {
+		    return this._paymentId;
+	    }
+	    public function get date():Date {
+		    return this._date;
+	    }
+	    public function get amount():Number {
+		    return this._amount;
+	    }
+	    public function get userId():Number {
+		    return this._userId;
+	    }
+	    public function get paymentMethodId():Number {
+		    return this._paymentMethodId;
 	    }
 
-    	public function get date() {
-		return $this.date;
+	    // Setters
+	    public function set paymentId(paymentId:Number):void {
+		    this._paymentId = paymentId;
 	    }
-
-    	public function get amount() {
-		return $this.amount;
+	    public function set date(date:Date):void {
+		    this._date = date;
 	    }
-
-    	public function get userId() {
-		return $this.userId;
+	    public function set amount(amount:Number):void {
+		    this._amount = amount;
 	    }
-
-    	public function get paymentMethodId() {
-		return $this.paymentMethodId;
+	    public function set userId(userId:Number):void {
+		    this._userId = userId;
 	    }
-
-    
-        public function set paymentId(paymentId:Number) {
-		$this.paymentId = $paymentId;
+	    public function set paymentMethodId(paymentMethodId:Number):void {
+		    this._paymentMethodId = paymentMethodId;
 	    }
-
-        public function set date(date:Date) {
-		$this.date = $date;
-	    }
-
-        public function set amount(amount:Number) {
-		$this.amount = $amount;
-	    }
-
-        public function set userId(userId:Number) {
-		$this.userId = $userId;
-	    }
-
-        public function set paymentMethodId(paymentMethodId:Number) {
-		$this.paymentMethodId = $paymentMethodId;
-	    }
-
     }
+}

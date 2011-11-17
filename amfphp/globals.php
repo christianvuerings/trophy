@@ -12,6 +12,8 @@ $amfphp['startTime'] = ((float)$usec + (float)$sec);
 $servicesPath = "services/";
 $voPath = "services/vo/";
 
+set_include_path(get_include_path() . ';' . dirname(__FILE__) . '/' . $servicesPath);
+
 
 /**
 * Database configuration

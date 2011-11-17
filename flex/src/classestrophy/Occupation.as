@@ -2,25 +2,24 @@ package classestrophy
 {
     [RemoteClass(alias="classestrophy.Occupation")]
     public class Occupation
-    {		
-        private var occupationId:Number;
-        private var label:String;
-    
-    	public function get occupationId() {
-		return  this.occupationId;
+    {
+	    private var _occupationId:Number;
+	    private var _label:String;
+
+	    // Getters
+	    public function get occupationId():Number {
+		    return this._occupationId;
+	    }
+	    public function get label():String {
+		    return this._label;
 	    }
 
-    	public function get label() {
-		return  this.label;
+	    // Setters
+	    public function set occupationId(occupationId:Number):void {
+		    this._occupationId = occupationId;
 	    }
-
-    
-        public function set occupationId(occupationId:Number) {
-		 this.occupationId =  occupationId;
+	    public function set label(label:String):void {
+		    this._label = label;
 	    }
-
-        public function set label(label:String) {
-		 this.label =  label;
-	    }
-
     }
+}

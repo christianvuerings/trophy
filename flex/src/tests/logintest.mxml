@@ -10,7 +10,8 @@
 	<fx:Script>
 		<![CDATA[
 		import classestrophy.*;
-		
+
+		import com.adobe.crypto.MD5;
 		import mx.collections.ArrayCollection;
 		import mx.controls.Alert;
 		import mx.rpc.events.FaultEvent;
@@ -23,7 +24,7 @@
 		[Bindable]
 		private var myUser:User;
 
-		private function LoginHandler(event:ResultEvent):void{		
+		private function LoginHandler(event:ResultEvent):void{
 			for each (var user:User in event.result){
 				myUser = user;
 			}
@@ -34,16 +35,16 @@
 			}
 
 		}
-			
+
 		private function ClickLoginButton(event:Event):void{
 			email = txtEmail.text;
-			password = txtPassword.text;
+			password = MD5.hash(txtPassword.text);
 			rmoTtrophy.getOperation('LoginUser').send();
 		}
 		protected function faultHandler(event:FaultEvent):void
 		{
 			Alert.show(event.fault.faultString, event.fault.faultCode);
-				
+
 		}
 		]]>
 	</fx:Script>
@@ -51,10 +52,10 @@
 		<s:RemoteObject id="rmoTtrophy" destination="amfphp" fault="faultHandler(event)"
 						showBusyCursor="true" source="controllers">
 			<s:method fault="faultHandler(event)" name="LoginUser" result="LoginHandler(event)">
-				<s:arguments>        	
+				<s:arguments>
 					<email>{email}</email>
-					<password>{password}</password>					
-				</s:arguments>					      	
+					<password>{password}</password>
+				</s:arguments>
 			</s:method>
 		</s:RemoteObject>
 	</fx:Declarations>

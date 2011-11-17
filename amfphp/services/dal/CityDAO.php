@@ -1,7 +1,7 @@
 <?php
 
-require_once 'MySQLDatabase.php';
-require_once 'interfaces/CityDAOInterface.php';
+require_once 'dal/MySQLDatabase.php';
+require_once 'dal/interfaces/CityDAOInterface.php';
 require_once 'model/interfaces/CityInterface.php';
 require_once 'model/City.php';
 
@@ -15,120 +15,107 @@ class CityDAO implements CityDAOInterface {
 
     private static $instance;
 
-    private function __construct() {
-        
-    }
+    private function __construct(){ }
 
     /**
-     * Returns an instance of this UserDAO
+     * Returns an instance of this CityDAO
      * Singleton pattern
-     * 
-     * @return UserDAO $instance
+     *
+     * @return CityDAO $instance
      */
-    public static function getInstance() {
-        if (!isset(self::$instance))
-            self::$instance = new self();
+    public function getInstance() {
+	if (is_null(self::$instance))
+	    self::$instance = new self();
 
-        return self::$instance;
+	return self::$instance;
     }
 
     /**
      * deletes a City object from the database
-     * 
-     * @param $int $cityId
+     *
+     * @param int $id
      * @return int  number of deleted rows
      */
-    public function delete($cityId) {
-// get database
-        $db = MySQLDatabase::getInstance();
+    public function delete($id) {
+	// get database
+	$db = MySQLDatabase::getInstance();
 
-// delete and return affected rows
-        return $db->delete(TABLE_NAME, 'city_id = ?', array($primaryKey));
+	// delete and return affected rows
+	return $db->delete(TABLE_NAME, 'id = ?', array($primaryKey));
     }
 
     /**
      * loads a City object from the database
-     * 
-     * @param $int $cityId
+     *
+     * @param int $id
      * @return City
      */
-    public function load($cityId) {
-// get database
-        $db = MySQLDatabase::getInstance();
+    public function load($id) {
+	// get database
+	$db = MySQLDatabase::getInstance();
 
-// get record from database
-        $record = $db->getRecord('SELECT city_id, province_id, zipcode, name FROM ' . self::TABLE_NAME . 'WHERE city_id = ?', array($cityId));
+	// get record from database
+	$record = $db->getRecord('SELECT id, alpha, longitude, latitude, code, name, province_id FROM ' . self::TABLE_NAME . 'WHERE id = ?', array($id));
 
-// translate record to City object
-        $city = new City();
-        $city->setCityId($record['city_id']);
-        $city->setProvinceId($record['province_id']);
-        $city->setZipcode($record['zipcode']);
-        $city->setName($record['name']);
+	// translate record to City object
+	$city = new City();
+	$city->setId($record['id']);
+	$city->setAlpha($record['alpha']);
+	$city->setLongitude($record['longitude']);
+	$city->setLatitude($record['latitude']);
+	$city->setCode($record['code']);
+	$city->setName($record['name']);
+	$city->setProvinceId($record['province_id']);
 
-// return City object
-        return $city;
+	// return City object
+	return $city;
     }
 
     /**
      * Saves the given object to the database
-     * 
+     *
      * @param CityInterface $city
      * @return int $primaryKey
      */
-    public function save(CityInterface $city) {
-// get database
-        $db = MySQLDatabase::getInstance();
+    public function save(CityInterface $city){
+	// get database
+	$db = MySQLDatabase::getInstance();
 
-// get the key
-        $primaryKey = $city->getCityId();
+	// get the key
+	$primaryKey = $city->getId();
 
-        if (is_null($primaryKey)) {
-// if the key is NULL, there is no record of it in the database
-// create array to insert    
-            $newRecord = array();
-            $newRecord['province_id'] = $city->getProvinceId();
-            $newRecord['zipcode'] = $city->getZipcode();
-            $newRecord['name'] = $city->getName();
+	if(is_null($primaryKey)){
+	    // if the key is NULL, there is no record of it in the database
+	    // create array to insert
+	    $newRecord = array();
+        	    		    	    $newRecord['alpha'] = $city->getAlpha();
+			    	    $newRecord['longitude'] = $city->getLongitude();
+			    	    $newRecord['latitude'] = $city->getLatitude();
+			    	    $newRecord['code'] = $city->getCode();
+			    	    $newRecord['name'] = $city->getName();
+			    	    $newRecord['province_id'] = $city->getProvinceId();
 
-// add this record
-            $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
-        } else {
-// the key is not null, the record already exists in the database
-// we need to perform an update on that record
-// create array for update
-            $record = array();
-            $record['city_id'] = $city->getCityId();
-            $record['province_id'] = $city->getProvinceId();
-            $record['zipcode'] = $city->getZipcode();
-            $record['name'] = $city->getName();
+	    // add this record
+	    $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
+	} else {
+	    // the key is not null, the record already exists in the database
+	    // we need to perform an update on that record
+	    // create array for update
+	    $record = array();
+	    	    $record['id'] = $city->getId();
+		    $record['alpha'] = $city->getAlpha();
+		    $record['longitude'] = $city->getLongitude();
+		    $record['latitude'] = $city->getLatitude();
+		    $record['code'] = $city->getCode();
+		    $record['name'] = $city->getName();
+		    $record['province_id'] = $city->getProvinceId();
 
-// update the record
-            $db->update(self::TABLE_NAME, $record, 'city_id = ?', array($primaryKey));
-        }
+	    // update the record
+	    $db->update(self::TABLE_NAME, $record, 'id = ?', array($primaryKey));
+	}
 
-// return key
-        return $primaryKey;
-        }
-
-        /**
-         * Search for cities that match
-         * 
-         * @param string $searchTerm
-         * @return array<string> $validCities
-         */
-        public function autocompleteCities($searchTerm){
-        $validCities = array();
-        $db = MySQLDatabase::getInstance();
-        //TODO : fix sql injection
-        $query = "SELECT * FROM " . self::TABLE_NAME . " WHERE alpha LIKE '%".$searchTerm."%' ";
-        $results = $db->getRecords($query);
-        foreach ($results as $result) {
-            array_push($validCities, $result['alpha']);
-        }
-        return $validCities;
+	// return key
+	return $primaryKey;
     }
-
 }
-
 ?>

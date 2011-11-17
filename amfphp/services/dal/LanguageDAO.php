@@ -1,9 +1,9 @@
 <?php
 
-require_once 'MySQLDatabase.php';
-require_once 'interfaces/LanguageDAOInterface.php';
-require_once '../model/interfaces/LanguageInterface.php';
-require_once '../model/Language.php';
+require_once 'dal/MySQLDatabase.php';
+require_once 'dal/interfaces/LanguageDAOInterface.php';
+require_once 'model/interfaces/LanguageInterface.php';
+require_once 'model/Language.php';
 
 /**
  * DAO for Language
@@ -12,78 +12,79 @@ require_once '../model/Language.php';
  */
 class LanguageDAO implements LanguageDAOInterface {
     const TABLE_NAME = 'language';
-    
+
     private static $instance;
-    
+
     private function __construct(){ }
-    
+
     /**
      * Returns an instance of this LanguageDAO
      * Singleton pattern
-     * 
+     *
      * @return LanguageDAO $instance
      */
-    public static function getInstance() {
-	if(!isset(self::$instance)) self::$instance = new self();
-	
+    public function getInstance() {
+	if (is_null(self::$instance))
+	    self::$instance = new self();
+
 	return self::$instance;
     }
 
     /**
      * deletes a Language object from the database
-     * 
-     * @param $int $languageId
+     *
+     * @param string $languageId
      * @return int  number of deleted rows
      */
     public function delete($languageId) {
 	// get database
 	$db = MySQLDatabase::getInstance();
-	
+
 	// delete and return affected rows
 	return $db->delete(TABLE_NAME, 'language_id = ?', array($primaryKey));
     }
-    
+
     /**
      * loads a Language object from the database
-     * 
-     * @param $int $languageId
+     *
+     * @param string $languageId
      * @return Language
      */
     public function load($languageId) {
 	// get database
 	$db = MySQLDatabase::getInstance();
-	
+
 	// get record from database
 	$record = $db->getRecord('SELECT language_id, label FROM ' . self::TABLE_NAME . 'WHERE language_id = ?', array($languageId));
-	
+
 	// translate record to Language object
 	$language = new Language();
-	$language->setLanguageId($record['language_id']);   
-	$language->setLabel($record['label']);   
+	$language->setLanguageId($record['language_id']);
+	$language->setLabel($record['label']);
 
 	// return Language object
 	return $language;
     }
-    
+
     /**
      * Saves the given object to the database
-     * 
+     *
      * @param LanguageInterface $language
-     * @return int $primaryKey
+     * @return string $primaryKey
      */
     public function save(LanguageInterface $language){
 	// get database
 	$db = MySQLDatabase::getInstance();
-	
+
 	// get the key
 	$primaryKey = $language->getLanguageId();
-	
+
 	if(is_null($primaryKey)){
 	    // if the key is NULL, there is no record of it in the database
-	    // create array to insert    
+	    // create array to insert
 	    $newRecord = array();
         	    		    	    $newRecord['label'] = $language->getLabel();
-			    
+
 	    // add this record
 	    $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
 	} else {
@@ -93,11 +94,11 @@ class LanguageDAO implements LanguageDAOInterface {
 	    $record = array();
 	    	    $record['language_id'] = $language->getLanguageId();
 		    $record['label'] = $language->getLabel();
-		
+
 	    // update the record
 	    $db->update(self::TABLE_NAME, $record, 'language_id = ?', array($primaryKey));
 	}
-	
+
 	// return key
 	return $primaryKey;
     }

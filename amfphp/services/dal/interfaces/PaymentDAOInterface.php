@@ -1,40 +1,40 @@
 <?php
 
-require_once '../model/interfaces/PaymentInterface.php';
+require_once 'model/interfaces/PaymentInterface.php';
 
 /**
  * interface  for PaymentDAO
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-interface PaymentDAOInterface {   
+interface PaymentDAOInterface {
     /**
      * Returns an instance of this PaymentDAO
      * Singleton pattern
-     * 
+     *
      * @return PaymentDAO $instance
      */
-    public static function getInstance();
-    
+    public function getInstance();
+
     /**
      * deletes a Payment object from the database
-     * 
-     * @param $int $paymentId
+     *
+     * @param int $paymentId
      * @return int  number of deleted rows
      */
     public function delete($paymentId);
-    
+
     /**
      * loads a Payment object from the database
-     * 
-     * @param $int $paymentId
+     *
+     * @param int $paymentId
      * @return Payment
      */
     public function load($paymentId);
-    
+
     /**
      * Saves the given object to the database
-     * 
+     *
      * @param PaymentInterface $payment
      * @return int $primaryKey
      */

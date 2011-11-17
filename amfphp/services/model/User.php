@@ -1,9 +1,7 @@
 <?php
 
 require_once 'dal/UserDAO.php';
-require_once 'interfaces/UserInterface.php';
-require_once 'interfaces/OccupationInterface.php';
-require_once 'interfaces/SpecialtyInterface.php';
+require_once 'model/interfaces/UserInterface.php';
 
 /**
  * Model User
@@ -12,527 +10,364 @@ require_once 'interfaces/SpecialtyInterface.php';
  */
 class User implements UserInterface {
 
-    public $userId;
-    public $firstName;
-    public $lastName;
-    public $email;
-    public $password;
-    public $lastLogin;
-    public $memberSince;
-    public $twitterId;
-    public $facebookId;
-    public $blogRss;
-    public $addressStreet;
-    public $addressNumber;
-    public $addressBus;
-    public $cityId;
-    public $telephone;
-    public $fax;
-    public $gsm;
-    public $languageId;
-    
-    private $occupations = array();	
-    private $specialties = array();
-    
+    private $userId;
+    private $firstName;
+    private $lastName;
+    private $email;
+    private $password;
+    private $lastLogin;
+    private $memberSince;
+    private $languageId;
+    private $addressId;
+    private $gsm;
+    private $avatar;
+    private $twitter;
+    private $facebook;
+    private $rss;
     //mapping with flex
     public $_explicitType = "classestrophy.User";
-    
+
     public function __construct() {
-        
+
     }
 
     /**
      * Creates a new User object
-     * 
-     * @param int   $userId
+     *
      * @param string   $firstName
      * @param string   $lastName
      * @param string   $email
      * @param string   $password
-     * @param date   $lastLogin
-     * @param date   $memberSince
-     * @param string   $twitterId
-     * @param string   $facebookId
-     * @param string   $blogRss
-     * @param string   $addressStreet
-     * @param string   $addressNumber
-     * @param string   $addressBus
-     * @param int   $cityId
-     * @param string   $telephone
-     * @param string   $fax
+     * @param int   $lastLogin
+     * @param int   $memberSince
+     * @param string   $languageId
+     * @param int   $addressId
      * @param string   $gsm
-     * @param array<Occupation>	$occupations
-     * @param array<Specialty> $specialties
-     * @param int   $languageId
+     * @param string   $avatar
+     * @param string   $twitter
+     * @param string   $facebook
+     * @param string   $rss
      * @return User $instance
      */
-    public static function createNew($userId, $firstName, $lastName, $email, $password, $lastLogin, $memberSince, $addressStreet, $addressNumber, $cityId, $languageId, $twitterId = NULL, $facebookId = NULL, $blogRss = NULL, $addressBus = NULL, $telephone = NULL, $fax = NULL, $gsm = NULL, $occupations = array(), $specialties = array()) {
-        $instance = new self();
+    public static function createNew($firstName, $lastName, $email, $password, $memberSince, $languageId, $addressId, $lastLogin = NULL, $gsm = NULL, $avatar = NULL, $twitter = NULL, $facebook = NULL, $rss = NULL) {
+	$instance = new self();
 
-        $instance->userId = $userId;
-        $instance->firstName = $firstName;
-        $instance->lastName = $lastName;
-        $instance->email = $email;
-        $instance->password = $password;
-        $instance->lastLogin = $lastLogin;
-        $instance->memberSince = $memberSince;
-        $instance->twitterId = $twitterId;
-        $instance->facebookId = $facebookId;
-        $instance->blogRss = $blogRss;
-        $instance->addressStreet = $addressStreet;
-        $instance->addressNumber = $addressNumber;
-        $instance->addressBus = $addressBus;
-        $instance->cityId = $cityId;
-        $instance->telephone = $telephone;
-        $instance->fax = $fax;
-        $instance->gsm = $gsm;
-        $instance->languageId = $languageId;
-        $instance->occupations = $occupations;
-        $instance->specialties = $specialties;
+	$instance->firstName = $firstName;
+	$instance->lastName = $lastName;
+	$instance->email = $email;
+	$instance->password = $password;
+	$instance->lastLogin = $lastLogin;
+	$instance->memberSince = $memberSince;
+	$instance->languageId = $languageId;
+	$instance->addressId = $addressId;
+	$instance->gsm = $gsm;
+	$instance->avatar = $avatar;
+	$instance->twitter = $twitter;
+	$instance->facebook = $facebook;
+	$instance->rss = $rss;
 
-        return $instance;
+	return $instance;
     }
 
     /**
      * deletes an object from permanent storage
-     * 
+     *
      * @param int $userId
      * @return void
      */
     public static function delete($userId) {
-        // get data access object
-        $dao = UserDAO::getInstance();
+	// get data access object
+	$dao = UserDAO::getInstance();
 
-        $dao->delete($userId);
+	$dao->delete($userId);
     }
 
     /**
      * Saves this object to permanent storage
-     * 
+     *
      * @return int $id
      */
     public function save() {
-        // get data access object
-        $dao = UserDAO::getInstance();
+	// get data access object
+	$dao = UserDAO::getInstance();
 
-        // saves this object tot storage
-        $userId = $dao->save($this);
+	// saves this object tot storage
+	$userId = $dao->save($this);
 
-        // update userId
-        $this->userId = $userId;
+	// update userId
+	$this->userId = $userId;
 
-        // returns id
-        return $userId;
+	// returns id
+	return $userId;
     }
 
     /**
      * loads an object from permanent storage
-     * 
+     *
      * @param int $userId
      * @return User
      */
     public static function load($userId) {
-        // get data access object
-        $dao = UserDAO::getInstance();
+	// get data access object
+	$dao = UserDAO::getInstance();
 
-        return $dao->load($userId);
+	return $dao->load($userId);
     }
 
-    /**
-     * Adds an occupation to this user
-     *
-     * @param OccupationInterface $occupation 
-     */
-    public function addOccupation(OccupationInterface $occupation) {
-        $this->occupations[$occupation->getOccupationId()] = $occupation;
-    }
-
-    /**
-     * Adds a specialty to this user
-     *
-     * @param specialtyInterface $specialty 
-     */
-    public function addspecialty(specialtyInterface $specialty) {
-        $this->specialties[$specialty->getspecialtyId()] = $specialty;
-    }
+    /* Getters and setters */
 
     /**
      * Returns userId
-     * 
+     *
      * @return int
      */
     public function getUserId() {
-        return $this->userId;
+	return $this->userId;
     }
 
     /**
      * Returns firstName
-     * 
+     *
      * @return string
      */
     public function getFirstName() {
-        return $this->firstName;
+	return $this->firstName;
     }
 
     /**
      * Returns lastName
-     * 
+     *
      * @return string
      */
     public function getLastName() {
-        return $this->lastName;
+	return $this->lastName;
     }
 
     /**
      * Returns email
-     * 
+     *
      * @return string
      */
     public function getEmail() {
-        return $this->email;
+	return $this->email;
     }
 
     /**
      * Returns password
-     * 
+     *
      * @return string
      */
     public function getPassword() {
-        return $this->password;
+	return $this->password;
     }
 
     /**
      * Returns lastLogin
-     * 
-     * @return date
+     *
+     * @return int
      */
     public function getLastLogin() {
-        return $this->lastLogin;
+	return $this->lastLogin;
     }
 
     /**
      * Returns memberSince
-     * 
-     * @return date
-     */
-    public function getMemberSince() {
-        return $this->memberSince;
-    }
-
-    /**
-     * Returns twitterId
-     * 
-     * @return string
-     */
-    public function getTwitterId() {
-        return $this->twitterId;
-    }
-
-    /**
-     * Returns facebookId
-     * 
-     * @return string
-     */
-    public function getFacebookId() {
-        return $this->facebookId;
-    }
-
-    /**
-     * Returns blogRss
-     * 
-     * @return string
-     */
-    public function getBlogRss() {
-        return $this->blogRss;
-    }
-
-    /**
-     * Returns addressStreet
-     * 
-     * @return string
-     */
-    public function getAddressStreet() {
-        return $this->addressStreet;
-    }
-
-    /**
-     * Returns addressNumber
-     * 
-     * @return string
-     */
-    public function getAddressNumber() {
-        return $this->addressNumber;
-    }
-
-    /**
-     * Returns addressBus
-     * 
-     * @return string
-     */
-    public function getAddressBus() {
-        return $this->addressBus;
-    }
-
-    /**
-     * Returns cityId
-     * 
+     *
      * @return int
      */
-    public function getCityId() {
-        return $this->cityId;
-    }
-
-    /**
-     * Returns telephone
-     * 
-     * @return string
-     */
-    public function getTelephone() {
-        return $this->telephone;
-    }
-
-    /**
-     * Returns fax
-     * 
-     * @return string
-     */
-    public function getFax() {
-        return $this->fax;
-    }
-
-    /**
-     * Returns gsm
-     * 
-     * @return string
-     */
-    public function getGsm() {
-        return $this->gsm;
+    public function getMemberSince() {
+	return $this->memberSince;
     }
 
     /**
      * Returns languageId
-     * 
-     * @return int
+     *
+     * @return string
      */
     public function getLanguageId() {
-        return $this->languageId;
+	return $this->languageId;
     }
 
     /**
-     * Returns an array of linked occupations to this user
+     * Returns addressId
      *
-     * @return Array<Occupation>
+     * @return int
      */
-    public function getOccupations() {
-        return $this->occupations;
+    public function getAddressId() {
+	return $this->addressId;
     }
 
     /**
-     * Return an array of specialties linked to this user
+     * Returns gsm
      *
-     * @return Array<specialty>
+     * @return string
      */
-    public function getSpecialties() {
-        return $this->specialties;
+    public function getGsm() {
+	return $this->gsm;
     }
 
     /**
-     * Removes an occupation to this user
+     * Returns avatar
      *
-     * @param OccupationInterface $occupation 
+     * @return string
      */
-    public function removeOccupation(OccupationInterface $occupation) {
-        unset($this->occupations[$occupation->getOccupationId()]);
+    public function getAvatar() {
+	return $this->avatar;
     }
 
     /**
-     * Removes a specialty to this user
+     * Returns twitter
      *
-     * @param specialtyInterface $specialty 
+     * @return string
      */
-    public function removeSpecialty(specialtyInterface $specialty) {
-        unset($this->specialties[$specialty->getspecialtyId()]);
+    public function getTwitter() {
+	return $this->twitter;
+    }
+
+    /**
+     * Returns facebook
+     *
+     * @return string
+     */
+    public function getFacebook() {
+	return $this->facebook;
+    }
+
+    /**
+     * Returns rss
+     *
+     * @return string
+     */
+    public function getRss() {
+	return $this->rss;
     }
 
     /**
      * Sets userId
-     * 
+     *
      * @param int
      */
     public function setUserId($userId) {
-        $this->userId = $userId;
+	$this->userId = $userId;
     }
 
     /**
      * Sets firstName
-     * 
+     *
      * @param string
      */
     public function setFirstName($firstName) {
-        $this->firstName = $firstName;
+	$this->firstName = $firstName;
     }
 
     /**
      * Sets lastName
-     * 
+     *
      * @param string
      */
     public function setLastName($lastName) {
-        $this->lastName = $lastName;
+	$this->lastName = $lastName;
     }
 
     /**
      * Sets email
-     * 
+     *
      * @param string
      */
     public function setEmail($email) {
-        $this->email = $email;
+	$this->email = $email;
     }
 
     /**
      * Sets password
-     * 
+     *
      * @param string
      */
     public function setPassword($password) {
-        $this->password = $password;
+	$this->password = $password;
     }
 
     /**
      * Sets lastLogin
-     * 
-     * @param date
+     *
+     * @param int
      */
     public function setLastLogin($lastLogin) {
-        $this->lastLogin = $lastLogin;
+	$this->lastLogin = $lastLogin;
     }
 
     /**
      * Sets memberSince
-     * 
-     * @param date
-     */
-    public function setMemberSince($memberSince) {
-        $this->memberSince = $memberSince;
-    }
-
-    /**
-     * Sets twitterId
-     * 
-     * @param string
-     */
-    public function setTwitterId($twitterId) {
-        $this->twitterId = $twitterId;
-    }
-
-    /**
-     * Sets facebookId
-     * 
-     * @param string
-     */
-    public function setFacebookId($facebookId) {
-        $this->facebookId = $facebookId;
-    }
-
-    /**
-     * Sets blogRss
-     * 
-     * @param string
-     */
-    public function setBlogRss($blogRss) {
-        $this->blogRss = $blogRss;
-    }
-
-    /**
-     * Sets addressStreet
-     * 
-     * @param string
-     */
-    public function setAddressStreet($addressStreet) {
-        $this->addressStreet = $addressStreet;
-    }
-
-    /**
-     * Sets addressNumber
-     * 
-     * @param string
-     */
-    public function setAddressNumber($addressNumber) {
-        $this->addressNumber = $addressNumber;
-    }
-
-    /**
-     * Sets addressBus
-     * 
-     * @param string
-     */
-    public function setAddressBus($addressBus) {
-        $this->addressBus = $addressBus;
-    }
-
-    /**
-     * Sets cityId
-     * 
+     *
      * @param int
      */
-    public function setCityId($cityId) {
-        $this->cityId = $cityId;
-    }
-
-    /**
-     * Sets telephone
-     * 
-     * @param string
-     */
-    public function setTelephone($telephone) {
-        $this->telephone = $telephone;
-    }
-
-    /**
-     * Sets fax
-     * 
-     * @param string
-     */
-    public function setFax($fax) {
-        $this->fax = $fax;
-    }
-
-    /**
-     * Sets gsm
-     * 
-     * @param string
-     */
-    public function setGsm($gsm) {
-        $this->gsm = $gsm;
+    public function setMemberSince($memberSince) {
+	$this->memberSince = $memberSince;
     }
 
     /**
      * Sets languageId
-     * 
-     * @param int
+     *
+     * @param string
      */
     public function setLanguageId($languageId) {
-        $this->languageId = $languageId;
+	$this->languageId = $languageId;
     }
-    
+
     /**
-     * Sets the occupations
-     * 
-     * @param array<Occupations>
-     */
-    public function setOccupations($occupations) {
-        $this->occupations = $occupations;
-    }
-    
-    /**
-     * sets an array of specialties linked to this user
+     * Sets addressId
      *
-     * @return Array<specialty>
+     * @param int
      */
-    public function setSpecialties($specialties) {
-        $this->specialties = $specialties;
+    public function setAddressId($addressId) {
+	$this->addressId = $addressId;
     }
+
+    /**
+     * Sets gsm
+     *
+     * @param string
+     */
+    public function setGsm($gsm) {
+	$this->gsm = $gsm;
+    }
+
+    /**
+     * Sets avatar
+     *
+     * @param string
+     */
+    public function setAvatar($avatar) {
+	$this->avatar = $avatar;
+    }
+
+    /**
+     * Sets twitter
+     *
+     * @param string
+     */
+    public function setTwitter($twitter) {
+	$this->twitter = $twitter;
+    }
+
+    /**
+     * Sets facebook
+     *
+     * @param string
+     */
+    public function setFacebook($facebook) {
+	$this->facebook = $facebook;
+    }
+
+    /**
+     * Sets rss
+     *
+     * @param string
+     */
+    public function setRss($rss) {
+	$this->rss = $rss;
+    }
+
 }
 
 ?>

@@ -1,50 +1,50 @@
 <?php
 
 /**
- * Interface for Occupation
+ * Interface for TargetGroup
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-interface OccupationInterface {
+interface TargetGroupInterface {
 
     /**
-     * Creates a new Occupation object
+     * Creates a new TargetGroup object
      *
      * @param string   $label
-     * @return Occupation $instance
+     * @return TargetGroup $instance
      */
     public static function createNew($label);
 
     /**
      * deletes an object from permanent storage
      *
-     * @param int $occupationId
+     * @param int $targetGroupId
      * @return void
      */
-    public static function delete($occupationId);
+    public static function delete($targetGroupId);
 
      /**
      * Saves this object to permanent storage
      *
-     * @return int $occupationId
+     * @return int $targetGroupId
      */
     public function save();
 
     /**
      * loads an object from permanent storage
      *
-     * @param int $occupationId
-     * @return Occupation
+     * @param int $targetGroupId
+     * @return TargetGroup
      */
-    public static function load($occupationId);
+    public static function load($targetGroupId);
 
 
     /* Getters and setters */
-    public function getOccupationId();
+    public function getTargetGroupId();
 
     public function getLabel();
 
-    public function setOccupationId($occupationId);
+    public function setTargetGroupId($targetGroupId);
 
     public function setLabel($label);
 

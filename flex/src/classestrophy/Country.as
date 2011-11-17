@@ -2,25 +2,24 @@ package classestrophy
 {
     [RemoteClass(alias="classestrophy.Country")]
     public class Country
-    {		
-        private var countryId:Number;
-        private var label:String;
-    
-    	public function get countryId() {
-		return $this.countryId;
+    {
+	    private var _countryId:String;
+	    private var _label:String;
+
+	    // Getters
+	    public function get countryId():String {
+		    return this._countryId;
+	    }
+	    public function get label():String {
+		    return this._label;
 	    }
 
-    	public function get label() {
-		return $this.label;
+	    // Setters
+	    public function set countryId(countryId:String):void {
+		    this._countryId = countryId;
 	    }
-
-    
-        public function set countryId(countryId:Number) {
-		$this.countryId = $countryId;
+	    public function set label(label:String):void {
+		    this._label = label;
 	    }
-
-        public function set label(label:String) {
-		$this.label = $label;
-	    }
-
     }
+}

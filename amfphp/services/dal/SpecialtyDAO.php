@@ -1,132 +1,90 @@
 <?php
 
-require_once 'MySQLDatabase.php';
-require_once 'interfaces/specialtyDAOInterface.php';
-require_once 'model/interfaces/specialtyInterface.php';
-require_once 'model/specialty.php';
+require_once 'dal/MySQLDatabase.php';
+require_once 'dal/interfaces/SpecialtyDAOInterface.php';
+require_once 'model/interfaces/SpecialtyInterface.php';
+require_once 'model/Specialty.php';
 
 /**
- * DAO for specialty
+ * DAO for Specialty
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class specialtyDAO implements specialtyDAOInterface {
+class SpecialtyDAO implements SpecialtyDAOInterface {
     const TABLE_NAME = 'specialty';
-    const SPECIALTY_LINK_TABLE_NAME = 'user_specialty';
-    
+
     private static $instance;
-    
+
     private function __construct(){ }
-    
+
     /**
-     * Returns an instance of this specialtyDAO
+     * Returns an instance of this SpecialtyDAO
      * Singleton pattern
-     * 
-     * @return specialtyDAO $instance
+     *
+     * @return SpecialtyDAO $instance
      */
-    public static function getInstance() {
-	if(!isset(self::$instance)) self::$instance = new self();
-	
+    public function getInstance() {
+	if (is_null(self::$instance))
+	    self::$instance = new self();
+
 	return self::$instance;
     }
 
     /**
-     * deletes a specialty object from the database
-     * 
-     * @param $int $specialtyId
+     * deletes a Specialty object from the database
+     *
+     * @param int $specialtyId
      * @return int  number of deleted rows
      */
     public function delete($specialtyId) {
 	// get database
 	$db = MySQLDatabase::getInstance();
-	
+
 	// delete and return affected rows
 	return $db->delete(TABLE_NAME, 'specialty_id = ?', array($primaryKey));
     }
-    
-    
-    public function getSpecialtiesForUserId($userId){
-	// get database
-	$db = MySQLDatabase::getInstance();
-	
-	// build query
-	$query = "SELECT specialty_id, label 
-		    FROM self::TABLE_NAME as o
-		    LEFT JOIN self::SPECIALTY_LINK_TABLE_NAME AS uo ON uo.occupation_id = o.occupation_id 
-		    WHERE UO.user_id = ?";
-	
-	// get records
-	$records = $db->getRecords($query, array($userId));
-	
-	// return objects of the array
-	return $this->recordsToObjects($records);
-    }
-    
+
     /**
-     * loads a specialty object from the database
-     * 
-     * @param $int $specialtyId
-     * @return specialty
+     * loads a Specialty object from the database
+     *
+     * @param int $specialtyId
+     * @return Specialty
      */
     public function load($specialtyId) {
 	// get database
 	$db = MySQLDatabase::getInstance();
-	
+
 	// get record from database
 	$record = $db->getRecord('SELECT specialty_id, label FROM ' . self::TABLE_NAME . 'WHERE specialty_id = ?', array($specialtyId));
-	
-	// translate record to specialty object
-	// return specialty object
-	return $this->recordToObject($record);
-    }
-    
-    /**
-     * Translates a records to an object
-     *
-     * @param array $record
-     * @return array<Specialty> 
-     */
-    private function recordToObject($record){
-	$specialty = specialty::createNew($record['id'], $record['label']);
-	
+
+	// translate record to Specialty object
+	$specialty = new Specialty();
+	$specialty->setSpecialtyId($record['specialty_id']);
+	$specialty->setLabel($record['label']);
+
+	// return Specialty object
 	return $specialty;
     }
-    
-    /**
-     * Translates an array of specialty records to objects
-     *
-     * @param array $records
-     * @return array<Specialty> 
-     */
-    private function recordsToObjects($records){
-	$specialties = array();
-	
-	foreach ($records as $record) {
-	    $specialties[] = $this->recordToObject($record);
-	}
-	
-	return $specialties;
-    }
-    
+
     /**
      * Saves the given object to the database
-     * 
-     * @param specialtyInterface $specialty
+     *
+     * @param SpecialtyInterface $specialty
      * @return int $primaryKey
      */
-    public function save(specialtyInterface $specialty){
+    public function save(SpecialtyInterface $specialty){
 	// get database
 	$db = MySQLDatabase::getInstance();
-	
+
 	// get the key
-	$primaryKey = $specialty->getspecialtyId();
-	
+	$primaryKey = $specialty->getSpecialtyId();
+
 	if(is_null($primaryKey)){
 	    // if the key is NULL, there is no record of it in the database
-	    // create array to insert    
+	    // create array to insert
 	    $newRecord = array();
         	    		    	    $newRecord['label'] = $specialty->getLabel();
-			    
+
 	    // add this record
 	    $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
 	} else {
@@ -134,13 +92,13 @@ class specialtyDAO implements specialtyDAOInterface {
 	    // we need to perform an update on that record
 	    // create array for update
 	    $record = array();
-	    	    $record['specialty_id'] = $specialty->getspecialtyId();
+	    	    $record['specialty_id'] = $specialty->getSpecialtyId();
 		    $record['label'] = $specialty->getLabel();
-		
+
 	    // update the record
 	    $db->update(self::TABLE_NAME, $record, 'specialty_id = ?', array($primaryKey));
 	}
-	
+
 	// return key
 	return $primaryKey;
     }

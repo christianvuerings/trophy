@@ -1,43 +1,43 @@
 <?php
 
-require_once 'model/interfaces/specialtyInterface.php';
+require_once 'model/interfaces/SpecialtyInterface.php';
 
 /**
- * interface  for specialtyDAO
+ * interface  for SpecialtyDAO
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-interface specialtyDAOInterface {   
+interface SpecialtyDAOInterface {
     /**
-     * Returns an instance of this specialtyDAO
+     * Returns an instance of this SpecialtyDAO
      * Singleton pattern
-     * 
-     * @return specialtyDAO $instance
+     *
+     * @return SpecialtyDAO $instance
      */
-    public static function getInstance();
-    
+    public function getInstance();
+
     /**
-     * deletes a specialty object from the database
-     * 
-     * @param $int $specialtyId
+     * deletes a Specialty object from the database
+     *
+     * @param int $specialtyId
      * @return int  number of deleted rows
      */
     public function delete($specialtyId);
-    
+
     /**
-     * loads a specialty object from the database
-     * 
-     * @param $int $specialtyId
-     * @return specialty
+     * loads a Specialty object from the database
+     *
+     * @param int $specialtyId
+     * @return Specialty
      */
     public function load($specialtyId);
-    
+
     /**
      * Saves the given object to the database
-     * 
-     * @param specialtyInterface $specialty
+     *
+     * @param SpecialtyInterface $specialty
      * @return int $primaryKey
      */
-    public function save(specialtyInterface $specialty);
+    public function save(SpecialtyInterface $specialty);
 }
 ?>

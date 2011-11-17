@@ -1,29 +1,29 @@
 <?php
 
-require_once 'dal/SpecialtyDAO.php';
-require_once 'model/interfaces/SpecialtyInterface.php';
+require_once 'dal/TargetGroupDAO.php';
+require_once 'model/interfaces/TargetGroupInterface.php';
 
 /**
- * Model Specialty
+ * Model TargetGroup
  *
  * @author Thomas Crepain <info@thomascrepain.be>
  */
-class Specialty implements SpecialtyInterface {
+class TargetGroup implements TargetGroupInterface {
 
-    private $specialtyId;
+    private $targetGroupId;
     private $label;
     //mapping with flex
-    public $_explicitType = "classestrophy.Specialty";
+    public $_explicitType = "classestrophy.TargetGroup";
 
     public function __construct() {
 
     }
 
     /**
-     * Creates a new Specialty object
+     * Creates a new TargetGroup object
      *
      * @param string   $label
-     * @return Specialty $instance
+     * @return TargetGroup $instance
      */
     public static function createNew($label) {
 	$instance = new self();
@@ -36,14 +36,14 @@ class Specialty implements SpecialtyInterface {
     /**
      * deletes an object from permanent storage
      *
-     * @param int $specialtyId
+     * @param int $targetGroupId
      * @return void
      */
-    public static function delete($specialtyId) {
+    public static function delete($targetGroupId) {
 	// get data access object
-	$dao = SpecialtyDAO::getInstance();
+	$dao = TargetGroupDAO::getInstance();
 
-	$dao->delete($specialtyId);
+	$dao->delete($targetGroupId);
     }
 
     /**
@@ -53,40 +53,40 @@ class Specialty implements SpecialtyInterface {
      */
     public function save() {
 	// get data access object
-	$dao = SpecialtyDAO::getInstance();
+	$dao = TargetGroupDAO::getInstance();
 
 	// saves this object tot storage
-	$specialtyId = $dao->save($this);
+	$targetGroupId = $dao->save($this);
 
-	// update specialtyId
-	$this->specialtyId = $specialtyId;
+	// update targetGroupId
+	$this->targetGroupId = $targetGroupId;
 
 	// returns id
-	return $specialtyId;
+	return $targetGroupId;
     }
 
     /**
      * loads an object from permanent storage
      *
-     * @param int $specialtyId
-     * @return Specialty
+     * @param int $targetGroupId
+     * @return TargetGroup
      */
-    public static function load($specialtyId) {
+    public static function load($targetGroupId) {
 	// get data access object
-	$dao = SpecialtyDAO::getInstance();
+	$dao = TargetGroupDAO::getInstance();
 
-	return $dao->load($specialtyId);
+	return $dao->load($targetGroupId);
     }
 
     /* Getters and setters */
 
     /**
-     * Returns specialtyId
+     * Returns targetGroupId
      *
      * @return int
      */
-    public function getSpecialtyId() {
-	return $this->specialtyId;
+    public function getTargetGroupId() {
+	return $this->targetGroupId;
     }
 
     /**
@@ -99,12 +99,12 @@ class Specialty implements SpecialtyInterface {
     }
 
     /**
-     * Sets specialtyId
+     * Sets targetGroupId
      *
      * @param int
      */
-    public function setSpecialtyId($specialtyId) {
-	$this->specialtyId = $specialtyId;
+    public function setTargetGroupId($targetGroupId) {
+	$this->targetGroupId = $targetGroupId;
     }
 
     /**
