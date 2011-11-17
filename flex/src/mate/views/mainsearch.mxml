@@ -6,6 +6,9 @@
 		  creationComplete="mainsearchCreationComplete(event)">
 	<fx:Script>
 		<![CDATA[
+			import com.asfusion.mate.core.GlobalDispatcher;
+			import com.asfusion.mate.events.Dispatcher;
+			
 			import mate.events.*;
 			
 			import mx.controls.Alert;
@@ -14,6 +17,8 @@
 			public var locale:String;
 
 			private var changeGlobalStateEvent:GlobalStateEvent;
+			[Bindable]
+			public var dispatcher:GlobalDispatcher;
 
 			protected function afterSearchHandler():void {
 				changeGlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
@@ -26,7 +31,7 @@
 				if(txtSearch.text != "") {
 					var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SUBMITSEARCH);
 					searchEvent.locationname = txtSearch.text;
-					dispatchEvent(searchEvent);
+					dispatcher.dispatchEvent(searchEvent);
 					afterSearchHandler();
 				}
 			}
@@ -66,7 +71,7 @@
 			protected function mainsearchCreationComplete(event:FlexEvent):void
 			{
 				initializeExternalInterface();
-
+				dispatcher = new GlobalDispatcher();
 				frmSearch.addEventListener(KeyboardEvent.KEY_DOWN, checkKey);
 				addEventListener(LanguageEvent.SETLOCALE, languageChanged);
 			}

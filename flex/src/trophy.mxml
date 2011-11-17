@@ -23,9 +23,6 @@
 			import mx.core.FlexGlobals;
 			import mx.managers.BrowserManager;
 
-			private function submitSearch(event:SearchEvent):void {
-				Alert.show(event.locationname);
-			}
 
 			private function changeGlobalState(event:GlobalStateEvent):void {
 				// TODO Only change the viewstack selected item if the item isn't currently being displayed
@@ -40,7 +37,6 @@
 			private function addEventListeners():void{
 				addEventListener(GlobalStateEvent.CHANGEGLOBALSTATE, changeGlobalState);
 				addEventListener(LanguageEvent.SETLOCALE, languageChanged);
-				addEventListener(SearchEvent.SUBMITSEARCH, submitSearch);
 			}
 			private function addDispatchEvents():void {
 				var languageEvent:LanguageEvent = new LanguageEvent(LanguageEvent.GETLOCALE);

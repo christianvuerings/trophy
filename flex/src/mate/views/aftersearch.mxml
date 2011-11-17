@@ -6,20 +6,42 @@
 		 <!--creationComplete="registerViewCreatedHandler(event)">-->
 	<fx:Script>
 		<![CDATA[
+			import classestrophy.*;
+			
 			import com.asfusion.mate.core.GlobalDispatcher;
-
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
 			[Bindable]
-			private var user:Object;
+			private var resultObject:Object;
 			[Bindable]
 			public var dispatcher:GlobalDispatcher;
+			[Bindable]
+			private var users:ArrayCollection;
 			
 			public function SearchCompleted(resultObject:Object):void {
-				lblContent.text ='Ole ola!';
+				Alert.show("Enter functie");
+				users = new ArrayCollection();
+				for each (var user:User in resultObject){
+					var userAdd:User = user;
+					users.addItem(user);
+				}
+				if (users.length != 0){
+					for each(var showUser:User in users){
+						Alert.show(showUser.firstName);
+					}
+				} 
+				else{ 
+					lblContent.text = 'Er konden geen gebruikers gevonden worden';
+				}
 			}
 
 		]]>
 	</fx:Script>
 	<views:header/>
-	<s:Label id="lblContent" text="joebaddjnqdqk"/>
+	<s:Label id="lblContent" />
 
 </s:VGroup>
