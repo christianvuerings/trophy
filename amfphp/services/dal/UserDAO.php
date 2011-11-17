@@ -85,8 +85,8 @@ class UserDAO implements UserDAOInterface {
 	// get database
 	$db = MySQLDatabase::getInstance();
 
-	// get record from database
-	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (?)', array(implode(', ', $userIds)));
+	// get records from database
+	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (' . implode(', ', $userIds) . ')');
 
 	// return User object
 	return $this->recordsToObjects($records);
@@ -149,8 +149,10 @@ class UserDAO implements UserDAOInterface {
     private function recordsToObjects($records){
 	$users = array();
 
-	foreach ($records as $record) {
-	    $users[] = $this->recordToObject($record);
+	if(!is_null($records) && !empty($records)) {
+	    foreach ($records as $record) {
+		$users[] = $this->recordToObject($record);
+	    }
 	}
 
 	return $users;
@@ -241,7 +243,7 @@ class UserDAO implements UserDAOInterface {
         $records = $db->getRecords($query, array($city));
         $userIds = array();
 
-        if ($records != null) {
+        if (!is_null($records)) {
             foreach ($records as $record) {
                 if(!is_null($record['user_id'])) array_push($userIds, (int) $record['user_id']);
             }
