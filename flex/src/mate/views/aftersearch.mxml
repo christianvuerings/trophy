@@ -21,9 +21,9 @@
 			public var dispatcher:GlobalDispatcher;
 			[Bindable]
 			private var users:ArrayCollection;
+
 			
 			public function SearchCompleted(resultObject:Object):void {
-				Alert.show("Enter functie");
 				users = new ArrayCollection();
 				for each (var user:User in resultObject){
 					var userAdd:User = user;
@@ -31,7 +31,7 @@
 				}
 				if (users.length != 0){
 					for each(var showUser:User in users){
-						Alert.show(showUser.firstName);
+						lblContent.text = showUser.firstName;
 					}
 				} 
 				else{ 
@@ -42,6 +42,6 @@
 		]]>
 	</fx:Script>
 	<views:header/>
-	<s:Label id="lblContent" />
+	<s:Label id="lblContent" text="TEST" />
 
 </s:VGroup>
