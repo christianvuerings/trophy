@@ -26,19 +26,6 @@
 			import mx.core.FlexGlobals;
 			import mx.managers.BrowserManager;
 
-			private var _user:User;
-			[Bindable]
-			public function get user():User {
-				return _user;
-			}
-			public function set user(value:User):void {
-				_user = value;
-			}
-
-			private function submitSearch(event:SearchEvent):void {
-				Alert.show(event.locationname);
-			}
-
 			private function changeGlobalState(event:GlobalStateEvent):void {
 				if(event.globalstate == "loggedin") {
 					viewstack_topnavigation.selectedIndex = 1;
@@ -59,7 +46,6 @@
 			private function addEventListeners():void{
 				addEventListener(GlobalStateEvent.CHANGEGLOBALSTATE, changeGlobalState);
 				addEventListener(LanguageEvent.SETLOCALE, languageChanged);
-				addEventListener(SearchEvent.SUBMITSEARCH, submitSearch);
 			}
 			private function addDispatchEvents():void {
 				var languageEvent:LanguageEvent = new LanguageEvent(LanguageEvent.GETLOCALE);

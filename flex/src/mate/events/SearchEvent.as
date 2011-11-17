@@ -7,7 +7,7 @@ package mate.events
 		public static const SUBMITSEARCH:String = "submitSearchEvent";
 
 		private var _locationname:String;
-
+		[Bindable]
 		public function get locationname():String
 		{
 			return _locationname;

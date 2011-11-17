@@ -1,20 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:VGroup xmlns:fx="http://ns.adobe.com/mxml/2009"
-		 xmlns:s="library://ns.adobe.com/flex/spark"
-		 xmlns:mx="library://ns.adobe.com/flex/mx" xmlns:views="mate.views.*">
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  xmlns:views="mate.views.*">
 		 <!--creationComplete="registerViewCreatedHandler(event)">-->
 	<fx:Script>
 		<![CDATA[
+			import classestrophy.*;
+			
 			import com.asfusion.mate.core.GlobalDispatcher;
-
+			
+			import mx.collections.ArrayCollection;
+			import mx.controls.Alert;
+			import mx.rpc.events.FaultEvent;
+			import mx.rpc.events.ResultEvent;
+			
 			[Bindable]
-			private var user:Object;
+			private var resultObject:Object;
 			[Bindable]
 			public var dispatcher:GlobalDispatcher;
+			[Bindable]
+			private var users:ArrayCollection;
+			
+			public function SearchCompleted(resultObject:Object):void {
+				Alert.show("Enter functie");
+				users = new ArrayCollection();
+				for each (var user:User in resultObject){
+					var userAdd:User = user;
+					users.addItem(user);
+				}
+				if (users.length != 0){
+					for each(var showUser:User in users){
+						Alert.show(showUser.firstName);
+					}
+				} 
+				else{ 
+					lblContent.text = 'Er konden geen gebruikers gevonden worden';
+				}
+			}
 
 		]]>
 	</fx:Script>
-	<views:header />
-	<s:Label text="Welcome in the afterseach! Meet your doom!!!"/>
+	<views:header/>
+	<s:Label id="lblContent" />
 
 </s:VGroup>
