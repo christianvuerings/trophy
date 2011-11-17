@@ -16,7 +16,7 @@
   <applications>
     <application path="tests/logintest.mxml"/>
     <application path="tests/registertest.mxml"/>
-    <application path="trophy.mxml"/>
+    <application path="TROPHY.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
