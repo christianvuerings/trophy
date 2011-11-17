@@ -3,6 +3,9 @@ package mate.business
 
 	import classestrophy.User;
 
+	import com.asfusion.mate.core.GlobalDispatcher;
+	import com.asfusion.mate.events.Dispatcher;
+
 	import flashx.textLayout.factory.TruncationOptions;
 
 	public class TrophyManager{
@@ -13,6 +16,9 @@ package mate.business
 		import mx.controls.Alert;
 		import mx.rpc.Fault;
 		import mx.utils.ArrayUtil;
+
+		[Bindable]
+		public var dispatcher:GlobalDispatcher;
 
 		private var _isLoggedIn:Boolean = false;
 		private var _user:User;
@@ -35,9 +41,12 @@ package mate.business
 
 		public function RegisterCompleted(resultObject:Object):void {
 			if(resultObject) {
-				Alert.show("ok");
+				Alert.show("Gebruiker is geregistreerd");
+				var changeGlobalStateEvent:GlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "mainsearchview";
+				dispatcher.dispatchEvent(changeGlobalStateEvent);
 			} else {
-				Alert.show("nok");
+				Alert.show("Een gebruiker met die email bestaat al");
 			}
 		}
 
@@ -49,6 +58,9 @@ package mate.business
 				user.email = resultObject[0].email;
 				user.userId = resultObject[0].userId;
 				isLoggedIn = true;
+				var changeGlobalStateEvent:GlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "loggedin";
+				dispatcher.dispatchEvent(changeGlobalStateEvent);
 			} else {
 				isLoggedIn = false;
 			}

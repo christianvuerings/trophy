@@ -14,9 +14,9 @@
     <sourceAttachmentPath/>
   </compiler>
   <applications>
-    <application path="TROPHY.mxml"/>
     <application path="tests/logintest.mxml"/>
     <application path="tests/registertest.mxml"/>
+    <application path="trophy.mxml"/>
   </applications>
   <modules/>
   <buildCSSFiles/>
