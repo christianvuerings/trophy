@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
+		  xmlns:s="library://ns.adobe.com/flex/spark"
+		  xmlns:mx="library://ns.adobe.com/flex/mx"
+		  width="100%">
+
+	<fx:Script>
+		<![CDATA[
+			import classestrophy.User;
+
+			import mate.events.*;
+
+			import mx.controls.Alert;
+			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
+
+			private var changeGlobalStateEvent:GlobalStateEvent;
+			private var _user:User;
+
+			[Bindable]
+			private var application:Object = FlexGlobals.topLevelApplication;
+			[Bindable]
+			// Small hack to not get the following error:
+			// 'Data binding will not be able to detect assignments to "firstName".'
+			private var firstName:String = "";
+
+			// Getters & Setters
+			[Bindable]
+			public function get user():User {
+				return _user;
+			}
+			public function set user(value:User):void {
+				_user = value;
+			}
+
+			protected function logoutClickHandler(event:MouseEvent):void {
+				changeGlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "loggedout";
+				dispatchEvent(changeGlobalStateEvent);
+			}
+
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+	</fx:Declarations>
+	<s:HGroup horizontalAlign="right" paddingTop="5" width="{application.width}" id="loggedin">
+		<s:Label text="{resourceManager.getString('main', 'hi')}" paddingTop="5" />
+		<s:Label text="{user.firstName}" paddingTop="5" />
+		<mx:LinkButton label="{resourceManager.getString('main', 'logout')}" click="logoutClickHandler(event)" />
+	</s:HGroup>
+</s:Group>

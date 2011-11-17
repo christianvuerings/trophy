@@ -2,7 +2,7 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		  xmlns:s="library://ns.adobe.com/flex/spark"
 		  xmlns:mx="library://ns.adobe.com/flex/mx"
-		  width="100%" creationComplete="topnavigation_creationComplete(event)">
+		  width="100%">
 
 	<fx:Script>
 		<![CDATA[
@@ -15,23 +15,9 @@
 			import mx.events.FlexEvent;
 
 			private var changeGlobalStateEvent:GlobalStateEvent;
-			private var _user:User;
 
 			[Bindable]
 			private var application:Object = FlexGlobals.topLevelApplication;
-			[Bindable]
-			// Small hack to not get the following error:
-			// 'Data binding will not be able to detect assignments to "firstName".'
-			private var firstName:String = "";
-
-			// Getters & Setters
-			[Bindable]
-			public function get user():User {
-				return _user;
-			}
-			public function set user(value:User):void {
-				_user = value;
-			}
 
 			protected function registerClickHandler(event:MouseEvent):void {
 				changeGlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
@@ -43,36 +29,11 @@
 				changeGlobalStateEvent.globalstate = "loginview";
 				dispatchEvent(changeGlobalStateEvent);
 			}
-			protected function logoutClickHandler(event:MouseEvent):void {
-				Alert.show("Log Out");
-			}
-			private function showHide():void {
-				if(user && user.userId) {
-					Alert.show(user.firstName);
-					loggedout.visible = false;
-					loggedin.visible = true;
-				} else {
-					loggedout.visible = true;
-					loggedin.visible = false;
-				}
-			}
-			public function LoginCompleted(resultObject:Object):void {
-				showHide();
-			}
-
-			protected function topnavigation_creationComplete(event:FlexEvent):void {
-				showHide();
-			}
 
 		]]>
 	</fx:Script>
 	<fx:Declarations>
 	</fx:Declarations>
-	<s:HGroup horizontalAlign="right" paddingTop="5" width="{application.width}" id="loggedin">
-		<s:Label text="{resourceManager.getString('main', 'hi')}:" paddingTop="5" />
-		<s:Label text="{firstName}" paddingTop="5" />
-		<mx:LinkButton label="{resourceManager.getString('main', 'logout')}" click="logoutClickHandler(event)" />
-	</s:HGroup>
 	<s:HGroup horizontalAlign="right" paddingTop="5" width="{application.width}" id="loggedout">
 		<s:Label text="{resourceManager.getString('main', 'i_am_a_psychologist')}:" paddingTop="5" />
 		<mx:LinkButton label="{resourceManager.getString('main', 'register')}" click="registerClickHandler(event)" />

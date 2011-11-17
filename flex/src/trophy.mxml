@@ -16,6 +16,9 @@
 	</fx:Declarations>
 	<fx:Script>
 		<![CDATA[
+			import classestrophy.User;
+
+			import mate.business.TrophyManager;
 			import mate.events.*;
 
 			import mx.controls.Alert;
@@ -23,14 +26,30 @@
 			import mx.core.FlexGlobals;
 			import mx.managers.BrowserManager;
 
+			private var _user:User;
+			[Bindable]
+			public function get user():User {
+				return _user;
+			}
+			public function set user(value:User):void {
+				_user = value;
+			}
+
 			private function submitSearch(event:SearchEvent):void {
 				Alert.show(event.locationname);
 			}
 
 			private function changeGlobalState(event:GlobalStateEvent):void {
-				// TODO Only change the viewstack selected item if the item isn't currently being displayed
+				if(event.globalstate == "loggedin") {
+					viewstack_topnavigation.selectedIndex = 1;
+					viewstack.selectedChild = NavigatorContent(viewstack.getChildByName("mainsearchview"));
+				} else if (event.globalstate == "loggedout") {
+					viewstack_topnavigation.selectedIndex = 0;
+					viewstack.selectedChild = NavigatorContent(viewstack.getChildByName("mainsearchview"));
+				} else {
+					viewstack.selectedChild = NavigatorContent(viewstack.getChildByName(event.globalstate));
+				}
 
-				viewstack.selectedChild = NavigatorContent(viewstack.getChildByName(event.globalstate));
 			}
 
 			private function languageChanged(event:LanguageEvent):void {
@@ -67,7 +86,16 @@
 		<s:layout>
 			<s:VerticalLayout />
 		</s:layout>
-		<views:topnavigation id="topnavigation" />
+
+		<mx:ViewStack id="viewstack_topnavigation" selectedIndex="0">
+			<s:NavigatorContent id="loggedout">
+				<views:topnavigationloggedout id="topnavigationloggedout" />
+			</s:NavigatorContent>
+			<s:NavigatorContent id="loggedin">
+				<views:topnavigationloggedin id="topnavigationloggedin" />
+			</s:NavigatorContent>
+		</mx:ViewStack>
+
 		<mx:ViewStack id="viewstack" width="100%" height="100%">
 			<s:NavigatorContent id="mainsearchview">
 				<views:mainsearch id="mainsearch" horizontalCenter="0" verticalCenter="100" />

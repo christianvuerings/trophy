@@ -12,6 +12,9 @@
 	</fx:Script>
 	<fx:Declarations>
 		<Debugger level="{Debugger.ALL}" />
+		<EventHandlers type="{FlexEvent.INITIALIZE}">
+			<ObjectBuilder generator="{TrophyManager}" constructorArguments="{scope.dispatcher}"/>
+		</EventHandlers>
 		<EventHandlers type="{RegisterEvent.REGISTER}" debug="true" dispatcherType="global">
 			<RemoteObjectInvoker destination="amfphp" showBusyCursor="true"
 								 source="controllers"
@@ -36,9 +39,9 @@
 								 arguments="{[event.email, event.password]}">
 				<resultHandlers>
 					<MethodInvoker generator="{TrophyManager}" method="LoginCompleted"
-								   arguments="{resultObject}" />
-					<MethodInvoker generator="{topnavigation}" method="LoginCompleted"
-								   arguments="{resultObject}" />
+								   arguments="{resultObject}">
+						<Properties dispatcher="{scope.dispatcher}"/>
+					</MethodInvoker>
 				</resultHandlers>
 				<faultHandlers>
 					<MethodInvoker generator="{TrophyManager}" method="HandleFault"
@@ -46,9 +49,8 @@
 				</faultHandlers>
 			</RemoteObjectInvoker>
 		</EventHandlers>
-		<Injectors target="{topnavigation}">
-			<PropertyInjector targetKey="user" source="{TrophyManager}"
-							  sourceKey="user" />
+		<Injectors target="{topnavigationloggedin}">
+			<PropertyInjector source="{TrophyManager}" sourceKey="user" targetKey="user"/>
 		</Injectors>
 	</fx:Declarations>
 </EventMap>

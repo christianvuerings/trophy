@@ -5,6 +5,7 @@ package mate.events
 	public class GlobalStateEvent extends Event
 	{
 		public static const CHANGEGLOBALSTATE:String = "changeGlobalStateEvent";
+		public static const CHANGELOGGEDINSTATE:String = "changeLoggedInStateEvent";
 
 		public var globalstate:String = "";
 
