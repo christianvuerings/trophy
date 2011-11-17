@@ -6,7 +6,7 @@
 			import mate.business.*;
 			import mate.events.*;
 			import mate.views.*;
-			
+
 			import mx.events.FlexEvent;
 		]]>
 	</fx:Script>
@@ -23,7 +23,9 @@
 								 arguments="{event.user}">
 				<resultHandlers>
 					<MethodInvoker arguments="{resultObject}" generator="{TrophyManager}"
-								   method="RegisterCompleted"/>
+								   method="RegisterCompleted">
+						<Properties dispatcher="{scope.dispatcher}"/>
+					</MethodInvoker>
 				</resultHandlers>
 				<faultHandlers>
 					<MethodInvoker arguments="{fault}" generator="{TrophyManager}"
