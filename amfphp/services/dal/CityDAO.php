@@ -15,7 +15,9 @@ class CityDAO implements CityDAOInterface {
 
     private static $instance;
 
-    private function __construct(){ }
+    private function __construct() {
+
+    }
 
     /**
      * Returns an instance of this CityDAO
@@ -96,23 +98,23 @@ class CityDAO implements CityDAOInterface {
      * @param CityInterface $city
      * @return int $primaryKey
      */
-    public function save(CityInterface $city){
+    public function save(CityInterface $city) {
 	// get database
 	$db = MySQLDatabase::getInstance();
 
 	// get the key
 	$primaryKey = $city->getId();
 
-	if(is_null($primaryKey)){
+	if (is_null($primaryKey)) {
 	    // if the key is NULL, there is no record of it in the database
 	    // create array to insert
 	    $newRecord = array();
-        	    		    	    $newRecord['alpha'] = $city->getAlpha();
-			    	    $newRecord['longitude'] = $city->getLongitude();
-			    	    $newRecord['latitude'] = $city->getLatitude();
-			    	    $newRecord['code'] = $city->getCode();
-			    	    $newRecord['name'] = $city->getName();
-			    	    $newRecord['province_id'] = $city->getProvinceId();
+	    $newRecord['alpha'] = $city->getAlpha();
+	    $newRecord['longitude'] = $city->getLongitude();
+	    $newRecord['latitude'] = $city->getLatitude();
+	    $newRecord['code'] = $city->getCode();
+	    $newRecord['name'] = $city->getName();
+	    $newRecord['province_id'] = $city->getProvinceId();
 
 	    // add this record
 	    $primaryKey = $db->insert(self::TABLE_NAME, $newRecord);
@@ -121,13 +123,13 @@ class CityDAO implements CityDAOInterface {
 	    // we need to perform an update on that record
 	    // create array for update
 	    $record = array();
-	    	    $record['id'] = $city->getId();
-		    $record['alpha'] = $city->getAlpha();
-		    $record['longitude'] = $city->getLongitude();
-		    $record['latitude'] = $city->getLatitude();
-		    $record['code'] = $city->getCode();
-		    $record['name'] = $city->getName();
-		    $record['province_id'] = $city->getProvinceId();
+	    $record['id'] = $city->getId();
+	    $record['alpha'] = $city->getAlpha();
+	    $record['longitude'] = $city->getLongitude();
+	    $record['latitude'] = $city->getLatitude();
+	    $record['code'] = $city->getCode();
+	    $record['name'] = $city->getName();
+	    $record['province_id'] = $city->getProvinceId();
 
 	    // update the record
 	    $db->update(self::TABLE_NAME, $record, 'id = ?', array($primaryKey));
@@ -136,5 +138,7 @@ class CityDAO implements CityDAOInterface {
 	// return key
 	return $primaryKey;
     }
+
 }
+
 ?>
