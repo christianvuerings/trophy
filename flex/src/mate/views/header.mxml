@@ -2,7 +2,8 @@
 <s:Group xmlns:fx="http://ns.adobe.com/mxml/2009"
 		 xmlns:s="library://ns.adobe.com/flex/spark"
 		 xmlns:mx="library://ns.adobe.com/flex/mx"
-		 xmlns:views="mate.views.*">
+		 xmlns:views="mate.views.*"
+		 creationComplete="headerCreationComplete(event)">
 	<s:Rect width="{application.width}" height="100%">
 		<s:fill><s:SolidColor color="#F5F5F5" /></s:fill>
 		<s:stroke>
@@ -11,12 +12,18 @@
 	</s:Rect>
 	<fx:Script>
 		<![CDATA[
-			import mate.events.GlobalStateEvent;
+			import com.asfusion.mate.core.GlobalDispatcher;
+
+			import mate.events.*;
 
 			import mx.core.FlexGlobals;
+			import mx.events.FlexEvent;
 
+			private var changeGlobalStateEvent:GlobalStateEvent;
 			[Bindable]
 			private var application:Object = FlexGlobals.topLevelApplication;
+			[Bindable]
+			public var dispatcher:GlobalDispatcher;
 
 			private function gotomainpage():void {
 				var changeGlobalState:GlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
@@ -28,6 +35,35 @@
 			{
 				gotomainpage();
 			}
+
+			protected function afterSearchHandler():void {
+				changeGlobalStateEvent = new GlobalStateEvent(GlobalStateEvent.CHANGEGLOBALSTATE);
+				changeGlobalStateEvent.globalstate = "aftersearchview";
+				dispatchEvent(changeGlobalStateEvent);
+			}
+
+			private function performSearch():void{
+				// Check whether the user actually entered something in the textbox
+				if(txtSearch.text != "") {
+					var searchEvent:SearchEvent = new SearchEvent(SearchEvent.SUBMITSEARCH);
+					searchEvent.locationname = txtSearch.text;
+					dispatcher.dispatchEvent(searchEvent);
+					afterSearchHandler();
+				}
+			}
+
+			private function checkKey(event:KeyboardEvent):void {
+				if(event.charCode==13){
+					performSearch();
+				}
+			}
+
+			protected function headerCreationComplete(event:FlexEvent):void
+			{
+				dispatcher = new GlobalDispatcher();
+				frmSearch.addEventListener(KeyboardEvent.KEY_DOWN, checkKey);
+			}
+
 		]]>
 	</fx:Script>
 
