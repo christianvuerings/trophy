@@ -85,8 +85,9 @@ class UserDAO implements UserDAOInterface {
 	// get database
 	$db = MySQLDatabase::getInstance();
 
-	// get records from database
-	$records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (' . implode(', ', $userIds) . ')');
+	// get records from database if there where user ids given
+	if (count($userIds) > 0) $records = $db->getRecords('SELECT user_id, first_name, last_name, email, password, last_login, member_since, language_id, address_id, gsm, avatar, twitter, facebook, rss FROM ' . self::TABLE_NAME . ' WHERE user_id IN (' . implode(', ', $userIds) . ')');
+	else $records = array();
 
 	// return User object
 	return $this->recordsToObjects($records);
@@ -238,9 +239,9 @@ class UserDAO implements UserDAOInterface {
         $query.="LEFT JOIN practice p ON p.practice_id = pu.practice_id ";
 	$query.="LEFT JOIN address a ON p.address_id = a.address_id ";
         $query.="LEFT JOIN city c ON c.id = a.city_id ";
-        $query.="WHERE c.alpha = ? ";
+        $query.="WHERE c.alpha = ? OR c.code = ? ";
 
-        $records = $db->getRecords($query, array($city));
+        $records = $db->getRecords($query, array($city, $city));
         $userIds = array();
 
         if (!is_null($records)) {
@@ -251,8 +252,8 @@ class UserDAO implements UserDAOInterface {
 
         //If we find less then 10 users we will look in the nearby cities
         if (count($userIds) <= 10) {
-            $query = "SELECT longitude,latitude FROM city WHERE alpha = ? ";
-            $record = $db->getRecord($query, array($city));
+            $query = "SELECT longitude,latitude FROM city WHERE alpha = ? OR code = ? ";
+            $record = $db->getRecord($query, array($city, $city));
             $longitude = $record['longitude'];
             $latitude = $record['latitude'];
             $longitudeLow = $longitude - 0.2;
@@ -270,21 +271,21 @@ class UserDAO implements UserDAOInterface {
                 }
             }
 
-            $query = "SELECT distinct(u.user_id) AS 'user_id' ";
-            $query.="FROM practice_user pu ";
-            $query.="LEFT JOIN  user u ON pu.user_id = u.user_id ";
-            $query.="LEFT JOIN practice p ON p.practice_id = pu.practice_id ";
+	    $query = "SELECT distinct(u.user_id) AS 'user_id' ";
+	    $query.="FROM practice_user pu ";
+	    $query.="LEFT JOIN  user u ON pu.user_id = u.user_id ";
+	    $query.="LEFT JOIN practice p ON p.practice_id = pu.practice_id ";
 	    $query.="LEFT JOIN address a ON p.address_id = a.address_id ";
 	    $query.="LEFT JOIN city c ON c.id = a.city_id ";
-            $query.="WHERE c.alpha IN ('". implode('\', \'', $extraCities). "') ";
+	    $query.="WHERE c.alpha IN ('". implode('\', \'', $extraCities). "') ";
 
-            $records = $db->getRecords($query);
+	    $records = $db->getRecords($query);
 
-            if ($records != null) {
-                foreach ($records as $record) {
-                    if(!is_null($record['user_id'])) array_push($userIds, (int) $record['user_id']);
-                }
-            }
+	    if ($records != null) {
+		foreach ($records as $record) {
+		    if(!is_null($record['user_id'])) array_push($userIds, (int) $record['user_id']);
+		}
+	    }
         }
 
 	// remove duplicates
