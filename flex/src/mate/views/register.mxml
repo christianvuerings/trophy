@@ -64,6 +64,34 @@
 		<s:FormItem label="{resourceManager.getString('main','password')}:">
 			<s:TextInput id="txtPassword" width="400" displayAsPassword="true" />
 		</s:FormItem>
+		<s:FormHeading label="{resourceManager.getString('main','practice_data')}" />
+		<s:FormItem label="{resourceManager.getString('main','country')}:">
+			<s:DropDownList id="ddlCountry" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','postal_code')}:">
+			<s:TextInput id="txtPostalCode" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','city')}:">
+			<s:TextInput id="txtCity" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','street')}:">
+			<s:TextInput id="txtStreet" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','street_number')}:">
+			<s:TextInput id="txtStreetNumber" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','street_box')}:">
+			<s:TextInput id="txtStreetBox" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','website')}:">
+			<s:TextInput id="txtWebsite" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','cellphone')}:">
+			<s:TextInput id="txtCellphone" width="400" />
+		</s:FormItem>
+		<s:FormItem label="{resourceManager.getString('main','phone')}:">
+			<s:TextInput id="txtPhone" width="400" />
+		</s:FormItem>
 		<s:FormItem>
 			<s:Button label="{resourceManager.getString('main','register')}" id="btnRegister" />
 		</s:FormItem>
